@@ -37,6 +37,7 @@ Constant.h should always be included after config.h,
    the system you are compiling moria on.  */
 
 /* Mac OS X BSD - mainly used for file locations below */
+/* now defined in Makefile */
 /* #define MAC_OSX */
 
 /* No system definition is needed for 4.3BSD, SUN OS, DG/UX.  */
@@ -46,6 +47,7 @@ Constant.h should always be included after config.h,
 
 /* If compiling on Debian (also works on other versions of Linux),
    define this. */
+/* now defined in Makefile */
 /* #define DEBIAN_LINUX */
 
 /* If you are compiling on an ultrix/4.2BSD/Dynix/etc. version of UNIX,

@@ -1,0 +1,27 @@
+# BINDIR is the directory where the moria binary while be put
+# LIBDIR is where the other files (score, news, hours) will be put
+# LIBDIR must be the same directory defined in config.h
+# OWNER is who you want the game to be chown to.
+# GROUP is who you wnat the game to be chgrp to.
+
+# Edited for Debian GNU/Linux.
+DESTDIR =
+
+BINDIR = $(DESTDIR)/usr/games
+LIBDIR = $(DESTDIR)/var/games/moria
+OWNER = root
+GROUP = games
+PLATFORMDIR = unix
+
+CC := cc
+
+# For testing and debugging the program, it is best to use this line.
+# CFLAGS = -g
+# For playing the game, you may want to use this line
+CFLAGS := -O2 -I/opt/local/include -I/opt/local/include/ncurses -DEBIAN_LINUX
+LIB := -lcurses -L/opt/local/lib
+
+# Debian GNU/Linux addition
+ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+CFLAGS += -g
+endif

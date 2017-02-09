@@ -1,3 +1,20 @@
+To build moria, simply run 'make' from the root directory of the project.
+There is no need to move or symlink platform specific code into the src
+directory or edit the config.h file (hopefully).
+
+  make
+  make install
+  
+Installing usually requires root privs, so can be completed with sudo.
+Otherwise the install locations/owners can be changed to not require root
+privs.
+
+
+2017/02/09
+
+
+
+Old Directions
 
 First, you have to put every file in the 'source' directory, and every file
 in your machine/OS specific directory into a common directory.  If you are on
