@@ -76,6 +76,7 @@ int highlight_seams = FALSE;
 int find_ignore_doors = FALSE;
 int sound_beep_flag = TRUE;
 int display_counts = TRUE;
+int disable_haggle = TRUE;		// SAC
 
 char doing_inven = FALSE;  /* Track inventory commands. -CJS- */
 int screen_change = FALSE; /* Track screen updates for inven_commands. */

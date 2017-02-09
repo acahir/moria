@@ -1069,6 +1069,7 @@ static struct opt_desc {
                {"Highlight and notice mineral seams", &highlight_seams},
                {"Beep for invalid character", &sound_beep_flag},
                {"Display rest/repeat counts", &display_counts},
+               {"Disable haggling in stores",		&disable_haggle },   // SAC
                {0, 0}};
 
 /* Set or unset various boolean options.		-CJS- */

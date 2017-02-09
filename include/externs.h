@@ -76,6 +76,7 @@ extern int highlight_seams;   /* Highlight magma and quartz */
 extern int find_ignore_doors; /* Run through open doors */
 extern int sound_beep_flag;   /* Beep for invalid character */
 extern int display_counts;    /* Display rest/repeat counts */
+extern int disable_haggle;		/* Disable haggling SAC */
 
 /* global flags */
 extern int new_level_flag; /* Next level when true  */
