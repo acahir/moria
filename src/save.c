@@ -843,6 +843,8 @@ int get_char(generate) int *generate;
     else                      // SAC
       easy_mode = FALSE;      // SAC
 
+    update_options(); // update values after reading in pref SAC
+  
     /* Don't allow resurrection of total_winner characters.  It causes
        problems because the character level is out of the allowed range.  */
     if (to_be_wizard && (l & 0x40000000L)) {

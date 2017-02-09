@@ -422,6 +422,7 @@ int m_bonus(int, int, int);
 
 /* misc2.c */
 void magic_treasure(int, int);
+void update_options(void);
 void set_options(void);
 
 /* misc3.c */
@@ -933,6 +934,7 @@ int m_bonus();
 
 /* misc2.c */
 void magic_treasure();
+void update_options();
 void set_options();
 
 /* misc3.c */
