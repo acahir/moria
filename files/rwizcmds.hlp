@@ -9,6 +9,7 @@
 ^I - Identify.
 ^O - Print random objects sample.
 ^T - Teleport player.
+^V - Create Object by ID (id from treasure.c)
 ^W - Wizard password on/off.
 @  - Create any object *CAN CAUSE FATAL ERROR*
 +  - Gain experience.

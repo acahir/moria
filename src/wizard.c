@@ -374,3 +374,22 @@ void wizard_create() {
   } else
     msg_print("Aborted.");
 }
+
+/* Wizard routine for creating objects			SAC	*/
+void wizard_create_by_id() {
+  vtype tmp_str;
+  register int tmp_val;
+
+  prt("ID     : ", 0, 0);
+  if (!get_string(tmp_str, 0, 9, 5))
+    return;
+  tmp_val = atoi(tmp_str);
+
+  // highest valid from treasure.c file
+  if (tmp_val <= 366) {
+    place_object_by_id(char_row, char_col, tmp_val);
+    msg_print("Object created.");
+  } else {
+    msg_print("Invalid ID.");
+  }
+}

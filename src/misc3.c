@@ -164,6 +164,20 @@ void place_object(y, x, must_be_small) int y, x, must_be_small;
     msg_print("You feel something roll beneath your feet."); /* -CJS- */
 }
 
+/* Places a specific object at given row, column co-ordinate	SAC	*/
+/* used by Wizard command only */
+void place_object_by_id(y, x, id) int y, x, id;
+{
+  register int cur_pos;
+
+  cur_pos = popt();
+  cave[y][x].tptr = cur_pos;
+  invcopy(&t_list[cur_pos], id);
+  magic_treasure(cur_pos, OBJ_BASE_MAX);
+  if (cave[y][x].cptr == 1)
+    msg_print("You feel something roll beneath your feet.");
+}
+
 /* Allocates an object for tunnels and rooms		-RAK-	*/
 void alloc_object(alloc_set, typ, num) int (*alloc_set)();
 int typ, num;

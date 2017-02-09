@@ -430,6 +430,7 @@ void place_rubble(int, int);
 void place_gold(int, int);
 int get_obj_num(int, int);
 void place_object(int, int, int);
+void place_object_by_id(int, int, int); // SAC
 void alloc_object(int (*)(), int, int);
 void random_object(int, int, int);
 void cnv_stat(int8u, char *);
@@ -776,6 +777,7 @@ void aim(void);
 void wizard_light(void);
 void change_character(void);
 void wizard_create(void);
+void wizard_create_by_id(void); // SAC
 
 #else
 /* !defined (LINT_ARGS) */
@@ -939,6 +941,7 @@ void place_rubble();
 void place_gold();
 int get_obj_num();
 void place_object();
+void place_object_by_id(); // SAC
 void alloc_object();
 void random_object();
 void cnv_stat();
@@ -1288,6 +1291,7 @@ void aim();
 void wizard_light();
 void change_character();
 void wizard_create();
+void wizard_create_by_id(); // SAC
 
 #endif
 

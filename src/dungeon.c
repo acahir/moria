@@ -1272,7 +1272,10 @@ static void do_command(com_val) char com_val;
     free_turn_flag = TRUE;
     break;
   case CTRL('V'): /* (^V)iew license */
-    helpfile(MORIA_GPL);
+    if (wizard)
+      wizard_create_by_id();
+    else
+      helpfile(MORIA_GPL);
     free_turn_flag = TRUE;
     break;
   case CTRL('W'): /* (^W)izard mode */
