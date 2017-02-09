@@ -784,26 +784,30 @@ static void make_attack(monptr) int monptr;
           break;
         }
         i_ptr = &inventory[i];
-        if (i_ptr->tohit > 0) {
-          i_ptr->tohit -= randint(2);
-          /* don't send it below zero */
-          if (i_ptr->tohit < 0)
-            i_ptr->tohit = 0;
-          flag = TRUE;
-        }
-        if (i_ptr->todam > 0) {
-          i_ptr->todam -= randint(2);
-          /* don't send it below zero */
-          if (i_ptr->todam < 0)
-            i_ptr->todam = 0;
-          flag = TRUE;
-        }
-        if (i_ptr->toac > 0) {
-          i_ptr->toac -= randint(2);
-          /* don't send it below zero */
-          if (i_ptr->toac < 0)
-            i_ptr->toac = 0;
-          flag = TRUE;
+        // SAC only remove bonuses that can be replaced
+        if (i == INVEN_WIELD) {
+          if (i_ptr->tohit > 0) {
+            i_ptr->tohit -= randint(2);
+            /* don't send it below zero */
+            if (i_ptr->tohit < 0)
+              i_ptr->tohit = 0;
+            flag = TRUE;
+          }
+          if (i_ptr->todam > 0) {
+            i_ptr->todam -= randint(2);
+            /* don't send it below zero */
+            if (i_ptr->todam < 0)
+              i_ptr->todam = 0;
+            flag = TRUE;
+          }
+        } else {
+          if (i_ptr->toac > 0) {
+            i_ptr->toac -= randint(2);
+            /* don't send it below zero */
+            if (i_ptr->toac < 0)
+              i_ptr->toac = 0;
+            flag = TRUE;
+          }
         }
         if (flag) {
           msg_print("There is a static feeling in the air.");
