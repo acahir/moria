@@ -533,6 +533,77 @@ unsigned char loc_symbol(y, x) int y, x;
   }
 }
 
+/* Returns color for given row, column     -RAK- */
+int getColorByLoc(y, x) int y, x;
+{
+  register cave_type *cave_ptr;
+  char ch;
+
+  cave_ptr = &cave[y][x];
+
+  // Colors for monsters
+  if ((cave_ptr->cptr > 1) && (m_list[cave_ptr->cptr].ml)) {
+    return c_list[m_list[cave_ptr->cptr].mptr].color;
+  } else {
+    ch = loc_symbol(y, x);
+    switch (ch) {
+    case '#':
+      return COL_DEFAULT;
+      break;
+    case '@':
+      return COL_PLAYER;
+      break;
+    case '$':
+      return COL_GOLD;
+      break;
+    case '*':
+      return COL_GOLD;
+      break;
+    case '%':
+      return COL_DEFAULT;
+      break;
+    case '+':
+    case '\'':
+    case '<':
+    case '>':
+      return COL_BROWN;
+      break;
+    case '^':
+      return COL_RED;
+      break;
+    case '!':
+    case '"':
+    case '&':
+    case '(':
+    case ')':
+    case '-':
+    case '/':
+    case '=':
+    case '?':
+    case '[':
+    case '\\':
+    case ']':
+    case '_':
+    case '{':
+    case '|':
+    case '}':
+      return COL_STUFF;
+      break;
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+      return COL_LTBLUE;
+      break;
+    default:
+      return COL_DEFAULT;
+      break;
+    }
+  }
+}
+
 /* Tests a spot for light or field mark status		-RAK-	*/
 int test_light(y, x) int y, x;
 {
@@ -549,6 +620,7 @@ int test_light(y, x) int y, x;
 void prt_map() {
   register int i, j, k;
   register unsigned char tmp_char;
+  int color; // SAC
 
   k = 0;
   for (i = panel_row_min; i <= panel_row_max; i++) /* Top to bottom */
@@ -558,8 +630,10 @@ void prt_map() {
     for (j = panel_col_min; j <= panel_col_max; j++) /* Left to right */
     {
       tmp_char = loc_symbol(i, j);
-      if (tmp_char != ' ')
-        print(tmp_char, i, j);
+      if (tmp_char != ' ') {
+        color = getColorByLoc(i, j);        // SAC
+        color_print(tmp_char, i, j, color); // SAC
+      }
     }
   }
 }

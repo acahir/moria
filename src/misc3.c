@@ -237,9 +237,17 @@ char *out_val;
 }
 
 /* Print character stat in given row, column		-RAK-	*/
+/* Added color support    SAC */
 void prt_stat(stat) int stat;
 {
   stat_type out_val1;
+  int color;
+
+  if (py.stats.max_stat[stat] > py.stats.cur_stat[stat]) {
+    color = COL_WARN;
+  } else {
+    color = COL_WHITE;
+  }
 
   cnv_stat(py.stats.use_stat[stat], out_val1);
   put_buffer(stat_names[stat], 6 + stat, STAT_COLUMN);
@@ -295,6 +303,15 @@ int row, column;
 
   (void)sprintf(out_val, "%6d", num);
   put_buffer(out_val, row, column);
+}
+
+/* Print number at given row, column in color  SAC */
+static void color_prt_int(num, row, column, pair) int num, row, column, pair;
+{
+  vtype out_val;
+
+  (void)sprintf(out_val, "%6d", num);
+  color_put_buffer(out_val, row, column, pair);
 }
 
 /* Print number at given row, column	-RAK-	*/
@@ -431,7 +448,19 @@ void prt_cmana() { prt_int(py.misc.cmana, 15, STAT_COLUMN + 6); }
 void prt_mhp() { prt_int(py.misc.mhp, 16, STAT_COLUMN + 6); }
 
 /* Prints players current hit points			-RAK-	*/
-void prt_chp() { prt_int(py.misc.chp, 17, STAT_COLUMN + 6); }
+/* Added color support    SAC */
+void prt_chp() {
+  int color;
+  if (((py.misc.chp * 100 / py.misc.mhp)) < 50) {
+    color = COL_WARN;
+  } else if (((py.misc.chp * 100 / py.misc.mhp)) < 25) {
+    color = COL_RED;
+  } else {
+    color = COL_GREEN;
+  }
+
+  color_prt_int(py.misc.chp, 17, STAT_COLUMN + 6, color);
+}
 
 /* prints current AC					-RAK-	*/
 void prt_pac() { prt_int(py.misc.dis_ac, 19, STAT_COLUMN + 6); }

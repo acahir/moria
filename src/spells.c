@@ -147,7 +147,7 @@ int detect_trap() {
   register inven_type *t_ptr;
 
   detect = FALSE;
-  for (i = panel_row_min; i <= panel_row_max; i++)
+  for (i = panel_row_min; i <= panel_row_max; i++) {
     for (j = panel_col_min; j <= panel_col_max; j++) {
       c_ptr = &cave[i][j];
       if (c_ptr->tptr != 0) {
@@ -161,6 +161,7 @@ int detect_trap() {
         }
       }
     }
+  }
   return (detect);
 }
 
@@ -170,7 +171,7 @@ int detect_sdoor() {
   register cave_type *c_ptr;
 
   detect = FALSE;
-  for (i = panel_row_min; i <= panel_row_max; i++)
+  for (i = panel_row_min; i <= panel_row_max; i++) {
     for (j = panel_col_min; j <= panel_col_max; j++) {
       c_ptr = &cave[i][j];
       if (c_ptr->tptr != 0) {
@@ -190,6 +191,7 @@ int detect_sdoor() {
         }
       }
     }
+  }
   return (detect);
 }
 
@@ -213,7 +215,8 @@ int detect_invisible() {
     {
       m_ptr->ml = TRUE;
       /* works correctly even if hallucinating */
-      print((char)c_list[m_ptr->mptr].cchar, (int)m_ptr->fy, (int)m_ptr->fx);
+      color_print((char)c_list[m_ptr->mptr].cchar, (int)m_ptr->fy,
+                  (int)m_ptr->fx, c_list[m_ptr->mptr].color);
       flag = TRUE;
     }
   }
@@ -466,7 +469,8 @@ int detect_monsters() {
     {
       m_ptr->ml = TRUE;
       /* works correctly even if hallucinating */
-      print((char)c_list[m_ptr->mptr].cchar, (int)m_ptr->fy, (int)m_ptr->fx);
+      color_print((char)c_list[m_ptr->mptr].cchar, (int)m_ptr->fy,
+                  (int)m_ptr->fx, c_list[m_ptr->mptr].color);
       detect = TRUE;
     }
   }
@@ -1555,7 +1559,7 @@ int genocide() {
 #endif
 
   killed = FALSE;
-  if (get_com("Which type of creature do you wish exterminated?", &typ))
+  if (get_com("Which type of creature do you wish exterminated?", &typ)) {
     for (i = mfptr - 1; i >= MIN_MONIX; i--) {
       m_ptr = &m_list[i];
       r_ptr = &c_list[m_ptr->mptr];
@@ -1570,13 +1574,14 @@ int genocide() {
           killed = TRUE;
         } else {
           /* genocide is a powerful spell, so we will let the player
-             know the names of the creatures he did not destroy,
-             this message makes no sense otherwise */
+                            know the names of the creatures he did not destroy,
+                            this message makes no sense otherwise */
           (void)sprintf(out_val, "The %s is unaffected.", r_ptr->name);
           msg_print(out_val);
         }
       }
     }
+  }
   return (killed);
 }
 
@@ -1708,7 +1713,8 @@ int detect_evil() {
         (CD_EVIL & c_list[m_ptr->mptr].cdefense)) {
       m_ptr->ml = TRUE;
       /* works correctly even if hallucinating */
-      print((char)c_list[m_ptr->mptr].cchar, (int)m_ptr->fy, (int)m_ptr->fx);
+      color_print((char)c_list[m_ptr->mptr].cchar, (int)m_ptr->fy,
+                  (int)m_ptr->fx, c_list[m_ptr->mptr].color);
       flag = TRUE;
     }
   }

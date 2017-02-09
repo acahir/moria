@@ -1483,12 +1483,14 @@ void move_rec(y1, x1, y2, x2) register int y1, x1, y2, x2;
 }
 
 /* Room is lit, make it appear				-RAK-	*/
+/* Added color support    SAC */
 void light_room(y, x) int y, x;
 {
   register int i, j, start_col, end_col;
   int tmp1, tmp2, start_row, end_row;
   register cave_type *c_ptr;
   int tval;
+  char ch;
 
   tmp1 = (SCREEN_HEIGHT / 2);
   tmp2 = (SCREEN_WIDTH / 2);
@@ -1496,38 +1498,48 @@ void light_room(y, x) int y, x;
   start_col = (x / tmp2) * tmp2;
   end_row = start_row + tmp1 - 1;
   end_col = start_col + tmp2 - 1;
-  for (i = start_row; i <= end_row; i++)
+  for (i = start_row; i <= end_row; i++) {
     for (j = start_col; j <= end_col; j++) {
       c_ptr = &cave[i][j];
       if (c_ptr->lr && !c_ptr->pl) {
         c_ptr->pl = TRUE;
-        if (c_ptr->fval == DARK_FLOOR)
+        if (c_ptr->fval == DARK_FLOOR) {
           c_ptr->fval = LIGHT_FLOOR;
+        }
         if (!c_ptr->fm && c_ptr->tptr != 0) {
           tval = t_list[c_ptr->tptr].tval;
           if (tval >= TV_MIN_VISIBLE && tval <= TV_MAX_VISIBLE)
             c_ptr->fm = TRUE;
         }
-        print(loc_symbol(i, j), i, j);
+        ch = loc_symbol(i, j);
+        color_print(ch, i, j, getColorByLoc(i, j));
       }
     }
+  }
 }
 
 /* Lights up given location				-RAK-	*/
+/* Added color support      SAC */
 void lite_spot(y, x) register int y, x;
 {
-  if (panel_contains(y, x))
-    print(loc_symbol(y, x), y, x);
+  char ch;
+
+  if (panel_contains(y, x)) {
+    ch = loc_symbol(y, x);
+    color_print(ch, y, x, getColorByLoc(y, x));
+  }
 }
 
 /* Normal movement					*/
 /* When FIND_FLAG,  light only permanent features	*/
+/* Added color support    SAC */
 static void sub1_move_light(y1, x1, y2, x2) register int x1, x2;
 int y1, y2;
 {
   register int i, j;
   register cave_type *c_ptr;
   int tval, top, left, bottom, right;
+  char ch;
 
   if (light_flag) {
     for (i = y1 - 1; i <= y1 + 1; i++) /* Turn off lamp light	*/
@@ -1569,8 +1581,10 @@ int y1, y2;
     right = x1 + 1;
   }
   for (i = top; i <= bottom; i++)
-    for (j = left; j <= right; j++) /* Leftmost to rightmost do*/
-      print(loc_symbol(i, j), i, j);
+    for (j = left; j <= right; j++) { /* Leftmost to rightmost do*/
+      ch = loc_symbol(i, j);
+      color_print(ch, i, j, getColorByLoc(i, j));
+    }
 }
 
 /* When blinded,  move only the player symbol.		*/
@@ -1579,19 +1593,23 @@ static void sub3_move_light(y1, x1, y2, x2) register int y1, x1;
 int y2, x2;
 {
   register int i, j;
+  char ch;
 
   if (light_flag) {
     for (i = y1 - 1; i <= y1 + 1; i++)
       for (j = x1 - 1; j <= x1 + 1; j++) {
         cave[i][j].tl = FALSE;
-        print(loc_symbol(i, j), i, j);
+        ch = loc_symbol(i, j);
+        color_print(ch, i, j, getColorByLoc(i, j));
       }
     light_flag = FALSE;
-  } else if (!find_flag || find_prself)
-    print(loc_symbol(y1, x1), y1, x1);
-
-  if (!find_flag || find_prself)
-    print('@', y2, x2);
+  } else if (!find_flag || find_prself) {
+    ch = loc_symbol(y1, x1);
+    color_print(ch, y1, x1, getColorByLoc(y1, x1));
+  }
+  if (!find_flag || find_prself) {
+    color_print('@', y2, x2, COL_PLAYER);
+  }
 }
 
 /* Package for moving the character's light about the screen	 */

@@ -98,8 +98,9 @@ void search(y, x, chance) int y, x, chance;
               if (!known2_p(t_ptr)) {
                 known2(t_ptr);
                 msg_print("You have discovered a trap on the chest!");
-              } else
+              } else {
                 msg_print("The chest is trapped!");
+              }
             }
           }
         }
@@ -232,6 +233,7 @@ void find_init(dir) int dir;
 {
   int row, col, deepleft, deepright;
   register int i, shortleft, shortright;
+  char ch;
 
   row = char_row;
   col = char_col;
@@ -288,9 +290,10 @@ void find_init(dir) int dir;
      in this case while moving, so the only problem is on the first turn
      of find mode, when the initial position of the character must be erased.
      Hence we must do the erasure here.  */
-  if (!light_flag && !find_prself)
-    print(loc_symbol(char_row, char_col), char_row, char_col);
-
+  if (!light_flag && !find_prself) {
+    ch = loc_symbol(char_row, char_col);
+    color_print(ch, char_row, char_col, getColorByLoc(char_row, char_col));
+  }
   move_char(dir, TRUE);
   if (find_flag == FALSE)
     command_count = 0;

@@ -622,3 +622,42 @@ Constant.h should always be included after config.h,
 
 /* Number of entries allowed in the scorefile.  */
 #define SCOREFILE_SIZE 1000
+
+/* SAC Color defs */
+/* Note on adding color - had two options, could have added color based on char
+   being printed to screen (1), or could include colors with object defs (2)
+   Option 1 was simpler, less places to modify, but limited to each char always
+   being same color.
+   Option 2 requires more changes, but gives greated flexibility for color choice
+   so decided to go with 2
+   Colors are defined per object type, which is then looked up when printed */
+#define COL_DEFAULT 15
+#define COL_PLAYER 57
+#define COL_RED 9
+#define COL_GREEN 10
+#define COL_BLUE 12
+#define COL_WHITE 15
+#define COL_EMERALD 34
+#define COL_STUFF 67
+#define COL_MAGMA 88
+#define COL_LTBLUE 110
+
+#define COL_BROWN 130
+#define COL_WARN 208
+#define COL_GOLD 229
+#define COL_SILVER 231
+#define COL_MONSTER 88
+#define COL_MONSTER_DEFAULT 160
+#define COL_MONSTER_BLACK 8
+#define COL_MONSTER_WHITE 15
+#define COL_MONSTER_BLUE 33
+#define COL_MONSTER_GREEN 76
+#define COL_MONSTER_PURPLE 92
+#define COL_MONSTER_BROWN 130
+#define COL_MONSTER_HUMAN 137
+#define COL_MONSTER_RED 160
+#define COL_MONSTER_YELLOW 190
+#define COL_MONSTER_DISENCHANT 224
+#define COL_MONSTER_CLEAR 231
+#define COL_MONSTER_GREY 244
+#define COL_MONSTER_MULTI 42

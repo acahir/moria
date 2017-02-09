@@ -346,6 +346,7 @@ int suspend(void);
 #endif
 void init_curses(void);
 void moriaterm(void);
+void color_put_buffer(char *, int, int, int); // SAC
 void put_buffer(char *, int, int);
 void put_qio(void);
 void restore_term(void);
@@ -355,9 +356,11 @@ void flush(void);
 void erase_line(int, int);
 void clear_screen(void);
 void clear_from(int);
+void color_print(char, int, int, int); // SAC
 void print(char, int, int);
 void move_cursor_relative(int, int);
 void count_msg_print(char *);
+void color_prt(char *, int, int, int); // SAC
 void prt(char *, int, int);
 void move_cursor(int, int);
 void msg_print(char *);
@@ -396,6 +399,7 @@ int damroll(int, int);
 int pdamroll(unsigned char *);
 int los(int, int, int, int);
 unsigned char loc_symbol(int, int);
+int getColorByLoc(int, int); // SAC
 int test_light(int, int);
 void prt_map(void);
 int compact_monsters(void);
@@ -851,6 +855,7 @@ int suspend();
 #endif
 void init_curses();
 void moriaterm();
+void color_put_buffer(); // SAC
 void put_buffer();
 void put_qio();
 void restore_term();
@@ -860,9 +865,11 @@ void flush();
 void erase_line();
 void clear_screen();
 void clear_from();
+void color_print(); // SAC
 void print();
 void move_cursor_relative();
 void count_msg_print();
+void color_prt(); // SAC
 void prt();
 void move_cursor();
 void msg_print();
@@ -901,6 +908,7 @@ int damroll();
 int pdamroll();
 int los();
 unsigned char loc_symbol();
+int getColorByLoc(); // SAC
 int test_light();
 void prt_map();
 int compact_monsters();

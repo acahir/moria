@@ -374,6 +374,22 @@ void init_curses()
   (void)refresh();
   moriaterm();
 
+  /* SAC adding color support */
+  /* monsters - defined in mostners.c (red, blue, green, silver, etc) */
+  /* treasure etc - color based on symbol mapped in getColorByLoc() */
+  if (has_colors() == TRUE) {
+    start_color();
+
+    // init all 256 colors for now; pair id to foreground color
+    // start at 1; 0 suppodely reserved in ncurses
+    for (i = 1; i < 256; i++) {
+      init_pair(i, i, 0);
+    }
+  } else {
+    (void)printf("No color support found\n");
+    // exit (1);
+  }
+
 #if 0
   /* This assumes that the terminal is 80 characters wide, which is not
      guaranteed to be true.  */
@@ -492,9 +508,10 @@ void moriaterm()
 }
 #endif
 
-/* Dump IO to buffer					-RAK-	*/
-void put_buffer(out_str, row, col) char *out_str;
-int row, col;
+/* Dump IO to buffer          -RAK- */
+/* Modified to provide color output   SAC */
+void color_put_buffer(out_str, row, col, pair) char *out_str;
+int row, col, pair;
 #ifdef MAC
 {
   /* The screen manager handles writes past the edge ok */
@@ -512,6 +529,7 @@ int row, col;
   (void)strncpy(tmp_str, out_str, 79 - col);
   tmp_str[79 - col] = '\0';
 
+  attron(COLOR_PAIR(pair));
   if (mvaddstr(row, col, tmp_str) == ERR) {
     abort();
     /* clear msg_flag to avoid problems with unflushed messages */
@@ -523,8 +541,17 @@ int row, col;
     /* wait so user can see error */
     (void)sleep(2);
   }
+  attroff(COLOR_PAIR(pair));
 }
 #endif
+
+/* Wrapper for color_put_buffer with default color  SAC */
+void put_buffer(out_str, row, col) char *out_str;
+int row, col;
+{
+  // now just calls color print function with default color
+  color_put_buffer(out_str, row, col, COL_DEFAULT);
+}
 
 /* Dump the IO buffer to terminal			-RAK-	*/
 void put_qio() {
@@ -1111,9 +1138,11 @@ void clear_from(row) int row;
 
 /* Outputs a char to a given interpolated y, x position	-RAK-	*/
 /* sign bit of a character used to indicate standout mode. -CJS */
-void print(ch, row, col) char ch;
+/* print with color support   SAC */
+void color_print(ch, row, col, pair) char ch;
 int row;
 int col;
+int pair;
 #ifdef MAC
 {
   char cnow, anow;
@@ -1134,6 +1163,7 @@ int col;
 
   row -= panel_row_prt; /* Real co-ords convert to screen positions */
   col -= panel_col_prt;
+  attron(COLOR_PAIR(pair));
   if (mvaddch(row, col, ch) == ERR) {
     abort();
     /* clear msg_flag to avoid problems with unflushed messages */
@@ -1144,8 +1174,15 @@ int col;
     /* wait so user can see error */
     (void)sleep(2);
   }
+  attroff(COLOR_PAIR(pair));
 }
 #endif
+
+/* Wrapper for color_print with default color   SAC */
+void print(ch, row, col) char ch;
+int row;
+int col;
+{ color_print(ch, row, col, COL_DEFAULT); }
 
 /* Moves the cursor to a given interpolated y, x position	-RAK-	*/
 void move_cursor_relative(row, col) int row;
@@ -1186,6 +1223,37 @@ void count_msg_print(p) char *p;
   msg_print(p);
   command_count = i;
 }
+
+/* Outputs a line to a given y, x position    -RAK- */
+/* SAC modified to include color output */
+void color_prt(str_buff, row, col, pair) char *str_buff;
+int row;
+int col;
+int pair;
+#ifdef MAC
+{
+  Rect line;
+
+  if (row == MSG_LINE && msg_flag)
+    msg_print(CNIL);
+
+  line.left = col;
+  line.top = row;
+  line.right = SCRN_COLS;
+  line.bottom = row + 1;
+  DEraseScreen(&line);
+
+  color_put_buffer(str_buff, row, col);
+}
+#else
+{
+  if (row == MSG_LINE && msg_flag)
+    msg_print(CNIL);
+  (void)move(row, col);
+  clrtoeol();
+  color_put_buffer(str_buff, row, col, pair);
+}
+#endif
 
 /* Outputs a line to a given y, x position		-RAK-	*/
 void prt(str_buff, row, col) char *str_buff;
@@ -1605,10 +1673,29 @@ void screen_map() {
         DWriteScreenCharAttr(CH(VE), ATTR_NORMAL);
 #else
         /* can not use mvprintw() on ibmpc, because PC-Curses is horribly
-           written, and mvprintw() causes the fp emulation library to be
-           linked with PC-Moria, makes the program 10K bigger */
-        (void)sprintf(prntscrnbuf, "%c%s%c", CH(VE), map, CH(VE));
-        use_value2 mvaddstr(orow + 1, 0, prntscrnbuf);
+        written, and mvprintw() causes the fp emulation library to be
+        linked with PC-Moria, makes the program 10K bigger */
+        mvaddch(orow + 1, 0, CH(VE));
+        for (j = 0; j < MAX_WIDTH / RATIO; j++) {
+          if (map[j] == '@')
+            attron(COLOR_PAIR(COL_PLAYER));
+          else if (map[j] == '\'' || map[j] == '<' || map[j] == '>')
+            attron(COLOR_PAIR(COL_BROWN));
+          else if (map[j] == '.' || map[j] == '#' || map[j] == '%')
+            attron(COLOR_PAIR(COL_DEFAULT));
+          else
+            attron(COLOR_PAIR(COL_STUFF)); // rest of symbols
+          mvaddch(orow + 1, j + 1, map[j]);
+          if (map[j] == '@')
+            attroff(COLOR_PAIR(COL_PLAYER));
+          else if (map[j] == '\'' || map[j] == '<' || map[j] == '>')
+            attroff(COLOR_PAIR(COL_BROWN));
+          else if (map[j] == '.' || map[j] == '#' || map[j] == '%')
+            attroff(COLOR_PAIR(COL_DEFAULT));
+          else
+            attroff(COLOR_PAIR(COL_STUFF)); // rest of symbols
+        }
+        mvaddch(orow + 1, (MAX_WIDTH / RATIO) + 1, CH(VE));
 #endif
       }
       for (j = 0; j < MAX_WIDTH / RATIO; j++)
@@ -1633,10 +1720,31 @@ void screen_map() {
     DWriteScreenString((char *)map);
     DWriteScreenCharAttr(CH(VE), ATTR_NORMAL);
 #else
-    (void)sprintf(prntscrnbuf, "%c%s%c", CH(VE), map, CH(VE));
-    use_value2 mvaddstr(orow + 1, 0, prntscrnbuf);
+    mvaddch(orow + 1, 0, CH(VE));
+    for (j = 0; j < MAX_WIDTH / RATIO; j++) {
+      // Not sure exactly why last line is separate, but it is - SAC
+      if (map[j] == '@')
+        attron(COLOR_PAIR(COL_PLAYER));
+      else if (map[j] == '\'' || map[j] == '<' || map[j] == '>')
+        attron(COLOR_PAIR(COL_BROWN));
+      else if (map[j] == '.' || map[j] == '#' || map[j] == '%')
+        attron(COLOR_PAIR(COL_DEFAULT));
+      else
+        attron(COLOR_PAIR(COL_STUFF)); // rest of symbols
+      mvaddch(orow + 1, j + 1, map[j]);
+      if (map[j] == '@')
+        attroff(COLOR_PAIR(COL_PLAYER));
+      else if (map[j] == '\'' || map[j] == '<' || map[j] == '>')
+        attroff(COLOR_PAIR(COL_BROWN));
+      else if (map[j] == '.' || map[j] == '#' || map[j] == '%')
+        attroff(COLOR_PAIR(COL_DEFAULT));
+      else
+        attroff(COLOR_PAIR(COL_STUFF)); // rest of symbols
+    }
+    mvaddch(orow + 1, (MAX_WIDTH / RATIO) + 1, CH(VE));
 #endif
   }
+
 #ifdef MAC
   DSetScreenCursor(0, orow + 2);
   DWriteScreenCharAttr(CH(BL), ATTR_NORMAL);
