@@ -7,7 +7,7 @@ uMoria
 
 #### Installation
 
-After cloning the repository, the project should build cleanly on linux or Mac OS X by simply typing 'make' in the base directory.  'make install' will copy the files into final destinations.
+After cloning the repository, the project should build cleanly on linux or Mac OS X by simply typing 'make' in the base directory.  'make install' will copy the files into final destinations. uMoria requires the ncurses library which can be installed via [Macports](https://www.macports.org) or [Homebrew](http://brew.sh). Xcode, a free download from the App Store, is also required to build uMoria. 
 
 #### Playing
 
