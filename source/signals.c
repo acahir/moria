@@ -136,7 +136,7 @@ int sig;
     {
       if(++signal_count > 10)	/* Be safe. We will die if persistent enough. */
 	(void) MSIGNAL(sig, SIG_DFL);
-      return;
+      return 0;
     }
   error_sig = sig;
 
@@ -167,7 +167,7 @@ int sig;
 	      if (wait_for_more)
 		put_buffer(" -more-", MSG_LINE, 0);
 	      put_qio();
-	      return;		/* OK. We don't quit. */
+	      return 0;		/* OK. We don't quit. */
 	    }
 	  (void) strcpy(died_from, "Interrupting");
 	}

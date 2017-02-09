@@ -18,6 +18,9 @@
    You should have received a copy of the GNU General Public License 
    along with Umoria.  If not, see <http://www.gnu.org/licenses/>. */
 
+#define unix
+#include <sys/ioctl_compat.h>
+#include <unistd.h>
 
 #define CONFIG_H_INCLUDED
 #ifdef CONSTANT_H_INCLUDED
@@ -34,6 +37,9 @@ some of the system defines set up here.
 /* System definitions.  You must define one of these as appropriate for
    the system you are compiling moria on.  */
 
+/* Mac OS X BSD - mainly used for file locations below */
+/* #define MAC_OSX */
+
 /* No system definition is needed for 4.3BSD, SUN OS, DG/UX.  */
 /* Unless you're on a system, like an HP Apollo, that doesn't let
    more than one machine access a file at a time; then define this.  */
@@ -41,7 +47,7 @@ some of the system defines set up here.
 
 /* If compiling on Debian (also works on other versions of Linux), 
    define this. */
-#define DEBIAN_LINUX
+/* #define DEBIAN_LINUX */
 
 /* If you are compiling on an ultrix/4.2BSD/Dynix/etc. version of UNIX,
    define this.  It is not needed for SUNs.  */
@@ -221,7 +227,7 @@ some of the system defines set up here.
 
 #else
 
-#if 0
+#ifdef DEBIAN_LINUX
 /* Debian standards for file location */
 /* This must be unix; change file names as appropriate.  */
 #define MORIA_SAV	".moria-save"
@@ -235,6 +241,22 @@ some of the system defines set up here.
 #define MORIA_OWIZ_HELP	"/usr/lib/games/moria/owizcmds.hlp"
 #define MORIA_WELCOME	"/usr/lib/games/moria/welcome.hlp"
 #define MORIA_VER	"/usr/lib/games/moria/version.hlp"
+
+#else
+
+#ifdef MAC_OSX
+
+#define MORIA_SAV	"moria.save"
+#define MORIA_HOU	"/opt/local/var/games/moria/hours"
+#define MORIA_MOR	"/opt/local/var/games/moria/news"
+#define MORIA_GPL	"/opt/local/var/games/moria/COPYING"
+#define MORIA_TOP	"/opt/local/var/games/moria/scores"
+#define MORIA_HELP	"/opt/local/var/games/moria/roglcmds.hlp"
+#define MORIA_ORIG_HELP	"/opt/local/var/games/moria/origcmds.hlp"
+#define MORIA_WIZ_HELP	"/opt/local/var/games/moria/rwizcmds.hlp"
+#define MORIA_OWIZ_HELP	"/opt/local/var/games/moria/owizcmds.hlp"
+#define MORIA_WELCOME	"/opt/local/var/games/moria/welcome.hlp"
+#define MORIA_VER	"/opt/local/var/games/moria/version.hlp"
 
 #else
 
@@ -252,6 +274,7 @@ some of the system defines set up here.
 #define MORIA_WELCOME	"/home/dgrabiner/moria-5.6/files/welcome.hlp"
 #define MORIA_VER	"/home/dgrabiner/moria-5.6/files/version.hlp"
 
+#endif
 #endif
 #endif
 #endif
