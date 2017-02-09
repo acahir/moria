@@ -26,6 +26,7 @@
 #endif
 
 #include <stdio.h>
+#include <sys/stat.h>
 
 #ifdef __TURBOC__
 #include	<io.h>

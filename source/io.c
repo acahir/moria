@@ -327,10 +327,10 @@ void init_curses()
 #endif
 
   /* PC curses returns ERR */
-#if defined(USG) && !defined(PC_CURSES) && !defined(AMIGA)
-  if (initscr() == NULL)
-#else
+#if !defined(USG) && (defined(PC_CURSES) || defined(AMIGA))
   if (initscr() == ERR)
+#else
+  if (initscr() == NULL)
 #endif
     {
       (void) printf("Error allocating screen in curses package.\n");
@@ -353,7 +353,7 @@ void init_curses()
   /* RENMOD: libc6 defaults to BSD, this expects SYSV */
   (void) sysv_signal (SIGTSTP, suspend);
 #else
-  (void) signal (SIGTSTP, suspend);
+  (void) signal (SIGTSTP, (void *)suspend);
 #endif
 #endif
 #endif
@@ -758,7 +758,7 @@ void shell_out()
       /* it is not open on MSDOS machines */
       (void) fclose(highscore_fp);
 #endif
-      if (str = getenv("SHELL"))
+      if ((str = getenv("SHELL")))
 #ifndef ATARI_ST
 	(void) execl(str, str, (char *) 0);
 #else
@@ -777,7 +777,7 @@ void shell_out()
       msg_print("Fork failed. Try again.");
       return;
     }
-#if defined(USG) || defined(__386BSD__)
+#if defined(USG) || defined(__386BSD__) || defined(MAC_OSX)
   (void) wait((int *) 0);
 #else
   (void) wait((union wait *) 0);

@@ -371,7 +371,7 @@ int mon_num;
       j = (((long)cp->mexp * cp->level % py.misc.lev) * (long)1000 /
 	   py.misc.lev+5) / 10;
 
-      (void) sprintf(temp, " creature is worth %ld.%02ld point%s", templong,
+      (void) sprintf(temp, " creature is worth %d.%02d point%s", templong,
 		     j, (templong == 1 && j == 0 ? "" : "s"));
       roff(temp);
 
@@ -660,7 +660,7 @@ int mon_num;
 	roff(" one or two");
       else
 	{
-	  (void) sprintf(temp, " up to %ld", j);
+	  (void) sprintf(temp, " up to %d", j);
 	  roff(temp);
 	}
 #ifdef ATARIST_MWC
@@ -722,7 +722,7 @@ int mon_num;
       if (att_how > 19)
 	att_how = 0;
       roff(desc_amethod[att_how]);
-      if (att_type != 1 || d1 > 0 && d2 > 0)
+      if (att_type != 1 || (d1 > 0 && d2 > 0))
 	{
 	  roff(" to ");
 	  if (att_type > 24)

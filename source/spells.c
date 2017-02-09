@@ -169,6 +169,7 @@ int detect_trap()
       {
 	c_ptr = &cave[i][j];
 	if (c_ptr->tptr != 0)
+	{
 	  if (t_list[c_ptr->tptr].tval == TV_INVIS_TRAP)
 	    {
 	      c_ptr->fm = TRUE;
@@ -180,7 +181,8 @@ int detect_trap()
 	      t_ptr = &t_list[c_ptr->tptr];
 	      known2(t_ptr);
 	    }
-      }
+	  }
+  }
   return(detect);
 }
 
@@ -197,6 +199,7 @@ int detect_sdoor()
       {
 	c_ptr = &cave[i][j];
 	if (c_ptr->tptr != 0)
+	{
 	  /* Secret doors  */
 	  if (t_list[c_ptr->tptr].tval == TV_SECRET_DOOR)
 	    {
@@ -213,7 +216,8 @@ int detect_sdoor()
 	      lite_spot(i, j);
 	      detect = TRUE;
 	    }
-      }
+	  }
+  }
   return(detect);
 }
 
@@ -1823,6 +1827,7 @@ int genocide()
 	m_ptr = &m_list[i];
 	r_ptr = &c_list[m_ptr->mptr];
 	if (typ == c_list[m_ptr->mptr].cchar)
+	{
 #ifdef ATARIST_MWC
 	  if ((r_ptr->cmove & (holder = CM_WIN)) == 0)
 #else
@@ -1840,7 +1845,8 @@ int genocide()
 	      (void) sprintf(out_val, "The %s is unaffected.", r_ptr->name);
 	      msg_print(out_val);
 	    }
-      }
+	  }
+  }
   return(killed);
 }
 

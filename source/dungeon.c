@@ -141,6 +141,7 @@ void dungeon()
       /* The Mac ignores the game hours file		*/
       /* Check for game hours			       */
       if (((turn % 250) == 1) && !check_time())
+      {
 	if (closing_flag > 4)
 	  {
 	    msg_print("The gates to Moria are now closed.");
@@ -159,6 +160,7 @@ void dungeon()
 	    msg_print("The gates to Moria are closing.");
 	    msg_print("Please finish up or save your game.");
 	  }
+	}
 #endif
 
       /* turn over the store contents every, say, 1000 turns */
@@ -702,6 +704,7 @@ void dungeon()
 	}
 	/* Word-of-Recall  Note: Word-of-Recall is a delayed action	 */
       if (f_ptr->word_recall > 0)
+      {
 	if (f_ptr->word_recall == 1)
 	  {
 	    new_level_flag = TRUE;
@@ -720,7 +723,7 @@ void dungeon()
 	  }
 	else
 	  f_ptr->word_recall--;
-
+}
       /* Random teleportation  */
       if ((py.flags.teleport) && (randint(100) == 1))
 	{

@@ -18,6 +18,8 @@
    You should have received a copy of the GNU General Public License 
    along with Umoria.  If not, see <http://www.gnu.org/licenses/>. */
 
+#include <strings.h>
+
 #include "config.h"
 #include "constant.h"
 #include "types.h"

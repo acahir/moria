@@ -24,6 +24,7 @@
 /* To find out what system we're on.  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "config.h"
 #include "constant.h"
@@ -108,6 +109,12 @@ unsigned sleep();
 
 static int error_sig = -1;
 static int signal_count = 0;
+
+// remove compile warning for missing sigcontext struct prototype
+// unused, so just a workaround
+#ifdef MAC_OSX
+struct sigcontext {};
+#endif
 
 /*ARGSUSED*/
 #ifndef USG
@@ -242,7 +249,7 @@ void signals()
 #ifdef  __386BSD__
   (void) MSIGNAL(SIGTSTP, (sig_t)suspend);
 #else
-  (void) MSIGNAL(SIGTSTP, suspend);
+  (void) MSIGNAL(SIGTSTP, (void *)suspend);
 #endif
 #endif
 #ifndef USG
@@ -259,7 +266,7 @@ void init_signals()
 {
 #if !defined(ATARIST_MWC) && !defined(ATARIST_TC)
   /* No signals for Atari ST compiled with MWC or TC.  */
-  (void) MSIGNAL(SIGINT, signal_handler);
+  (void) MSIGNAL(SIGINT, (void *)signal_handler);
 
 #if defined(atarist) && defined(__GNUC__)
   /* Atari ST compiled with GNUC has most signals, but we need a cast
@@ -281,8 +288,8 @@ void init_signals()
 
 #else
   /* Everybody except the atari st.  */
-  (void) MSIGNAL(SIGINT, signal_handler);
-  (void) MSIGNAL(SIGFPE, signal_handler);
+  (void) MSIGNAL(SIGINT, (void *)signal_handler);
+  (void) MSIGNAL(SIGFPE, (void *)signal_handler);
 
 #if defined(MSDOS)
   /* many fewer signals under MSDOS */
@@ -301,26 +308,26 @@ void init_signals()
   /* Everybody except Atari, MSDOS, and Amiga.  */
   /* Ignore HANGUP, and let the EOF code take care of this case. */
   (void) MSIGNAL(SIGHUP, SIG_IGN);
-  (void) MSIGNAL(SIGQUIT, signal_handler);
-  (void) MSIGNAL(SIGILL, signal_handler);
-  (void) MSIGNAL(SIGTRAP, signal_handler);
-  (void) MSIGNAL(SIGIOT, signal_handler);
+  (void) MSIGNAL(SIGQUIT, (void *)signal_handler);
+  (void) MSIGNAL(SIGILL, (void *)signal_handler);
+  (void) MSIGNAL(SIGTRAP, (void *)signal_handler);
+  (void) MSIGNAL(SIGIOT, (void *)signal_handler);
 #ifdef SIGEMT  /* in BSD systems */
-  (void) MSIGNAL(SIGEMT, signal_handler);
+  (void) MSIGNAL(SIGEMT, (void *)signal_handler);
 #endif
 #ifdef SIGDANGER /* in SYSV systems */
   (void) MSIGNAL(SIGDANGER, signal_handler);
 #endif
-  (void) MSIGNAL(SIGKILL, signal_handler);
-  (void) MSIGNAL(SIGBUS, signal_handler);
-  (void) MSIGNAL(SIGSEGV, signal_handler);
+  (void) MSIGNAL(SIGKILL, (void *)signal_handler);
+  (void) MSIGNAL(SIGBUS, (void *)signal_handler);
+  (void) MSIGNAL(SIGSEGV, (void *)signal_handler);
 #ifdef SIGSYS
-  (void) MSIGNAL(SIGSYS, signal_handler);
+  (void) MSIGNAL(SIGSYS, (void *)signal_handler);
 #endif
-  (void) MSIGNAL(SIGTERM, signal_handler);
-  (void) MSIGNAL(SIGPIPE, signal_handler);
+  (void) MSIGNAL(SIGTERM, (void *)signal_handler);
+  (void) MSIGNAL(SIGPIPE, (void *)signal_handler);
 #ifdef SIGXCPU	/* BSD */
-  (void) MSIGNAL(SIGXCPU, signal_handler);
+  (void) MSIGNAL(SIGXCPU, (void *)signal_handler);
 #endif
 #ifdef SIGPWR /* SYSV */
   (void) MSIGNAL(SIGPWR, signal_handler);
@@ -357,13 +364,13 @@ void restore_signals()
 #if defined(atarist) && defined(__GNUC__)
   (void) MSIGNAL(SIGINT, (__Sigfunc)signal_handler);
 #else
-  (void) MSIGNAL(SIGINT, signal_handler);
+  (void) MSIGNAL(SIGINT, (void *)signal_handler);
 #endif
 #ifdef SIGQUIT
 #if defined(atarist) && defined(__GNUC__)
   (void) MSIGNAL(SIGQUIT, (__Sigfunc)signal_handler);
 #else
-  (void) MSIGNAL(SIGQUIT, signal_handler);
+  (void) MSIGNAL(SIGQUIT, (void *)signal_handler);
 #endif
 #endif
 #endif

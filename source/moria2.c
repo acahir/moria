@@ -106,6 +106,7 @@ int y, x, chance;
 		{
 		  /* mask out the treasure bits */
 		  if ((t_ptr->flags & CH_TRAPPED) > 1)
+		  {
 		    if (!known2_p(t_ptr))
 		      {
 			known2(t_ptr);
@@ -113,6 +114,7 @@ int y, x, chance;
 		      }
 		    else
 		      msg_print("The chest is trapped!");
+		  }
 		}
 	    }
 	}
