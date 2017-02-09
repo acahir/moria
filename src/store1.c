@@ -314,6 +314,39 @@ void store_init() {
   }
 }
 
+// SAC ensure list of base supplies always available
+// doesn't actually check, just tries to add one of each
+// base item every time through
+static void store_base_create(store_num) int store_num;
+{
+  register int i, currID, tries;
+  int cur_pos, dummy;
+  register store_type *s_ptr;
+  register inven_type *t_ptr;
+
+  cur_pos = popt();
+  s_ptr = &store[store_num];
+
+  for (i = 0; i < 5; i++) {
+    currID = store_base[store_num][i];
+    if (currID > 0) {
+      invcopy(&t_list[cur_pos], currID);
+      magic_treasure(cur_pos, OBJ_TOWN_LEVEL);
+      t_ptr = &t_list[cur_pos];
+      if (store_check_num(t_ptr, store_num)) {
+        if ((t_ptr->cost > 0) && /* Item must be good	*/
+            (t_ptr->cost < owners[s_ptr->owner].max_cost)) {
+          /* equivalent to calling ident_spell(), except will not
+          change the object_ident array */
+          store_bought(t_ptr);
+          store_carry(store_num, &dummy, t_ptr);
+        }
+      }
+    }
+  }
+  pusht((int8u)cur_pos);
+}
+
 /* Creates an item and inserts it into store's inven	-RAK-	*/
 static void store_create(store_num) int store_num;
 {
@@ -363,8 +396,11 @@ void store_maint() {
 
     if (s_ptr->store_ctr <= STORE_MAX_INVEN) {
       j = randint(STORE_TURN_AROUND);
-      if (s_ptr->store_ctr < STORE_MIN_INVEN)
+      if (s_ptr->store_ctr < STORE_MIN_INVEN) {
         j += STORE_MIN_INVEN - s_ptr->store_ctr;
+      }
+      if (easy_mode)          // SAC
+        store_base_create(i); // SAC
       while (--j >= 0)
         store_create(i);
     }

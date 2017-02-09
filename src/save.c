@@ -176,8 +176,10 @@ static int sv_write() {
     l |= 0x200;
   if (display_counts)
     l |= 0x400;
-  if (disable_haggle)		// SAC
-    l |= 0x800;					// SAC
+  if (disable_haggle) // SAC
+    l |= 0x800;       // SAC
+  if (easy_mode)      // SAC
+    l |= 0x1000;      // SAC
   if (death)
     l |= 0x80000000L; /* Sign bit */
   if (total_winner)
@@ -832,10 +834,14 @@ int get_char(generate) int *generate;
       display_counts = TRUE;
     else
       display_counts = FALSE;
-		if (l & 0x800)
-      disable_haggle = TRUE;
-    else
-      disable_haggle = FALSE;	
+    if (l & 0x800)            // SAC
+      disable_haggle = TRUE;  // SAC
+    else                      // SAC
+      disable_haggle = FALSE; // SAC
+    if (l & 0x1000)           // SAC
+      easy_mode = TRUE;       // SAC
+    else                      // SAC
+      easy_mode = FALSE;      // SAC
 
     /* Don't allow resurrection of total_winner characters.  It causes
        problems because the character level is out of the allowed range.  */

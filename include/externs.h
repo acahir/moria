@@ -76,7 +76,8 @@ extern int highlight_seams;   /* Highlight magma and quartz */
 extern int find_ignore_doors; /* Run through open doors */
 extern int sound_beep_flag;   /* Beep for invalid character */
 extern int display_counts;    /* Display rest/repeat counts */
-extern int disable_haggle;		/* Disable haggling SAC */
+extern int disable_haggle;    /* Disable haggling SAC */
+extern int easy_mode;         /* Improves odds for player SAC */
 
 /* global flags */
 extern int new_level_flag; /* Next level when true  */
@@ -177,6 +178,7 @@ extern store_type *store;
 extern store_type store[MAX_STORES];
 #endif
 extern int16u store_choice[MAX_STORES][STORE_CHOICES];
+extern int16u store_base[MAX_STORES][5];
 #ifndef MAC
 extern int (*store_buy[MAX_STORES])();
 #endif

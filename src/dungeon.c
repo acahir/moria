@@ -76,7 +76,7 @@ static void refill_lamp();
 /* It has had a bit more hard work.			-CJS- */
 
 void dungeon() {
-  int find_count, i;
+  int find_count, i, detect_odds;
   int regen_amount; /* Regenerate hp and mana*/
   char command;     /* Last command		 */
   register struct misc *p_ptr;
@@ -659,6 +659,7 @@ void dungeon() {
       } else
         f_ptr->word_recall--;
     }
+
     /* Random teleportation  */
     if ((py.flags.teleport) && (randint(100) == 1)) {
       disturb(0, 0);
@@ -772,8 +773,13 @@ void dungeon() {
     /* Allow for a slim chance of detect enchantment -CJS- */
     /* for 1st level char, check once every 2160 turns
        for 40th level char, check once every 416 turns */
+    if (easy_mode)
+      detect_odds = 375;
+    else
+      detect_odds = 750;
+
     if (((turn & 0xF) == 0) && (f_ptr->confused == 0) &&
-        (randint((int)(10 + 750 / (5 + py.misc.lev))) == 1)) {
+        (randint((int)(10 + detect_odds / (5 + py.misc.lev))) == 1)) {
       vtype tmp_str;
 
       for (i = 0; i < INVEN_ARRAY_SIZE; i++) {

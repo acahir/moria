@@ -106,6 +106,21 @@ int16u store_choice[MAX_STORES][STORE_CHOICES] = {
     {318, 141, 142, 153, 164, 167, 168, 140, 319, 320, 320, 321, 269,
      270, 282, 286, 287, 292, 293, 294, 295, 308, 269, 290, 319, 282}};
 
+// SAC list of items that should always be in stores
+int16u store_base[MAX_STORES][5] = {
+    /* General Store - cloak, ration, shovel, torch*/
+    {344, 365, 366, 0, 0},
+    /* Armory */
+    {93, 0, 0, 0, 0},
+    /* Weaponsmith	 */
+    {0, 0, 0, 0, 0},
+    /* Temple	 */
+    {260, 359, 260, 0, 0},
+    /* Alchemy shop	 */
+    {359, 230, 175, 176, 0},
+    /* Magic-User store*/
+    {318, 0, 0, 0, 0}};
+
 #ifndef MAC
 /* MPW doesn't seem to handle this very well, so replace store_buy array
    with a function call on mac */

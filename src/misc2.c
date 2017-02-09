@@ -39,7 +39,11 @@ void magic_treasure(x, level) int x, level;
   chance = OBJ_BASE_MAGIC + level;
   if (chance > OBJ_BASE_MAX)
     chance = OBJ_BASE_MAX;
-  special = chance / OBJ_DIV_SPECIAL;
+  if (easy_mode) {
+    special = chance / (OBJ_DIV_SPECIAL / 2);
+  } else {
+    special = chance / OBJ_DIV_SPECIAL;
+  }
   cursed = (10 * chance) / OBJ_DIV_CURSED;
   t_ptr = &t_list[x];
 
@@ -335,7 +339,7 @@ void magic_treasure(x, level) int x, level;
       t_ptr->toac += m_bonus(1, 20, level);
       if (magik(special)) {
         tmp = randint(12);
-        if (tmp > 5) {
+        if (tmp > 6) {
 #ifdef ATARIST_MWC
           t_ptr->flags |= (holder = TR_FFALL);
 #else
@@ -343,13 +347,13 @@ void magic_treasure(x, level) int x, level;
 #endif
           t_ptr->name2 = SN_SLOW_DESCENT;
           t_ptr->cost += 250;
-        } else if (tmp == 1) {
+        } else if (tmp <= 2) {
           t_ptr->flags |= TR_SPEED;
           t_ptr->name2 = SN_SPEED;
           t_ptr->ident |= ID_SHOW_P1;
           t_ptr->p1 = 1;
           t_ptr->cost += 5000;
-        } else /* 2 - 5 */
+        } else /* 3 - 6 */
         {
           t_ptr->flags |= TR_STEALTH;
           t_ptr->ident |= ID_SHOW_P1;
@@ -1069,8 +1073,36 @@ static struct opt_desc {
                {"Highlight and notice mineral seams", &highlight_seams},
                {"Beep for invalid character", &sound_beep_flag},
                {"Display rest/repeat counts", &display_counts},
-               {"Disable haggling in stores",		&disable_haggle },   // SAC
+               {"Disable haggling in stores", &disable_haggle},    // SAC
+               {"Easy mode: Improve odds for player", &easy_mode}, // SAC
                {0, 0}};
+
+/* updates some struct values for easy_mode SAC */
+void update_options() {
+  if (easy_mode) {
+    // store owners
+    owners[13].max_cost = 6000;
+    owners[14].max_cost = 6000;
+    // Spells
+    // Mage
+    magic_spell[0][20].sfail = 60;
+    // Rogue
+    magic_spell[2][20].sfail = 90;
+    // Ranger
+    magic_spell[3][20].sfail = 75;
+  } else {
+    // store owners
+    owners[13].max_cost = 3000;
+    owners[14].max_cost = 3000;
+    // Spells
+    // Mage
+    magic_spell[0][20].sfail = 99;
+    // Rogue
+    magic_spell[2][20].sfail = 99;
+    // Ranger
+    magic_spell[3][20].sfail = 95;
+  }
+}
 
 /* Set or unset various boolean options.		-CJS- */
 void set_options() {
@@ -1090,6 +1122,8 @@ void set_options() {
     move_cursor(i + 1, 40);
     switch (inkey()) {
     case ESCAPE:
+      // update easy mode values SAC
+      update_options();
       return;
     case '-':
       if (i > 0)
