@@ -1,21 +1,21 @@
 /* source/signals.c: signal handlers
 
-   Copyright (C) 1989-2008 James E. Wilson, Robert A. Koeneke, 
+   Copyright (C) 1989-2008 James E. Wilson, Robert A. Koeneke,
                            David J. Grabiner
 
    This file is part of Umoria.
 
-   Umoria is free software; you can redistribute it and/or modify 
+   Umoria is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    Umoria is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License 
+   You should have received a copy of the GNU General Public License
    along with Umoria.  If not, see <http://www.gnu.org/licenses/>. */
 
 /* This signal package was brought to you by		-JEW-  */
@@ -33,17 +33,11 @@
 
 #ifdef MAC
 
-void nosignals()
-{
-}
+void nosignals() {}
 
-void signals()
-{
-}
+void signals() {}
 
-void init_signals()
-{
-}
+void init_signals() {}
 
 #else /* a non-Mac system */
 
@@ -123,7 +117,8 @@ static void signal_handler(sig, code, scp)
 #else
 static int signal_handler(sig, code, scp)
 #endif
-int sig, code;
+    int sig,
+    code;
 struct sigcontext *scp;
 {
   int smask;
@@ -135,16 +130,16 @@ static void signal_handler(sig)
 #else
 static int signal_handler(sig)
 #endif
-int sig;
+    int sig;
 {
 #endif
 
-  if(error_sig >= 0)	/* Ignore all second signals. */
-    {
-      if(++signal_count > 10)	/* Be safe. We will die if persistent enough. */
-	(void) MSIGNAL(sig, SIG_DFL);
-      return 0;
-    }
+  if (error_sig >= 0) /* Ignore all second signals. */
+  {
+    if (++signal_count > 10) /* Be safe. We will die if persistent enough. */
+      (void)MSIGNAL(sig, SIG_DFL);
+    return 0;
+  }
   error_sig = sig;
 
   /* Allow player to think twice. Wizard may force a core dump. */
@@ -152,65 +147,57 @@ int sig;
 #if !defined(MSDOS) && !defined(AMIGA) && !defined(ATARIST_TC)
       || sig == SIGQUIT
 #endif
-      )
-    {
-      if (death)
-	(void) MSIGNAL(sig, SIG_IGN);		/* Can't quit after death. */
-      else if (!character_saved && character_generated)
-	{
-	  if (!get_check("Really commit *Suicide*?"))
-	    {
-	      if (turn > 0)
-		disturb(1, 0);
-	      erase_line(0, 0);
-	      put_qio();
-	      error_sig = -1;
+      ) {
+    if (death)
+      (void)MSIGNAL(sig, SIG_IGN); /* Can't quit after death. */
+    else if (!character_saved && character_generated) {
+      if (!get_check("Really commit *Suicide*?")) {
+        if (turn > 0)
+          disturb(1, 0);
+        erase_line(0, 0);
+        put_qio();
+        error_sig = -1;
 #ifdef USG
-	      (void) MSIGNAL(sig, signal_handler);/* Have to restore handler. */
+        (void)MSIGNAL(sig, signal_handler); /* Have to restore handler. */
 #else
-	      (void) sigsetmask(smask);
+        (void)sigsetmask(smask);
 #endif
-	      /* in case control-c typed during msg_print */
-	      if (wait_for_more)
-		put_buffer(" -more-", MSG_LINE, 0);
-	      put_qio();
-	      return 0;		/* OK. We don't quit. */
-	    }
-	  (void) strcpy(died_from, "Interrupting");
-	}
-      else
-	(void) strcpy(died_from, "Abortion");
-      prt("Interrupt!", 0, 0);
-      death = TRUE;
-      exit_game();
-    }
+        /* in case control-c typed during msg_print */
+        if (wait_for_more)
+          put_buffer(" -more-", MSG_LINE, 0);
+        put_qio();
+        return 0; /* OK. We don't quit. */
+      }
+      (void)strcpy(died_from, "Interrupting");
+    } else
+      (void)strcpy(died_from, "Abortion");
+    prt("Interrupt!", 0, 0);
+    death = TRUE;
+    exit_game();
+  }
   /* Die. */
-  prt(
-"OH NO!!!!!!  A gruesome software bug LEAPS out at you. There is NO defense!",
+  prt("OH NO!!!!!!  A gruesome software bug LEAPS out at you. There is NO "
+      "defense!",
       23, 0);
-  if (!death && !character_saved && character_generated)
-    {
-      panic_save = 1;
-      prt("Your guardian angel is trying to save you.", 0, 0);
-      (void) sprintf(died_from,"(panic save %d)",sig);
-      if (!save_char())
-	{
-	  (void) strcpy(died_from, "software bug");
-	  death = TRUE;
-	  turn = -1;
-	}
-    }
-  else
-    {
+  if (!death && !character_saved && character_generated) {
+    panic_save = 1;
+    prt("Your guardian angel is trying to save you.", 0, 0);
+    (void)sprintf(died_from, "(panic save %d)", sig);
+    if (!save_char()) {
+      (void)strcpy(died_from, "software bug");
       death = TRUE;
-      (void) _save_char(savefile);	/* Quietly save the memory anyway. */
+      turn = -1;
     }
+  } else {
+    death = TRUE;
+    (void)_save_char(savefile); /* Quietly save the memory anyway. */
+  }
   restore_term();
 #if !defined(MSDOS) && !defined(AMIGA) && !defined(ATARIST_TC)
   /* always generate a core dump */
-  (void) MSIGNAL(sig, SIG_DFL);
-  (void) kill(getpid(), sig);
-  (void) sleep(5);
+  (void)MSIGNAL(sig, SIG_DFL);
+  (void)kill(getpid(), sig);
+  (void)sleep(5);
 #endif
   exit(1);
 }
@@ -221,14 +208,13 @@ int sig;
 static int mask;
 #endif
 
-void nosignals()
-{
+void nosignals() {
 #if !defined(ATARIST_MWC) && !defined(ATARIST_TC)
 #ifdef SIGTSTP
 #if defined(atarist) && defined(__GNUC__)
-  (void) MSIGNAL(SIGTSTP, (__Sigfunc)SIG_IGN);
+  (void)MSIGNAL(SIGTSTP, (__Sigfunc)SIG_IGN);
 #else
-  (void) MSIGNAL(SIGTSTP, SIG_IGN);
+  (void)MSIGNAL(SIGTSTP, SIG_IGN);
 #endif
 #ifndef USG
   mask = sigsetmask(0);
@@ -239,21 +225,20 @@ void nosignals()
 #endif
 }
 
-void signals()
-{
+void signals() {
 #if !defined(ATARIST_MWC) && !defined(ATARIST_TC)
 #ifdef SIGTSTP
 #if defined(atarist) && defined(__GNUC__)
-  (void) MSIGNAL(SIGTSTP, (__Sigfunc)suspend);
+  (void)MSIGNAL(SIGTSTP, (__Sigfunc)suspend);
 #else
-#ifdef  __386BSD__
-  (void) MSIGNAL(SIGTSTP, (sig_t)suspend);
+#ifdef __386BSD__
+  (void)MSIGNAL(SIGTSTP, (sig_t)suspend);
 #else
-  (void) MSIGNAL(SIGTSTP, (void *)suspend);
+  (void)MSIGNAL(SIGTSTP, (void *)suspend);
 #endif
 #endif
 #ifndef USG
-  (void) sigsetmask(mask);
+  (void)sigsetmask(mask);
 #endif
 #endif
   if (error_sig == 0)
@@ -261,76 +246,74 @@ void signals()
 #endif
 }
 
-
-void init_signals()
-{
+void init_signals() {
 #if !defined(ATARIST_MWC) && !defined(ATARIST_TC)
   /* No signals for Atari ST compiled with MWC or TC.  */
-  (void) MSIGNAL(SIGINT, (void *)signal_handler);
+  (void)MSIGNAL(SIGINT, (void *)signal_handler);
 
 #if defined(atarist) && defined(__GNUC__)
   /* Atari ST compiled with GNUC has most signals, but we need a cast
      in every call to signal.  */
-  (void) MSIGNAL(SIGINT, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGQUIT, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGTSTP,(__Sigfunc)SIG_IGN);
-  (void) MSIGNAL(SIGILL, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGHUP, (__Sigfunc)SIG_IGN);
-  (void) MSIGNAL(SIGTRAP,(__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGIOT, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGEMT, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGKILL, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGBUS, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGSEGV, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGSYS, (__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGTERM,(__Sigfunc)signal_handler);
-  (void) MSIGNAL(SIGPIPE, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGINT, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGQUIT, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGTSTP, (__Sigfunc)SIG_IGN);
+  (void)MSIGNAL(SIGILL, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGHUP, (__Sigfunc)SIG_IGN);
+  (void)MSIGNAL(SIGTRAP, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGIOT, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGEMT, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGKILL, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGBUS, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGSEGV, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGSYS, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGTERM, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGPIPE, (__Sigfunc)signal_handler);
 
 #else
   /* Everybody except the atari st.  */
-  (void) MSIGNAL(SIGINT, (void *)signal_handler);
-  (void) MSIGNAL(SIGFPE, (void *)signal_handler);
+  (void)MSIGNAL(SIGINT, (void *)signal_handler);
+  (void)MSIGNAL(SIGFPE, (void *)signal_handler);
 
 #if defined(MSDOS)
-  /* many fewer signals under MSDOS */
+/* many fewer signals under MSDOS */
 #else
 
 #ifdef AMIGA
-/*  (void) MSIGNAL(SIGINT, signal_handler); */
-  (void) MSIGNAL(SIGTERM, signal_handler);
-  (void) MSIGNAL(SIGABRT, signal_handler);
-/*  (void) MSIGNAL(SIGFPE, signal_handler); */
-  (void) MSIGNAL(SIGILL, signal_handler);
-  (void) MSIGNAL(SIGSEGV, signal_handler);
+  /*  (void) MSIGNAL(SIGINT, signal_handler); */
+  (void)MSIGNAL(SIGTERM, signal_handler);
+  (void)MSIGNAL(SIGABRT, signal_handler);
+  /*  (void) MSIGNAL(SIGFPE, signal_handler); */
+  (void)MSIGNAL(SIGILL, signal_handler);
+  (void)MSIGNAL(SIGSEGV, signal_handler);
 
 #else
 
   /* Everybody except Atari, MSDOS, and Amiga.  */
   /* Ignore HANGUP, and let the EOF code take care of this case. */
-  (void) MSIGNAL(SIGHUP, SIG_IGN);
-  (void) MSIGNAL(SIGQUIT, (void *)signal_handler);
-  (void) MSIGNAL(SIGILL, (void *)signal_handler);
-  (void) MSIGNAL(SIGTRAP, (void *)signal_handler);
-  (void) MSIGNAL(SIGIOT, (void *)signal_handler);
-#ifdef SIGEMT  /* in BSD systems */
-  (void) MSIGNAL(SIGEMT, (void *)signal_handler);
+  (void)MSIGNAL(SIGHUP, SIG_IGN);
+  (void)MSIGNAL(SIGQUIT, (void *)signal_handler);
+  (void)MSIGNAL(SIGILL, (void *)signal_handler);
+  (void)MSIGNAL(SIGTRAP, (void *)signal_handler);
+  (void)MSIGNAL(SIGIOT, (void *)signal_handler);
+#ifdef SIGEMT /* in BSD systems */
+  (void)MSIGNAL(SIGEMT, (void *)signal_handler);
 #endif
 #ifdef SIGDANGER /* in SYSV systems */
-  (void) MSIGNAL(SIGDANGER, signal_handler);
+  (void)MSIGNAL(SIGDANGER, signal_handler);
 #endif
-  (void) MSIGNAL(SIGKILL, (void *)signal_handler);
-  (void) MSIGNAL(SIGBUS, (void *)signal_handler);
-  (void) MSIGNAL(SIGSEGV, (void *)signal_handler);
+  (void)MSIGNAL(SIGKILL, (void *)signal_handler);
+  (void)MSIGNAL(SIGBUS, (void *)signal_handler);
+  (void)MSIGNAL(SIGSEGV, (void *)signal_handler);
 #ifdef SIGSYS
-  (void) MSIGNAL(SIGSYS, (void *)signal_handler);
+  (void)MSIGNAL(SIGSYS, (void *)signal_handler);
 #endif
-  (void) MSIGNAL(SIGTERM, (void *)signal_handler);
-  (void) MSIGNAL(SIGPIPE, (void *)signal_handler);
-#ifdef SIGXCPU	/* BSD */
-  (void) MSIGNAL(SIGXCPU, (void *)signal_handler);
+  (void)MSIGNAL(SIGTERM, (void *)signal_handler);
+  (void)MSIGNAL(SIGPIPE, (void *)signal_handler);
+#ifdef SIGXCPU /* BSD */
+  (void)MSIGNAL(SIGXCPU, (void *)signal_handler);
 #endif
 #ifdef SIGPWR /* SYSV */
-  (void) MSIGNAL(SIGPWR, signal_handler);
+  (void)MSIGNAL(SIGPWR, signal_handler);
 #endif
 #endif
 #endif
@@ -338,39 +321,36 @@ void init_signals()
 #endif
 }
 
-void ignore_signals()
-{
+void ignore_signals() {
 #if !defined(ATARIST_MWC)
-  (void) MSIGNAL(SIGINT, SIG_IGN);
+  (void)MSIGNAL(SIGINT, SIG_IGN);
 #ifdef SIGQUIT
-  (void) MSIGNAL(SIGQUIT, SIG_IGN);
+  (void)MSIGNAL(SIGQUIT, SIG_IGN);
 #endif
 #endif
 }
 
-void default_signals()
-{
+void default_signals() {
 #if !defined(ATARIST_MWC)
-  (void) MSIGNAL(SIGINT, SIG_DFL);
+  (void)MSIGNAL(SIGINT, SIG_DFL);
 #ifdef SIGQUIT
-  (void) MSIGNAL(SIGQUIT, SIG_DFL);
+  (void)MSIGNAL(SIGQUIT, SIG_DFL);
 #endif
 #endif
 }
 
-void restore_signals()
-{
+void restore_signals() {
 #if !defined(ATARIST_MWC)
 #if defined(atarist) && defined(__GNUC__)
-  (void) MSIGNAL(SIGINT, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGINT, (__Sigfunc)signal_handler);
 #else
-  (void) MSIGNAL(SIGINT, (void *)signal_handler);
+  (void)MSIGNAL(SIGINT, (void *)signal_handler);
 #endif
 #ifdef SIGQUIT
 #if defined(atarist) && defined(__GNUC__)
-  (void) MSIGNAL(SIGQUIT, (__Sigfunc)signal_handler);
+  (void)MSIGNAL(SIGQUIT, (__Sigfunc)signal_handler);
 #else
-  (void) MSIGNAL(SIGQUIT, (void *)signal_handler);
+  (void)MSIGNAL(SIGQUIT, (void *)signal_handler);
 #endif
 #endif
 #endif

@@ -1,21 +1,21 @@
 /* source/rnd.c: random number generator
 
-   Copyright (C) 1989-2008 James E. Wilson, Robert A. Koeneke, 
+   Copyright (C) 1989-2008 James E. Wilson, Robert A. Koeneke,
                            David J. Grabiner
 
    This file is part of Umoria.
 
-   Umoria is free software; you can redistribute it and/or modify 
+   Umoria is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
 
    Umoria is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of 
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
 
-   You should have received a copy of the GNU General Public License 
+   You should have received a copy of the GNU General Public License
    along with Umoria.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include "config.h"
@@ -44,7 +44,7 @@
    Schrage's method is used to compute the sequence of z's.
    Let m = aq + r, where q = m div a, and r = m mod a.
    Then f(z) = az mod m = az - m * (az div m) =
-	     = gamma(z) + m * delta(z)
+             = gamma(z) + m * delta(z)
    Where gamma(z) = a(z mod q) - r(z div q)
    and	 delta(z) = (z div q) - (az div m)
 
@@ -62,8 +62,8 @@
    integers, this algorithm is from:
 
 Stephen K. Park and Keith W. Miller, "Random Number Generators:
-	Good ones are hard to find", Communications of the ACM, October 1988,
-	vol 31, number 10, pp. 1192-1201.
+        Good ones are hard to find", Communications of the ACM, October 1988,
+        vol 31, number 10, pp. 1192-1201.
 
    If this algorithm is implemented correctly, then if z[1] = 1, then
    z[10001] will equal 1043618065
@@ -72,21 +72,17 @@ Stephen K. Park and Keith W. Miller, "Random Number Generators:
    Returns integers in the range 1 to 2^31-1.
  */
 
-#define RNG_M 2147483647L  /* m = 2^31 - 1 */
+#define RNG_M 2147483647L /* m = 2^31 - 1 */
 #define RNG_A 16807L
-#define RNG_Q 127773L	   /* m div a */
-#define RNG_R 2836L	   /* m mod a */
+#define RNG_Q 127773L /* m div a */
+#define RNG_R 2836L   /* m mod a */
 
 /* 32 bit seed */
 static int32u rnd_seed;
 
-int32u get_rnd_seed ()
-{
-  return rnd_seed;
-}
+int32u get_rnd_seed() { return rnd_seed; }
 
-void set_rnd_seed (seedval)
-int32u seedval;
+void set_rnd_seed(seedval) int32u seedval;
 {
   /* set seed to value between 1 and m-1 */
 
@@ -94,8 +90,7 @@ int32u seedval;
 }
 
 /* returns a pseudo-random number from set 1, 2, ..., RNG_M - 1 */
-int32 rnd ()
-{
+int32 rnd() {
   register long low, high, test;
 
   high = rnd_seed / RNG_Q;
@@ -110,19 +105,18 @@ int32 rnd ()
 
 #ifdef TEST_RNG
 
-main ()
-{
+main() {
   long i, random;
 
-  set_rnd_seed (0L);
+  set_rnd_seed(0L);
 
   for (i = 1; i < 10000; i++)
-    (void) rnd ();
+    (void)rnd();
 
-  random = rnd ();
-  printf ("z[10001] = %ld, should be 1043618065\n", random);
+  random = rnd();
+  printf("z[10001] = %ld, should be 1043618065\n", random);
   if (random == 1043618065L)
-    printf ("success!!!\n");
+    printf("success!!!\n");
 }
 
 #endif
