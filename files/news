@@ -1,22 +1,20 @@
-                         *********************
-                         **   Umoria 5.6    **
-                         *********************
-                 Copyright (c) 1985 Robert Alan Koeneke
+                          *********************
+                          **  Umoria 5.6.1   **
+                          *********************
+                   Copyright (c) 1985 Robert Alan Koeneke
                    Copyright (c) 1989-94 James E. Wilson
 
-Programmers : Robert Alan Koeneke / University of Oklahoma
-              Jimmey Wayne Todd  / University of Oklahoma
-UNIX Port : James E. Wilson    / Cygnus Support
-Versions 5.5-5.6 : David J. Grabiner 
+       Programmers : Robert Alan Koeneke / University of Oklahoma
+                     Jimmey Wayne Todd   / University of Oklahoma
+         UNIX Port : James E. Wilson     / Cygnus Support
+  Versions 5.5-5.6 : David J. Grabiner
+    Version 5.6.1+ : Steve Cochran
 
-Umoria 5.6 is free software, and you are welcome to distribute it
-under certain conditions; for details, type control-V after starting a
-character.  
-Umoria 5.6 comes with ABSOLUTELY NO WARRANTY; for details,
-type control-V and view sections 15-17 of the License.
+  Please read doc/FEATURES.NEW for information on changes.
 
-Please send bug reports to grabiner@alumni.princeton.edu or to the USENET
-newsgroup rec.games.roguelike.moria.
+  Umoria 5.6 is free software, and you are welcome to distribute it
+  under certain conditions; for details, type control-V after starting
+  a character. Umoria 5.6 comes with ABSOLUTELY NO WARRANTY; for
+  details, type control-V and view sections 15-17 of the License.
 
-Moria 4.8x users, please read doc/FEATURES.NEW for information on changes.
-
+  Please file bug reports at https://github.com/acahir/umoria/issues

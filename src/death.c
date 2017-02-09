@@ -210,7 +210,7 @@ static int flock(f, l) int f, l;
   (void)sprintf(lockname, (char *)prefix_file((char *)"moria.%d"), sbuf.st_ino);
 #else
 #ifdef __linux__
-  (void)sprintf(lockname, "/tmp/moria.%ld", sbuf.st_ino);
+  (void)sprintf(lockname, "/tmp/moria.%d", sbuf.st_ino);
 #else
   (void)sprintf(lockname, "/tmp/moria.%d", sbuf.st_ino);
 #endif

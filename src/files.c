@@ -121,9 +121,9 @@ void read_times() {
     while (fgets(in_line, 80, file1) != CNIL)
       if (strlen(in_line) > 3) {
         /* These lines should be as in tables.c - i.e.
-  3 letter day, :, 24 chars, one per hour
-  the fgets will have read a \n which I'm
-  about to NULL */
+        3 letter day, :, 24 chars, one per hour
+        the fgets will have read a \n which I'm
+        about to NULL */
         in_line[3 + 1 + 24] = '\0';
 
         if (!strncmp(in_line, "SUN:", 4))

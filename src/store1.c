@@ -415,10 +415,10 @@ int32 minprice;
   int bargain_record;
   register store_type *s_ptr;
 
-	/* Added option to disable haggling SAC */
-	if (disable_haggle) {
-		return TRUE;
-	}
+  /* Added option to disable haggling SAC */
+  if (disable_haggle) {
+    return TRUE;
+  }
 
   s_ptr = &store[store_num];
   if (s_ptr->good_buy == MAX_SHORT)
