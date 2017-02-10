@@ -637,6 +637,12 @@ int mon_take_hit(monptr, dam) int monptr, dam;
     } else
       p_ptr->exp_frac = new_exp_frac;
 
+    /* If in easy_mode and exp below max_exp
+       add half new exp to max_exp */
+    if ((easy_mode) && (p_ptr->exp < p_ptr->max_exp)) {
+      p_ptr->max_exp += new_exp/2;
+    }
+
     p_ptr->exp += new_exp;
     /* can't call prt_experience() here, as that would result in "new level"
        message appearing before "monster dies" message */
