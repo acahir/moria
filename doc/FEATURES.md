@@ -1,4 +1,4 @@
-## Umoria 5.6.1
+## Moria 5.6.1
 
 #### New Features
 
@@ -8,8 +8,7 @@ Two new in-game options added
 	- doubles chance of getting a special item
 	- increased odds of casting Identity spell
 	- increased odds of detecting magic items in inventory
-	- ensures a list of base supplies are always available in stores
-		(indenty, word-of-recall, food ration, oil, etc)
+	- ensures a list of base supplies are always available in stores (indenty, word-of-recall, food ration, oil, etc)
 	- increases the price limits in some stores
 
 Added color support
@@ -25,10 +24,7 @@ Improved build process
 - Added Makefile for Mac OS x
 - Cleaned up some compiler warnings for C99
 
-Disenchant creatures can no longer affect item bonuses that can't 
-be re-enchanted. For example, Gauntlets of Slaying toHit or toDam, 
-or toAC on weapons. Seemed unfair to be able to loose without ability
-to regain.
+Disenchant creatures can no longer affect item bonuses that can't  be re-enchanted. For example, Gauntlets of Slaying toHit or toDam,  or toAC on weapons. Seemed unfair to be able to loose without ability to regain.
 
 Possible future improvements:
 - remove MAC code? no longer relevant and messy
@@ -39,8 +35,7 @@ Documentation
 - Added Spoilers document
 - Cleaned up old files
 
-Github repository created
-	https://github.com/acahir/umoria
+Github repository created at https://github.com/acahir/moria
 
 
 
