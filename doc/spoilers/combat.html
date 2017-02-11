@@ -1,0 +1,1087 @@
+<html>
+<head>
+<title>Combat</title>
+<body>
+
+<h2>Combat</h2>
+
+<h3>Contents:</h3>
+<ul>
+   <li><a href="#mdescriptions">Monster Descriptions</a>
+   <li><a href="#mattacks">Monster Attacks</a>
+   <li><a href="#hitprob">Hit probability</a>
+   <li><a href="#damagecalc">Damage calculation</a>
+   <li><a href="#bashing">Bashing</a>
+   <li><a href="#accalc">AC calculation</a>
+</ul>
+
+<a name="mdescriptions"><h3>Monster Descriptions</h3></a> (Get ready!)
+
+<pre>
++------------------------------------------------------------------------------+
+| Breathe/Resist Fire--------------------------------------------------------+ |
+| Breathe/Resist Frost------------------------------------------------------+| |
+| Breathe/Resist Acid------------------------------------------------------+|| |
+| Breathe/Resist Gas------------------------------------------------------+||| |
+| Breathe/Resist Lightning-----------------------------------------------+|||| |
+| Drain Mana------------------------------------------------------------+||||| |
+| Slow Person----------------------------------------------------------+|||||| |
+| Summon Undead-------------------------------------------------------+||||||| |
+| Summon Monsters----------------------------------------------------+|||||||| |
+| Cause Fear--------------------------------------------------------+||||||||| |
+| Cause Confusion--------------------------------------------------+|||||||||| |
+| Cause Blindness-------------------------------------------------+||||||||||| |
+| Hold Person----------------------------------------------------+|||||||||||| |
+| Cause Serious Wounds------------------------------------------+||||||||||||| |
+| Cause Light Wounds-------------------------------------------+|||||||||||||| |
+| Teleport to monster-----------------------------------------+||||||||||||||| |
+| Teleport Long----------------------------------------------+|||||||||||||||| |
+| Teleport Short--------------------------------------------+||||||||||||||||| |
+| Casting amount (1 time in x)----------------------------+ |||||||||||||||||| |
++-------------------------------------------------------+ | |||||||||||||||||| |
+| Win-the-Game Creatures------------------------------+ | | |||||||||||||||||| |
+| 4d2 objects/gold-----------------------------------+| | | |||||||||||||||||| |
+| 2d2 objects/gold----------------------------------+|| | | |||||||||||||||||| |
+| 1d2 objects/gold---------------------------------+||| | | |||||||||||||||||| |
+| 90% time has treasure---------------------------+|||| | | |||||||||||||||||| |
+| 60% time has treasure--------------------------+||||| | | |||||||||||||||||| |
+| Carries gold----------------------------------+|||||| | | |||||||||||||||||| |
+| Carries objects------------------------------+||||||| | | |||||||||||||||||| |
+| Carries small objects-----------------------+|||||||| | | |||||||||||||||||| |
+| Multiply Monster---------------------------+||||||||| | | |||||||||||||||||| |
+| Pickup objects----------------------------+|||||||||| | | |||||||||||||||||| |
+| Move through creatures-------------------+||||||||||| | | |||||||||||||||||| |
+| Move through walls----------------------+|||||||||||| | | |||||||||||||||||| |
+| Move through door----------------------+||||||||||||| | | |||||||||||||||||| |
+| Invisible-----------------------------+|||||||||||||| | | |||||||||||||||||| |
+| 75% random movement------------------+||||||||||||||| | | |||||||||||||||||| |
+| 40% random movement-----------------+|||||||||||||||| | | |||||||||||||||||| |
+| 20% random movement----------------+||||||||||||||||| | | |||||||||||||||||| |
+| No physical movement--------------+|||||||||||||||||| | | |||||||||||||||||| |
+| Move and attack normal ----------+||||||||||||||||||| | | |||||||||||||||||| |
+| Move only to attack  -----------+|||||||||||||||||||| | | |||||||||||||||||| |
++-------------------------------+ ||||||||||||||||||||| | | |||||||||||||||||| |
+| Monster                |  Exp | vvvvvvvvvvvvvvvvvvvvv | v vvvvvvvvvvvvvvvvvv |
++------------------------------------------------------------------------------+
+|Filthy Street Urchin    |    0 |  x x   x  x           | 0                    |
+|Blubbering Idiot        |    0 |  x x   x  x           | 0                    |
+|Pitiful-Looking Beggar  |    0 |  x x   x  x           | 0                    |
+|Mangy-Looking Leper     |    0 |  x x   x  x           | 0                    |
+|Squint-Eyed Rogue       |    0 |  x     x  x  xxx      | 0                    |
+|Singing, Happy Drunk    |    0 |    xxx x  x   xx      | 0                    |
+|Mean-Looking Mercenary  |    0 |  x x   x  x  xx x     | 0                    |
+|Battle-Scarred Veteran  |    0 |  x x   x  x  xx x     | 0                    |
+|Grey Mushroom patch     |    1 | x                     | 0                    |
+|Giant Yellow Centipede  |    2 |  x                    | 0                    |
+|Giant White Centipede   |    2 |  x x                  | 0                    |
+|White Icky-Thing        |    2 |  x  x                 | 0                    |
+|Clear Icky-Thing        |    1 |  x  x x               | 0                    |
+|Giant White Mouse       |    1 |  x x       x          | 0                    |
+|Large Brown Snake       |    3 |  x x                  | 0                    |
+|Large White Snake       |    2 |  x  x                 | 0                    |
+|Kobold                  |    5 |  x     x    xxxx      | 0                    |
+|White Worm mass         |    2 |  x   x     x          | 0                    |
+|Floating Eye            |    1 | x                     |13             x      |
+|Shrieker Mushroom patch |    1 | x                     | 0                    |
+|Blubbering Icky-Thing   |    8 |  x  x    xx xxx x     | 0                    |
+|Metallic Green Centipede|    3 |  x  x                 | 0                    |
+|Novice Warrior          |    6 |  x     x     xxx      | 0                    |
+|Novice Rogue            |    6 |  x     x  x  xxx      | 0                    |
+|Novice Priest           |    7 |  x     x     xxx      |12    x    x          |
+|Novice Mage             |    7 |  x     x     xxx      |12 x  x   x           |
+|Yellow Mushroom patch   |    2 | x                     | 0                    |
+|White Jelly             |   10 | x                     | 0                    |
+|Giant Green Frog        |    6 |  x x                  | 0                    |
+|Giant Black Ant         |    8 |  x x                  | 0                    |
+|White Harpy             |    5 |  x  x                 | 0                    |
+|Blue Yeek               |    4 |  x     x     xxx      | 0                    |
+|Green Worm mass         |    3 |  x   x     x          | 0                    |
+|Large Black Snake       |    9 |  x x                  | 0                    |
+|Poltergeist             |    6 |  x xxxx x x xxxxx     |15 x                  |
+|Metallic Blue Centipede |    7 |  x  x                 | 0                    |
+|Giant White Louse       |    1 |  x   x     x          | 0                    |
+|Black Naga              |   20 |  x x      x  xxx      | 0                    |
+|Spotted Mushroom patch  |    3 | x                     | 0                    |
+|Yellow Jelly            |   12 | x                     |15             x      |
+|Scruffy-Looking Hobbit  |    4 |  x     x  x xxxx      | 0                    |
+|Huge Brown Bat          |    4 |  x   x                | 0                    |
+|Giant White Ant         |    7 |  x                    | 0                    |
+|Yellow Mold             |    9 | x                     | 0                    |
+|Metallic Red Centipede  |   12 |  x x                  | 0                    |
+|Yellow Worm mass        |    4 |  x   x     x          | 0                    |
+|Large Green Snake       |   10 |  x x                  | 0                    |
+|Radiation Eye           |    6 | x                     |11             x      |
+|Drooling Harpy          |    7 |  x  x                 | 0                    |
+|Silver Mouse            |    1 |  x x       x          | 0                    |
+|Black Mushroom patch    |    8 | x                     | 0                    |
+|Blue Jelly              |   14 | x                     | 0                 x  |
+|Creeping Copper Coins   |    9 |  x            x  x    | 0                    |
+|Giant White Rat         |    1 |  x x       x          | 0                    |
+|Giant Black Centipede   |   11 |  x x                  | 0                    |
+|Giant Blue Centipede    |   10 |  x                    | 0                    |
+|Blue Worm mass          |    5 |  x   x     x          | 0                 x  |
+|Large Grey Snake        |   14 |  x x                  | 0                    |
+|Jackal                  |    8 |  x  x                 | 0                    |
+|Green Naga              |   30 |  x x      x  xxx      | 0                x   |
+|Green Glutton Ghost     |   15 |  x  xxx x x xxxxx     |15 xx                 |
+|White Mushroom patch    |    5 | x                     | 0                    |
+|Green Jelly             |   18 | x                     | 0                x   |
+|Skeleton Kobold         |   12 |  x     x              | 0                    |
+|Silver Jelly            |   15 | x                     | 0                    |
+|Giant Black Frog        |   12 |  x x                  | 0                    |
+|Grey Icky-Thing         |   10 |  x  x                 | 0                    |
+|Disenchanter Eye        |   20 | x                     | 9             x      |
+|Black Yeek              |    8 |  x     x     xxx      | 0                    |
+|Red Worm mass           |    6 |  x   x     x          | 0                  x |
+|Giant House Fly         |   10 |  x   x                | 0                    |
+|Copperhead Snake        |   15 |  x  x                 | 0                    |
+|Rot Jelly               |   15 | x                     | 0                    |
+|Purple Mushroom patch   |   12 | x                     | 0                    |
+|Brown Mold              |   20 | x                     | 0                    |
+|Giant Brown Bat         |   10 |  x xx                 | 0                    |
+|Creeping Silver Coins   |   18 |  x            xx x    | 0                    |
+|Orc                     |   16 |  x     x     xx x     | 0                    |
+|Grey Harpy              |   14 |  x  x                 | 0                    |
+|Blue Icky-Thing         |   12 |  x  x                 | 0                 x  |
+|Rattlesnake             |   20 |  x  x                 | 0                    |
+|Bloodshot Eye           |   15 | x                     | 7             x      |
+|Red Naga                |   40 |  x x      x  xxx      | 0                    |
+|Red Jelly               |   26 | x                     | 0                    |
+|Giant Red Frog          |   16 |  x x                  | 0                    |
+|Green Icky-Thing        |   18 |  x  x                 | 0                    |
+|Zombie Kobold           |   14 |  x     x              | 0                    |
+|Lost Soul               |   18 |  x xx x x x xxxxx     |15  x          x      |
+|Greedy Little Gnome     |   13 |  x     x  x xxx x     | 0                    |
+|Giant Green Fly         |   15 |  x   x                | 0                    |
+|Brown Yeek              |   11 |  x     x     xxx      | 0                    |
+|Green Mold              |   28 | x                     | 0                    |
+|Skeleton Orc            |   26 |  x     x              | 0                    |
+|Seedy Looking Human     |   22 |  x     x     xx  x    | 0                    |
+|Red Icky-Thing          |   22 |  x  x                 | 0                x   |
+|Bandit                  |   26 |  x     x  x  xx  x    | 0                    |
+|Yeti                    |   30 |  x     x              | 0                 x  |
+|Bloodshot Icky-Thing    |   24 |  x  x                 |11             x      |
+|Giant Grey Rat          |    2 |  x x       x          | 0                    |
+|Black Harpy             |   19 |  x x                  | 0                    |
+|Giant Black Bat         |   16 |  x  x                 | 0                    |
+|Clear Yeek              |   14 |  x    xx     xxx      | 0                    |
+|Orc Shaman              |   30 |  x     x     xx x     | 5    x       x       |
+|Giant Red Ant           |   22 |  x                    | 0                    |
+|King Cobra              |   28 |  x  x                 | 0                    |
+|Clear Mushroom patch    |    1 | x     x    x          | 0                    |
+|Giant White Tick        |   27 |  x x                  | 0                    |
+|Hairy Mold              |   32 | x                     | 0                    |
+|Disenchanter Mold       |   40 | x                     |11             x      |
+|Giant Red Centipede     |   24 |  x                    | 0                    |
+|Creeping Gold Coins     |   32 |  x            x xx    | 0                    |
+|Giant Fruit Fly         |    4 |  x   x     x          | 0                    |
+|Brigand                 |   35 |  x     x  x  xx  x    | 0                    |
+|Orc Zombie              |   30 |  x     x              | 0                    |
+|Orc Warrior             |   34 |  x     x     xx x     | 0                    |
+|Vorpal Bunny            |    2 |  x x       x          | 0                    |
+|Nasty Little Gnome      |   32 |  x     x    xxx  x    | 5 xx x     x         |
+|Hobgoblin               |   38 |  x     x     xxxx     | 0                    |
+|Black Mamba             |   40 |  x  x                 | 0                    |
+|Grape Jelly             |   60 | x                     |11             x      |
+|Master Yeek             |   28 |  x     x     xxx      | 8 x          x       |
+|Priest                  |   36 |  x     x     xx  x    | 5    x x             |
+|Giant Clear Ant         |   24 |  x    x               | 0                    |
+|Air Spirit              |   40 |  x   xxx              | 0                    |
+|Skeleton Human          |   38 |  x     x              | 0                    |
+|Human Zombie            |   34 |  x     x              | 0                    |
+|Moaning Spirit          |   44 |  x x  x x x  xxxx     |15  x          x      |
+|Swordsman               |   40 |  x     x     xx  x    | 0                    |
+|Killer Brown Beetle     |   38 |  x x                  | 0                    |
+|Ogre                    |   42 |  x     x     xxx      | 0                    |
+|Giant Red Speckled Frog |   32 |  x x                  | 0                    |
+|Magic User              |   35 |  x     x     xx  x    | 3 x     x  x         |
+|Black Orc               |   40 |  x     x     xx x     | 0                    |
+|Giant Long-Eared Bat    |   20 |  x  x                 | 0                    |
+|Giant Gnat              |    1 |  x   x     x          | 0                    |
+|Killer Green Beetle     |   46 |  x x                  | 0                    |
+|Giant Flea              |    1 |  x   x     x          | 0                    |
+|Giant White Dragon Fly  |   54 |  x  x                 |10                 x  |
+|Hill Giant              |   52 |  x     x     xxx      | 0                    |
+|Skeleton Hobgoblin      |   46 |  x     x              | 0                    |
+|Flesh Golem             |   48 |  x                    | 0                    |
+|White Dragon Bat        |   40 |  x  x                 | 4                 x  |
+|Giant Black Louse       |    1 |  x  x      x          | 0                    |
+|Guardian Naga           |   60 |  x x      x  xxx x    | 0                    |
+|Giant Grey Bat          |   22 |  x  x                 | 0                    |
+|Giant Clear Centipede   |   30 |  x    x               | 0                    |
+|Giant Yellow Tick       |   48 |  x x                  | 0                    |
+|Giant Ebony Ant         |    3 |  x         x          | 0                    |
+|Frost Giant             |   54 |  x     x     xxx      | 0                 x  |
+|Clay Golem              |   50 |  x                    | 0                    |
+|Huge White Bat          |    3 |  x  x      x          | 0                    |
+|Giant Tan Bat           |   18 |  x  x                 | 0                    |
+|Violet Mold             |   50 | x                     | 9             x      |
+|Umber Hulk              |   75 |  x     x              | 0                    |
+|Gelatinous Cube         |   36 |  x x     xx xxxxx x   | 0                x   |
+|Giant Black Rat         |    3 |  x x       x          | 0                    |
+|Giant Green Dragon Fly  |   58 |  x  x                 |10               x    |
+|Fire Giant              |   62 |  x     x     xxx      | 0                  x |
+|Green Dragon Bat        |   44 |  x  x                 | 4               x    |
+|Quasit                  |   48 |  x x  xx    xx   x    |10 xxxx    x          |
+|Troll                   |   64 |  x     x     xxxx     | 0                    |
+|Water Spirit            |   58 |  x x                  | 0                    |
+|Giant Brown Scorpion    |   62 |  x x                  | 0                    |
+|Earth Spirit            |   64 |  x x   xx x           | 0                    |
+|Fire Spirit             |   66 |  x x                  | 0                  x |
+|Uruk-Hai Orc            |   68 |  x     x     xx x     | 0                    |
+|Stone Giant             |   80 |  x     x     xxx      | 0                    |
+|Stone Golem             |  100 |  x                    | 0                    |
+|Grey Ooze               |   40 |  x   x   xx xxxx      | 0                 x  |
+|Disenchanter Ooze       |   50 |  x   x   xx xxxx      | 0                    |
+|Giant Spotted Rat       |    3 |  x x       x          | 0                    |
+|Mummified Kobold        |   46 |  x     x    xxx x     | 0                    |
+|Killer Black Beetle     |   75 |  x x                  | 0                    |
+|Red Mold                |   64 | x                     | 0                  x |
+|Quylthulg               |  200 |   x   x               | 7 x        x         |
+|Giant Red Bat           |   40 |  x  x                 | 0                    |
+|Giant Black Dragon Fly  |   58 |  x  x                 | 9                x   |
+|Cloud Giant             |  125 |  x     x     xxx      | 0              x     |
+|Black Dragon Bat        |   50 |  x  x                 | 4                x   |
+|Blue Dragon Bat         |   54 |  x  x                 | 4              x     |
+|Mummified Orc           |   56 |  x     x     xx x     | 0                    |
+|Killer Boring Beetle    |   70 |  x x                  | 0                    |
+|Killer Stag Beetle      |   80 |  x x                  | 0                    |
+|Black Mold              |   68 | x                     | 0                    |
+|Iron Golem              |  160 |  x                    | 0                    |
+|Giant Yellow Scorpion   |   60 |  x x                  | 0                    |
+|Green Ooze              |    6 |  x  x  x xxxxxxx      | 0                x   |
+|Black Ooze              |    7 |  x  x  x xxxxxxx      |11             x      |
+|Warrior                 |   60 |  x     x     xx  x    | 0                    |
+|Red Dragon Bat          |   60 |  x  x                 | 4                  x |
+|Killer Blue Beetle      |   85 |  x x                  | 0                    |
+|Giant Silver Ant        |   45 |  x x                  | 0                x   |
+|Crimson Mold            |   65 | x                     | 0                    |
+|Forest Wight            |  140 |  x x   x     xxxx     |15         x          |
+|Berzerker               |   65 |  x     x     xx  x    | 0                    |
+|Mummified Human         |   70 |  x     x     xx x     | 0                    |
+|Banshee                 |   60 |  x xx x x x  xxxx     |15  x          x      |
+|Giant Troll             |   85 |  x     x     xxxx     | 0                    |
+|Giant Brown Tick        |   70 |  x x                  | 0                    |
+|Killer Red Beetle       |   85 |  x x                  | 0                    |
+|Wooden Mold             |  100 | x                     | 0                    |
+|Giant Blue Dragon Fly   |   75 |  x  x                 | 9              x     |
+|Giant Grey Ant Lion     |   90 |  x x     x            | 0                    |
+|Disenchanter Bat        |   75 |  x  x                 | 0                    |
+|Giant Fire Tick         |   90 |  x x                  | 0                  x |
+|White Wraith            |  165 |  x x   x     xxxx     |12         x          |
+|Giant Black Scorpion    |   85 |  x x                  | 0                    |
+|Clear Ooze              |   12 |  x x  x  xx xxxx      | 0                    |
+|Killer Fire Beetle      |   95 |  x x                  | 0                  x |
+|Vampire                 |  175 |  x     x     xxx x    | 9      x  x          |
+|Giant Red Dragon Fly    |   75 |  x  x                 | 8                  x |
+|Shimmering Mold         |  180 | x                     | 0              x     |
+|Black Knight            |  140 |  x     x     xx  x    |15     x              |
+|Mage                    |  150 |  x     x     xx  x    | 3 xxx   xx x         |
+|Ice Troll               |  160 |  x     x     xxxx     | 0                 x  |
+|Giant Purple Worm       |  400 |  x x                  | 0                x   |
+|Young Blue Dragon       |  300 |  x x         xxxxx    |11         x    x     |
+|Young White Dragon      |  275 |  x x         xxxxx    |11         x       x  |
+|Young Green Dragon      |  290 |  x x         xxxxx    |11         x     x    |
+|Giant Fire Bat          |   85 |  x  x                 | 0                  x |
+|Giant Glowing Rat       |    4 |  x x       x          | 0              x     |
+|Skeleton Troll          |  225 |  x     x              | 0                    |
+|Giant Lightning Bat     |   80 |  x  x                 | 0              x     |
+|Giant Static Ant        |   80 |  x x                  | 0              x     |
+|Grave Wight             |  325 |  x x   x     xxxx     |10     x   x          |
+|Killer Slicer Beetle    |  200 |  x x                  | 0                    |
+|Giant White Ant Lion    |  175 |  x x     x            | 0                 x  |
+|Ghost                   |  350 |  x x  x x x  xxx x    |15  x          x      |
+|Giant Black Ant Lion    |  170 |  x x     x            | 0                x   |
+|Death Watch Beetle      |  190 |  x x                  | 0                    |
+|Ogre Mage               |  250 |  x     x     xx x     | 5 x x xx   x x       |
+|Two-Headed Troll        |  275 |  x     x     xxxx     | 0                    |
+|Invisible Stalker       |  200 |  x   xxx              | 0                    |
+|Giant Hunter Ant        |  150 |  x                    | 0                    |
+|Ninja                   |  300 |  x     x     xx  x    | 0                    |
+|Barrow Wight            |  375 |  x x   x     xxxx     | 8     xx  x          |
+|Skeleton 2-Headed Troll |  325 |  x     x              | 0                    |
+|Water Elemental         |  325 |  x x     x            | 0                    |
+|Fire Elemental          |  350 |  x x     x            | 0                  x |
+|Lich                    |  750 |  x     x     xxxxx    | 5 xxx xxxxx  xx      |
+|Master Vampire          |  700 |  x     x     xxx x    | 7     xx  x          |
+|Spirit Troll            |  425 |  x    x x x  xxx x    | 0                    |
+|Giant Red Scorpion      |  275 |  x x                  | 0                    |
+|Earth Elemental         |  375 |  x x   xxxx           | 0                    |
+|Young Black Dragon      |  600 |  x x         xxxxx    |11         x      x   |
+|Young Red Dragon        |  650 |  x x         xxxxx    |10         x        x |
+|Necromancer             |  600 |  x     x     xx  x    | 3  xx xxx x x        |
+|Mummified Troll         |  400 |  x     x     xxxx     | 0                    |
+|Giant Red Ant Lion      |  350 |  x x     x            | 0                  x |
+|Mature White Dragon     | 1000 |  x x         xxxx x   |10         x       x  |
+|Xorn                    |  650 |  x     xx x           | 0                    |
+|Giant Mottled Ant Lion  |  350 |  x x     x            | 0                    |
+|Grey Wraith             |  700 |  x x   x     xxxx     | 8     xx  x          |
+|Young Multi-Hued Dragon | 1250 |  x x         xxxx  x  | 5         x    xxxxx |
+|Mature Blue Dragon      | 1200 |  x x         xxxx x   | 9         x    x     |
+|Mature Green Dragon     | 1100 |  x x         xxxx x   |10         x     x    |
+|Iridescent Beetle       |  850 |  x x                  | 0                    |
+|King Vampire            | 1000 |  x     x     xxx x    | 7     xx  x          |
+|King Lich               | 1400 |  x     x     xxxxx    | 3 xxx xxxxx  xx      |
+|Mature Red Dragon       | 1400 |  x x         xxxx x   | 8        xx        x |
+|Mature Black Dragon     | 1350 |  x x         xxxx x   | 9         x      x   |
+|Mature Multi-Hued Dragon| 1650 |  x x         xxxx xx  | 5      x xx    xxxxx |
+|Ancient White Dragon    | 1500 |  x           xxxx  x  | 9      x xx       x  |
+|Emperor Wight           | 1600 |  x x   x     xx xx    | 6     xx  x          |
+|Black Wraith            | 1700 |  x x   x     xxxxx    | 7     xx  x          |
+|Nether Wraith           | 2100 |  x x  xxx    xxxxx    | 6 x   xx  x x        |
+|Sorcerer                | 2150 |  x     x     xxxxx    | 3 xxx xxxxxxxx       |
+|Ancient Blue Dragon     | 2500 |  x           xxxx  x  | 8      x xx    x     |
+|Ancient Green Dragon    | 2400 |  x           xxxx  x  | 9      x xx     x    |
+|Ancient Black Dragon    | 2500 |  x           xxxx  x  | 7      x xx      x   |
+|Crystal Ooze            |    8 |  x x  xx xxxxxxx      | 0                 x  |
+|Disenchanter Worm       |   30 |  x   x     x          | 0                    |
+|Rotting Quylthulg       | 1000 |   x   x               | 4 x         x        |
+|Ancient Red Dragon      | 2750 |  x           xxxx xx  | 6      xxxx        x |
+|Death Quasit            | 1000 |  x x  xx     x   x    |10 xxxx    x          |
+|Emperor Lich            |10000 |  x     x     xxxx x   | 2 xxx xxxxx  xx      |
+|Ancient MultiHued Dragon|12000 |  x           xxxxxxx  | 5      xxxx  x xxxxx |
+|Evil Iggy               |18000 |  x    xx  x  xxxxxxx  | 3 x   xxx x xxx      |
+|Balrog                  |55000 |  x    xxxxx  xxxxxxxx | 3   x xxx   xxx    x |
++-----------------------------------------------------------------------------+
+
++-----------------------------------------------------------------------------+
+| Monster                 | Spd |                  Attacks                    |
++-----------------------------------------------------------------------------+
+| Filthy Street Urchin    |  1  | ATCK  0d 0 STL$  0d 0                       |
+| Blubbering Idiot        |  1  | ATCK  0d 0                                  |
+| Pitiful-Looking Beggar  |  1  | ATCK  0d 0                                  |
+| Mangy-Looking Leper     |  1  | ATCK  0d 0                                  |
+| Squint-Eyed Rogue       |  1  | ATCK  1d 6 STLO  0d 0                       |
+| Singing, Happy Drunk    |  1  | ATCK  0d 0                                  |
+| Mean-Looking Mercenary  |  1  | ATCK  1d10                                  |
+| Battle-Scarred Veteran  |  1  | ATCK  2d 6                                  |
+| Grey Mushroom patch     |  1  | CONF  1d 4                                  |
+| Giant Yellow Centipede  |  1  | ATCK  1d 3 ATCK  1d 3                       |
+| Giant White Centipede   |  1  | ATCK  1d 2 ATCK  1d 2                       |
+| White Icky-Thing        |  1  | ATCK  1d 2                                  |
+| Clear Icky-Thing        |  1  | ATCK  1d 2                                  |
+| Giant White Mouse       |  1  | ATCK  1d 2                                  |
+| Large Brown Snake       |  0  | ATCK  1d 3 ATCK  1d 4                       |
+| Large White Snake       |  1  | ATCK  1d 1                                  |
+| Kobold                  |  1  | ATCK  1d 6                                  |
+| White Worm mass         |  0  | POIS  1d 2                                  |
+| Floating Eye            |  1  | PARA  0d 0                                  |
+| Shrieker Mushroom patch |  1  | AGGR  0d 0                                  |
+| Blubbering Icky-Thing   |  1  | POIS  1d 4 FOD-  0d 0                       |
+| Metallic Green Centipede|  2  | ATCK  1d 1                                  |
+| Novice Warrior          |  1  | ATCK  1d 7                                  |
+| Novice Rogue            |  1  | ATCK  1d 6 STL$  0d 0                       |
+| Novice Priest           |  1  | ATCK  1d 5                                  |
+| Novice Mage             |  1  | ATCK  1d 4                                  |
+| Yellow Mushroom patch   |  1  | FEAR  1d 6                                  |
+| White Jelly             |  2  | POIS  1d 2                                  |
+| Giant Green Frog        |  1  | ATCK  1d 3                                  |
+| Giant Black Ant         |  1  | ATCK  1d 4                                  |
+| White Harpy             |  1  | ATCK  1d 1 ATCK  1d 1 ATCK  1d 2            |
+| Blue Yeek               |  1  | ATCK  1d 5                                  |
+| Green Worm mass         |  0  | CORR  1d 3                                  |
+| Large Black Snake       |  0  | ATCK  1d 4 ATCK  1d 6                       |
+| Poltergeist             |  3  | FEAR  1d 1                                  |
+| Metallic Blue Centipede |  2  | ATCK  1d 2                                  |
+| Giant White Louse       |  2  | ATCK  1d 1                                  |
+| Black Naga              |  1  | ATCK  1d 8                                  |
+| Spotted Mushroom patch  |  1  | POIS  2d 4                                  |
+| Yellow Jelly            |  2  | POIS  1d 3                                  |
+| Scruffy-Looking Hobbit  |  1  | ATCK  1d 4 STL$  0d 0                       |
+| Huge Brown Bat          |  3  | ATCK  1d 2                                  |
+| Giant White Ant         |  1  | ATCK  1d 4                                  |
+| Yellow Mold             |  1  | ATCK  1d 4                                  |
+| Metallic Red Centipede  |  2  | ATCK  1d 2                                  |
+| Yellow Worm mass        |  0  | DEX-  1d 3                                  |
+| Large Green Snake       |  0  | ATCK  1d 4 ATCK  1d 6                       |
+| Radiation Eye           |  1  | STR-  1d 6                                  |
+| Drooling Harpy          |  1  | ATCK  1d 1 ATCK  1d 1 ATCK  1d 2 ATCK  0d 0 |
+| Silver Mouse            |  1  | LIT-  1d 1                                  |
+| Black Mushroom patch    |  1  | ATCK  1d 3                                  |
+| Blue Jelly              |  1  | COLD  1d 6                                  |
+| Creeping Copper Coins   |  0  | ATCK  1d 4 POIS  2d 4                       |
+| Giant White Rat         |  1  | POIS  1d 3                                  |
+| Giant Black Centipede   |  1  | ATCK  1d 2 ATCK  1d 2                       |
+| Giant Blue Centipede    |  1  | ATCK  1d 3 ATCK  1d 4                       |
+| Blue Worm mass          |  0  | COLD  1d 4                                  |
+| Large Grey Snake        |  0  | ATCK  1d 5 ATCK  1d 8                       |
+| Jackal                  |  1  | ATCK  1d 6                                  |
+| Green Naga              |  1  | ATCK  1d 8 ACID  2d 6                       |
+| Green Glutton Ghost     |  3  | FOD-  1d 1                                  |
+| White Mushroom patch    |  1  | PARA  2d 4                                  |
+| Green Jelly             |  2  | CORR  1d 2                                  |
+| Skeleton Kobold         |  1  | ATCK  1d 6                                  |
+| Silver Jelly            |  1  | LIT-  1d 3                                  |
+| Giant Black Frog        |  1  | ATCK  1d 6                                  |
+| Grey Icky-Thing         |  1  | ATCK  1d 5                                  |
+| Disenchanter Eye        |  0  | DENC  0d 0                                  |
+| Black Yeek              |  1  | ATCK  1d 5                                  |
+| Red Worm mass           |  0  | FIRE  1d 6                                  |
+| Giant House Fly         |  3  | ATCK  1d 2                                  |
+| Copperhead Snake        |  1  | POIS  2d 4                                  |
+| Rot Jelly               |  1  | FOD-  2d 3                                  |
+| Purple Mushroom patch   |  2  | CON-  1d 2                                  |
+| Brown Mold              |  1  | CONF  1d 4                                  |
+| Giant Brown Bat         |  3  | ATCK  1d 3                                  |
+| Creeping Silver Coins   |  0  | ATCK  1d 6 POIS  2d 6                       |
+| Orc                     |  1  | ATCK  1d 8                                  |
+| Grey Harpy              |  2  | ATCK  1d 2 ATCK  1d 2 ATCK  1d 2            |
+| Blue Icky-Thing         |  1  | COLD  2d 3                                  |
+| Rattlesnake             |  1  | POIS  2d 5                                  |
+| Bloodshot Eye           |  1  | BLND  2d 6                                  |
+| Red Naga                |  1  | ATCK  1d10 STR-  1d 4                       |
+| Red Jelly               |  1  | STR-  1d 5                                  |
+| Giant Red Frog          |  1  | STR-  2d 4                                  |
+| Green Icky-Thing        |  1  | CORR  2d 5                                  |
+| Zombie Kobold           |  1  | ATCK  1d 2 ATCK  1d 2                       |
+| Lost Soul               |  1  | ATCK  2d 2 WIS-  0d 0                       |
+| Greedy Little Gnome     |  1  | ATCK  1d 7 STLO  0d 0                       |
+| Giant Green Fly         |  2  | ATCK  1d 4                                  |
+| Brown Yeek              |  1  | ATCK  1d 6                                  |
+| Green Mold              |  1  | FEAR  1d 4                                  |
+| Skeleton Orc            |  1  | ATCK  2d 5                                  |
+| Seedy Looking Human     |  1  | ATCK  3d 4                                  |
+| Red Icky-Thing          |  2  | ATCK  1d 3 ACID  1d 5                       |
+| Bandit                  |  1  | ATCK  2d 4 STL$  0d 0                       |
+| Yeti                    |  1  | ATCK  1d 3 ATCK  1d 3 ATCK  1d 4            |
+| Bloodshot Icky-Thing    |  1  | ATCK  1d 4 CORR  2d 4                       |
+| Giant Grey Rat          |  1  | POIS  1d 4                                  |
+| Black Harpy             |  2  | ATCK  1d 2 ATCK  1d 2 ATCK  1d 3            |
+| Giant Black Bat         |  3  | ATCK  1d 6                                  |
+| Clear Yeek              |  1  | ATCK  1d 5                                  |
+| Orc Shaman              |  1  | ATCK  1d 6                                  |
+| Giant Red Ant           |  1  | ATCK  1d 4 STR-  1d 4                       |
+| King Cobra              |  1  | BLND  1d 2 POIS  3d 4                       |
+| Clear Mushroom patch    |  2  | ATCK  1d 1                                  |
+| Giant White Tick        |  0  | POIS  2d 6                                  |
+| Hairy Mold              |  1  | POIS  1d 3                                  |
+| Disenchanter Mold       |  1  | DENC  1d 6                                  |
+| Giant Red Centipede     |  2  | ATCK  1d 2 POIS  1d 2                       |
+| Creeping Gold Coins     |  0  | ATCK  2d 5 POIS  3d 5                       |
+| Giant Fruit Fly         |  2  | ATCK  1d 2                                  |
+| Brigand                 |  1  | ATCK  2d 4 STLO  0d 0                       |
+| Orc Zombie              |  1  | ATCK  1d 4 ATCK  1d 4                       |
+| Orc Warrior             |  1  | ATCK  2d 6                                  |
+| Vorpal Bunny            |  2  | ATCK  1d 5                                  |
+| Nasty Little Gnome      |  1  | ATCK  1d 5                                  |
+| Hobgoblin               |  1  | ATCK  1d10                                  |
+| Black Mamba             |  2  | POIS  4d 4                                  |
+| Grape Jelly             |  1  | EXP-  5d 8                                  |
+| Master Yeek             |  1  | ATCK  1d 8                                  |
+| Priest                  |  1  | ATCK  2d 3                                  |
+| Giant Clear Ant         |  1  | ATCK  1d 4                                  |
+| Air Spirit              |  3  | ATCK  1d 3                                  |
+| Skeleton Human          |  1  | ATCK  1d 8                                  |
+| Human Zombie            |  1  | ATCK  1d 4 ATCK  1d 4                       |
+| Moaning Spirit          |  1  | FEAR  0d 0 DEX-  1d 8                       |
+| Swordsman               |  1  | ATCK  3d 5                                  |
+| Killer Brown Beetle     |  1  | ATCK  3d 4                                  |
+| Ogre                    |  1  | ATCK  2d 8                                  |
+| Giant Red Speckled Frog |  1  | ATCK  3d 4                                  |
+| Magic User              |  1  | ATCK  2d 2                                  |
+| Black Orc               |  1  | ATCK  3d 4                                  |
+| Giant Long-Eared Bat    |  3  | ATCK  1d 4 ATCK  1d 2 ATCK  1d 2            |
+| Giant Gnat              |  3  | ATCK  1d 1                                  |
+| Killer Green Beetle     |  1  | ATCK  4d 4                                  |
+| Giant Flea              |  2  | ATCK  1d 2                                  |
+| Giant White Dragon Fly  |  1  | COLD  1d 6                                  |
+| Hill Giant              |  1  | ATCK  3d 6                                  |
+| Skeleton Hobgoblin      |  1  | ATCK  2d 5                                  |
+| Flesh Golem             |  1  | ATCK  1d 6 ATCK  1d 6                       |
+| White Dragon Bat        |  3  | COLD  1d 3                                  |
+| Giant Black Louse       |  2  | ATCK  1d 2                                  |
+| Guardian Naga           |  1  | ATCK  2d 8 ATCK  1d 8                       |
+| Giant Grey Bat          |  3  | ATCK  1d 6 ATCK  1d 2 ATCK  1d 2            |
+| Giant Clear Centipede   |  1  | ATCK  2d 4 ATCK  2d 4                       |
+| Giant Yellow Tick       |  0  | POIS  3d 9                                  |
+| Giant Ebony Ant         |  1  | ATCK  2d 3                                  |
+| Frost Giant             |  1  | COLD  3d 6                                  |
+| Clay Golem              |  1  | ATCK  1d 8 ATCK  1d 8                       |
+| Huge White Bat          |  2  | ATCK  1d 6                                  |
+| Giant Tan Bat           |  2  | FEAR  1d 2 ATCK  1d 1 ATCK  1d 1            |
+| Violet Mold             |  1  | PARA  1d 2                                  |
+| Umber Hulk              |  1  | CONF  0d 0 ATCK  1d 6 ATCK  1d 6 ATCK  2d 6 |
+| Gelatinous Cube         |  0  | ACID  1d10                                  |
+| Giant Black Rat         |  1  | POIS  1d 5                                  |
+| Giant Green Dragon Fly  |  1  | POIS  1d 6                                  |
+| Fire Giant              |  1  | FIRE  3d 7                                  |
+| Green Dragon Bat        |  3  | POIS  1d 3                                  |
+| Quasit                  |  1  | DEX-  1d 6 ATCK  1d 3 ATCK  1d 3            |
+| Troll                   |  1  | ATCK  1d 4 ATCK  1d 4 ATCK  1d 6            |
+| Water Spirit            |  2  | ATCK  2d 4                                  |
+| Giant Brown Scorpion    |  1  | ATCK  2d 4 STR-  1d 7                       |
+| Earth Spirit            |  1  | ATCK  1d 8 ATCK  1d 8                       |
+| Fire Spirit             |  2  | FIRE  2d 6                                  |
+| Uruk-Hai Orc            |  1  | ATCK  3d 5                                  |
+| Stone Giant             |  1  | ATCK  3d 8                                  |
+| Stone Golem             |  0  | ATCK  1d10 ATCK  1d10                       |
+| Grey Ooze               |  1  | COLD  2d 6                                  |
+| Disenchanter Ooze       |  1  | DENC  0d 0                                  |
+| Giant Spotted Rat       |  1  | POIS  1d 5                                  |
+| Mummified Kobold        |  1  | ATCK  1d 6 ATCK  1d 6                       |
+| Killer Black Beetle     |  1  | ATCK  4d 5                                  |
+| Red Mold                |  1  | FIRE  4d 4                                  |
+| Quylthulg               |  1  |                                             |
+| Giant Red Bat           |  2  | ATCK  1d 7 ATCK  1d 3 ATCK  1d 3            |
+| Giant Black Dragon Fly  |  1  | BLND  1d 6                                  |
+| Cloud Giant             |  1  | LIGT  3d 8                                  |
+| Black Dragon Bat        |  3  | ACID  1d 3                                  |
+| Blue Dragon Bat         |  3  | LIGT  1d 3                                  |
+| Mummified Orc           |  1  | ATCK  2d 4 ATCK  2d 4                       |
+| Killer Boring Beetle    |  1  | ATCK  4d 5                                  |
+| Killer Stag Beetle      |  1  | ATCK  3d 4 ATCK  1d12                       |
+| Black Mold              |  1  | ATCK  4d 3                                  |
+| Iron Golem              | -1  | ATCK  1d12 ATCK  1d12                       |
+| Giant Yellow Scorpion   |  1  | ATCK  1d 8 POIS  2d 5                       |
+| Green Ooze              |  0  | ACID  2d 3                                  |
+| Black Ooze              | -1  | CORR  2d 6                                  |
+| Warrior                 |  1  | ATCK  3d 5                                  |
+| Red Dragon Bat          |  3  | FIRE  1d 3                                  |
+| Killer Blue Beetle      |  1  | ATCK  4d 5                                  |
+| Giant Silver Ant        |  1  | ACID  4d 4                                  |
+| Crimson Mold            |  1  | ATCK  1d 3 FEAR  0d 0                       |
+| Forest Wight            |  1  | ATCK  1d 6 ATCK  1d 6 EXP- 12d 8            |
+| Berzerker               |  1  | ATCK  1d 8 ATCK  1d 8                       |
+| Mummified Human         |  1  | ATCK  2d 4 ATCK  2d 4                       |
+| Banshee                 |  2  | FEAR  0d 0 EXP- 14d 8                       |
+| Giant Troll             |  1  | ATCK  1d 6 ATCK  1d 6 ATCK  3d 4            |
+| Giant Brown Tick        |  0  | POIS  1d10 BLND  1d 1                       |
+| Killer Red Beetle       |  1  | STR-  4d 4                                  |
+| Wooden Mold             |  1  | POIS  2d 6                                  |
+| Giant Blue Dragon Fly   |  1  | ATCK  1d 6                                  |
+| Giant Grey Ant Lion     |  1  | ATCK  2d12                                  |
+| Disenchanter Bat        |  3  | DENC  0d 0                                  |
+| Giant Fire Tick         |  1  | FIRE  3d 7                                  |
+| White Wraith            |  1  | ATCK  1d 6 ATCK  1d 6 EXP- 15d 8            |
+| Giant Black Scorpion    |  1  | ATCK  1d10 POIS  2d 5                       |
+| Clear Ooze              |  1  | CONF  1d 8                                  |
+| Killer Fire Beetle      |  1  | ATCK  3d 4 FIRE  4d 5                       |
+| Vampire                 |  1  | ATCK  1d 6 ATCK  1d 6 EXP- 18d 8            |
+| Giant Red Dragon Fly    |  1  | FEAR  1d 6                                  |
+| Shimmering Mold         |  1  | LIGT  5d 4                                  |
+| Black Knight            |  1  | ATCK  5d 5                                  |
+| Mage                    |  1  | ATCK  2d 5                                  |
+| Ice Troll               |  1  | ATCK  1d 5 ATCK  1d 5 COLD  3d 6            |
+| Giant Purple Worm       |  1  | ATCK  1d 8 ACID  2d 8 POIS  1d 8            |
+| Young Blue Dragon       |  1  | ATCK  1d 4 ATCK  1d 4 ATCK  1d 6            |
+| Young White Dragon      |  1  | ATCK  1d 4 ATCK  1d 4 ATCK  1d 6            |
+| Young Green Dragon      |  1  | ATCK  1d 4 ATCK  1d 4 ATCK  1d 6            |
+| Giant Fire Bat          |  2  | FIRE  3d 6 ATCK  1d 4 ATCK  1d 4            |
+| Giant Glowing Rat       |  1  | LIGT  2d 6                                  |
+| Skeleton Troll          |  1  | ATCK  1d 6 ATCK  1d 6 ATCK  3d 4            |
+| Giant Lightning Bat     |  2  | LIGT  3d 8 ATCK  1d 5 ATCK  1d 5            |
+| Giant Static Ant        |  1  | LIGT  5d 5                                  |
+| Grave Wight             |  1  | ATCK  1d 7 ATCK  1d 7 EXP- 20d 8            |
+| Killer Slicer Beetle    |  1  | ATCK  5d 8                                  |
+| Giant White Ant Lion    |  1  | COLD  3d10                                  |
+| Ghost                   |  2  | FEAR  0d 0 EXP- 22d 8 INT-  1d10            |
+| Giant Black Ant Lion    |  1  | ATCK  2d12 ACID  3d 6                       |
+| Death Watch Beetle      |  1  | ATCK  5d 4 ATCK  5d 6                       |
+| Ogre Mage               |  1  | ATCK  3d 6                                  |
+| Two-Headed Troll        |  1  | ATCK  1d 8 ATCK  1d 8 ATCK  1d 6 ATCK  1d 6 |
+| Invisible Stalker       |  3  | ATCK  1d 6                                  |
+| Giant Hunter Ant        |  1  | ATCK  4d 8                                  |
+| Ninja                   |  1  | POIS  3d 4 STR-  3d 4                       |
+| Barrow Wight            |  1  | ATCK  1d 8 ATCK  1d 8 EXP- 26d 8            |
+| Skeleton 2-Headed Troll |  1  | ATCK  1d 9 ATCK  1d 9 ATCK  1d 5 ATCK  1d 5 |
+| Water Elemental         |  1  | ATCK  1d10 ATCK  1d10                       |
+| Fire Elemental          |  0  | FIRE  4d 6                                  |
+| Lich                    |  1  | DEX-  2d 8 EXP- 30d 8 CHG-  0d 0            |
+| Master Vampire          |  1  | ATCK  1d 6 ATCK  1d 6 EXP- 32d 8            |
+| Spirit Troll            |  1  | ATCK  1d 5 ATCK  1d 5 ATCK  1d 6 WIS-  0d 0 |
+| Giant Red Scorpion      |  2  | ATCK  1d 6 POIS  1d 4                       |
+| Earth Elemental         |  0  | ATCK  4d 6 ATCK  4d 6                       |
+| Young Black Dragon      |  1  | ATCK  1d 5 ATCK  1d 5 ATCK  1d 6            |
+| Young Red Dragon        |  1  | ATCK  1d 8 ATCK  1d 8 ATCK  2d 8            |
+| Necromancer             |  1  | ATCK  2d 6                                  |
+| Mummified Troll         |  1  | ATCK  2d 6 ATCK  2d 6                       |
+| Giant Red Ant Lion      |  1  | FIRE  3d12                                  |
+| Mature White Dragon     |  1  | ATCK  1d 8 ATCK  1d 8 ATCK  2d 8            |
+| Xorn                    |  1  | ATCK  1d 6 ATCK  1d 6 ATCK  1d 6            |
+| Giant Mottled Ant Lion  |  2  | ATCK  2d10                                  |
+| Grey Wraith             |  1  | ATCK  1d10 ATCK  1d10 EXP- 34d 8            |
+| Young Multi-Hued Dragon |  1  | ATCK  1d 9 ATCK  1d 9 ATCK  2d10            |
+| Mature Blue Dragon      |  1  | ATCK  1d 8 ATCK  1d 8 ATCK  2d10            |
+| Mature Green Dragon     |  1  | ATCK  1d 4 ATCK  1d 4 ATCK  1d 6            |
+| Iridescent Beetle       |  1  | ATCK  4d 6 ATCK  1d12 PARA  0d 0            |
+| King Vampire            |  1  | ATCK  1d 6 ATCK  1d 6 EXP- 38d 8            |
+| King Lich               |  1  | DEX-  2d10 EXP- 36d 8 CHG-  0d 0            |
+| Mature Red Dragon       |  1  | ATCK  1d10 ATCK  1d10 ATCK  2d12            |
+| Mature Black Dragon     |  1  | ATCK  1d 8 ATCK  1d 8 ATCK  2d10            |
+| Mature Multi-Hued Dragon|  1  | ATCK  1d10 ATCK  1d10 ATCK  2d12            |
+| Ancient White Dragon    |  2  | ATCK  1d 8 ATCK  1d 8 ATCK  2d 8            |
+| Emperor Wight           |  2  | ATCK  1d12 ATCK  1d12 EXP- 42d 8            |
+| Black Wraith            |  1  | ATCK  1d12 ATCK  1d12 EXP- 44d 8            |
+| Nether Wraith           |  1  | ATCK  1d12 ATCK  1d12 EXP- 52d 8            |
+| Sorcerer                |  2  | ATCK  2d 8                                  |
+| Ancient Blue Dragon     |  2  | ATCK  1d 9 ATCK  1d 9 ATCK  2d12            |
+| Ancient Green Dragon    |  2  | ATCK  1d 8 ATCK  1d 8 ATCK  2d10            |
+| Ancient Black Dragon    |  2  | ATCK  1d 9 ATCK  1d 9 ATCK  2d10            |
+| Crystal Ooze            | -1  | COLD  4d 4                                  |
+| Disenchanter Worm       |  0  | DENC  1d 4                                  |
+| Rotting Quylthulg       |  2  |                                             |
+| Ancient Red Dragon      |  2  | ATCK  1d10 ATCK  1d10 ATCK  2d14            |
+| Death Quasit            |  3  | DEX-  3d 6 ATCK  3d 3 ATCK  3d 3            |
+| Emperor Lich            |  2  | DEX-  2d12 EXP- 46d 8 CHG-  0d 0            |
+| Ancient MultiHued Dragon|  2  | ATCK  1d12 ATCK  1d12 ATCK  3d12            |
+| Evil Iggy               |  2  | STR-  4d 6 STLO  0d 0                       |
+| Balrog                  |  3  | FIRE 10d12 ATCK  8d12 CHG-  0d 0            |
++-----------------------------------------------------------------------------+
+
++----------------------------------------------------------------------------+
+| Intravision--------------------------------------------------------------+ |
+| Cannot be Slept---------------------------------------------------------+| |
+| Vulnerable to rock remover---------------------------------------------+|| |
+| Vulnerable to light---------------------------------------------------+||| |
+| Vulnerable to Acid---------------------------------------------------+|||| |
+| Vulnerable to Poison------------------------------------------------+||||| |
+| Vulnerable to Fire-------------------------------------------------+|||||| |
+| Vulnerable to Frost-----------------------------------------------+||||||| |
+| Is Undead--------------------------------------------------------+|||||||| |
+| Is Evil---------------------------------------------------------+||||||||| |
+| Is an Animal---------------------------------------------------+|||||||||| |
+| Is Dragon-----------------------------------------------------+||||||||||| |
++-------------------------------------------------------------+ |||||||||||| |
+| Monster                      |Ch|Lv |  HP   |  AC | Notice  | vvvvvvvvvvvv |
++----------------------------------------------------------------------------+
+| Filthy Street Urchin         | p|  0|  1d 4 |   1 |  40-  4 |   x xx     x |
+| Blubbering Idiot             | p|  0|  1d 2 |   1 |   0-  6 |     xx     x |
+| Pitiful-Looking Beggar       | p|  0|  1d 4 |   1 |  40- 10 |     xx     x |
+| Mangy-Looking Leper          | p|  0|  1d 1 |   1 |  50- 10 |     xx     x |
+| Squint-Eyed Rogue            | p|  0|  2d 8 |   8 |  99- 10 |   x xx     x |
+| Singing, Happy Drunk         | p|  0|  2d 3 |   1 |   0- 10 |     xx     x |
+| Mean-Looking Mercenary       | p|  0|  5d 8 |  20 | 250- 10 |   x xx     x |
+| Battle-Scarred Veteran       | p|  0|  7d 8 |  30 | 250- 10 |     xx     x |
+| Grey Mushroom patch          | ,|  1|  1d 2 |   1 |   0-  2 |      x x  x  |
+| Giant Yellow Centipede       | c|  1|  2d 6 |  12 |  30-  8 |  x           |
+| Giant White Centipede        | c|  1|  3d 5 |  10 |  40-  7 |  x           |
+| White Icky-Thing             | i|  1|  3d 5 |   7 |  10- 12 |      x       |
+| Clear Icky-Thing             | i|  1|  2d 5 |   6 |  10- 12 |      x       |
+| Giant White Mouse            | r|  1|  1d 3 |   4 |  20-  8 |  x  xxx    x |
+| Large Brown Snake            | R|  1|  4d 6 |  35 |  99-  4 |  x  xx x     |
+| Large White Snake            | R|  1|  3d 6 |  30 |  99-  4 |  x  xx x     |
+| Kobold                       | k|  1|  3d 7 |  16 |  10- 20 |     xx     x |
+| White Worm mass              | w|  1|  4d 4 |   1 |  10-  7 |  x  xx xx    |
+| Floating Eye                 | e|  1|  3d 6 |   6 |  10-  2 |         x  x |
+| Shrieker Mushroom patch      | ,|  2|  1d 1 |   1 |   0-  2 |      x x  x  |
+| Blubbering Icky-Thing        | i|  2|  5d 8 |   4 |  10- 14 |      x       |
+| Metallic Green Centipede     | c|  2|  4d 4 |   4 |  10-  5 |  x           |
+| Novice Warrior               | p|  2|  9d 4 |  16 |   5- 20 |     xx     x |
+| Novice Rogue                 | p|  2|  8d 4 |  12 |   5- 20 |   x xx     x |
+| Novice Priest                | p|  2|  7d 4 |  10 |   5- 20 |     xx     x |
+| Novice Mage                  | p|  2|  6d 4 |   6 |   5- 20 |     xx     x |
+| Yellow Mushroom patch        | ,|  2|  1d 1 |   1 |   0-  2 |      x x  x  |
+| White Jelly                  | J|  2|  8d 8 |   1 |  99-  2 |      x xx x  |
+| Giant Green Frog             | f|  2|  2d 8 |   8 |  30- 12 |  x   x x     |
+| Giant Black Ant              | a|  2|  3d 6 |  20 |  80-  8 |  x           |
+| White Harpy                  | h|  2|  2d 5 |  17 |  10- 16 |   x xx     x |
+| Blue Yeek                    | y|  2|  2d 6 |  14 |  10- 18 |     xx     x |
+| Green Worm mass              | w|  2|  6d 4 |   3 |  10-  7 |  x  xx  x    |
+| Large Black Snake            | R|  2|  4d 8 |  38 |  75-  5 |  x  xx x     |
+| Poltergeist                  | G|  3|  2d 5 |  15 |  10-  8 |   xx    x x  |
+| Metallic Blue Centipede      | c|  3|  4d 5 |   6 |  15-  6 |  x           |
+| Giant White Louse            | l|  3|  1d 1 |   5 |  10-  6 |  x  xxxxx    |
+| Black Naga                   | n|  3|  6d 8 |  40 | 120- 16 |   x  xxx   x |
+| Spotted Mushroom patch       | ,|  3|  1d 1 |   1 |   0-  2 |      x x  x  |
+| Yellow Jelly                 | J|  3| 10d 8 |   1 |  99-  2 |      x xx x  |
+| Scruffy-Looking Hobbit       | p|  3|  3d 5 |   8 |  10- 16 |   x xx     x |
+| Huge Brown Bat               | b|  3|  2d 6 |  12 |  40-  8 |  x   xx x  x |
+| Giant White Ant              | a|  3|  3d 6 |  16 |  80-  8 |  x           |
+| Yellow Mold                  | m|  3|  8d 8 |  10 |  99-  2 |      x x  x  |
+| Metallic Red Centipede       | c|  3|  4d 8 |   9 |  20-  8 |  x           |
+| Yellow Worm mass             | w|  3|  4d 8 |   4 |  10-  7 |  x  xx xx    |
+| Large Green Snake            | R|  3|  6d 8 |  40 |  70-  5 |  x  xx x     |
+| Radiation Eye                | e|  3|  3d 6 |   6 |  10-  2 |         x  x |
+| Drooling Harpy               | h|  3|  2d 8 |  22 |  10- 16 |   x xx     x |
+| Silver Mouse                 | r|  4|  1d 1 |   5 |  10-  8 |  x  xxx      |
+| Black Mushroom patch         | ,|  4|  8d 8 |   1 |   0-  2 |      x x  x  |
+| Blue Jelly                   | J|  4| 12d 8 |   1 |  99-  2 |      x xx x  |
+| Creeping Copper Coins        | $|  4|  7d 8 |  24 |  10-  3 |           x  |
+| Giant White Rat              | r|  4|  2d 2 |   7 |  30-  8 |  x  xxx    x |
+| Giant Black Centipede        | c|  4|  5d 8 |  20 |  30-  8 |  x           |
+| Giant Blue Centipede         | c|  4|  4d 8 |  20 |  50-  8 |  x           |
+| Blue Worm mass               | w|  4|  5d 8 |  12 |  10-  7 |  x   x xx    |
+| Large Grey Snake             | R|  4|  6d 8 |  41 |  50-  6 |  x  xx x     |
+| Jackal                       | j|  4|  3d 8 |  16 |  30- 12 |  x  xx     x |
+| Green Naga                   | n|  5|  9d 8 |  40 | 120- 18 |   x  xx    x |
+| Green Glutton Ghost          | G|  5|  3d 6 |  20 |  10- 10 |   xx    x x  |
+| White Mushroom patch         | ,|  5|  1d 1 |   1 |   0-  2 |      x x  x  |
+| Green Jelly                  | J|  5| 22d 8 |   1 |  99-  2 |      x  x x  |
+| Skeleton Kobold              | s|  5|  5d 8 |  26 |  40- 20 |   xx      x  |
+| Silver Jelly                 | J|  5| 20d 8 |  25 |  40-  2 |      x x  x  |
+| Giant Black Frog             | f|  5|  4d 8 |  18 |  40- 12 |  x   x x     |
+| Grey Icky-Thing              | i|  5|  4d 8 |  12 |  15- 14 |      x       |
+| Disenchanter Eye             | e|  5|  7d 8 |  10 |  10-  2 |         x  x |
+| Black Yeek                   | y|  5|  2d 8 |  16 |  10- 18 |     xx     x |
+| Red Worm mass                | w|  5|  5d 8 |  12 |  10-  7 |  x  x  xx  x |
+| Giant House Fly              | F|  5|  3d 8 |  16 |  20- 12 |  x   xx      |
+| Copperhead Snake             | R|  5|  4d 6 |  20 |   1-  6 |  x  xx x     |
+| Rot Jelly                    | J|  5| 20d 8 |  30 |  99-  2 |      x x  x  |
+| Purple Mushroom patch        | ,|  6|  1d 1 |   1 |   0-  2 |      x x  x  |
+| Brown Mold                   | m|  6| 15d 8 |  12 |  99-  2 |      x x  x  |
+| Giant Brown Bat              | b|  6|  3d 8 |  15 |  30- 10 |  x   xx x  x |
+| Creeping Silver Coins        | $|  6| 12d 8 |  30 |  10-  4 |           x  |
+| Orc                          | o|  6|  9d 8 |  32 |  30- 20 |   x xx     x |
+| Grey Harpy                   | h|  6|  3d 8 |  20 |  10- 16 |   x xx     x |
+| Blue Icky-Thing              | i|  6|  4d 8 |  14 |  20- 14 |      x       |
+| Rattlesnake                  | R|  6|  6d 7 |  24 |   1-  6 |  x  xx x     |
+| Bloodshot Eye                | e|  7|  4d 8 |   6 |  10-  2 |         x  x |
+| Red Naga                     | n|  7| 11d 8 |  40 | 120- 20 |   x  xxx   x |
+| Red Jelly                    | J|  7| 26d 8 |   1 |  99-  2 |      x xx x  |
+| Giant Red Frog               | f|  7|  5d 8 |  16 |  50- 12 |  x   x x     |
+| Green Icky-Thing             | i|  7|  5d 8 |  12 |  20- 14 |      x       |
+| Zombie Kobold                | z|  7|  6d 8 |  14 |  30- 20 |   xx x    x  |
+| Lost Soul                    | G|  7|  2d 8 |  10 |  10- 12 |   xx    x x  |
+| Greedy Little Gnome          | p|  7|  3d 8 |  14 |  10- 18 |   x xx     x |
+| Giant Green Fly              | F|  7|  3d 8 |  14 |  20- 12 |  x   xx      |
+| Brown Yeek                   | y|  8|  3d 8 |  18 |  10- 18 |     xx     x |
+| Green Mold                   | m|  8| 21d 8 |  14 |  75-  2 |      x x  x  |
+| Skeleton Orc                 | s|  8| 10d 8 |  36 |  40- 20 |   xx      x  |
+| Seedy Looking Human          | p|  8|  8d 8 |  26 |  20- 20 |   x xx     x |
+| Red Icky-Thing               | i|  8|  4d 8 |  18 |  20- 14 |      x       |
+| Bandit                       | p|  8|  8d 8 |  24 |  10- 20 |   x xx     x |
+| Yeti                         | Y|  9| 11d 8 |  24 |  10- 20 |   x  x     x |
+| Bloodshot Icky-Thing         | i|  9|  7d 8 |  18 |  20- 14 |      x       |
+| Giant Grey Rat               | r|  9|  2d 3 |  12 |  20-  8 |  x  xxx    x |
+| Black Harpy                  | h|  9|  3d 8 |  22 |  10- 16 |   x xx     x |
+| Giant Black Bat              | b|  9|  2d 8 |  18 |  25- 12 |  x   xx x  x |
+| Clear Yeek                   | y|  9|  3d 6 |  24 |  10- 18 |     xx       |
+| Orc Shaman                   | o|  9|  7d 8 |  15 |  20- 20 |   x xx     x |
+| Giant Red Ant                | a|  9|  4d 8 |  34 |  60- 12 |  x           |
+| King Cobra                   | R|  9|  8d 8 |  30 |   1-  8 |  x  xx x     |
+| Clear Mushroom patch         | ,| 10|  1d 1 |   1 |   0-  4 |      x x  x  |
+| Giant White Tick             | t| 10| 15d 8 |  40 |  20- 12 |  x   x       |
+| Hairy Mold                   | m| 10| 15d 8 |  15 |  70-  2 |      x x  x  |
+| Disenchanter Mold            | m| 10| 16d 8 |  20 |  70-  2 |      x x  x  |
+| Giant Red Centipede          | c| 10|  3d 8 |  26 |  50- 12 |  x           |
+| Creeping Gold Coins          | $| 10| 18d 8 |  36 |  10-  5 |           x  |
+| Giant Fruit Fly              | F| 10|  2d 2 |  14 |  10-  8 |  x   xx      |
+| Brigand                      | p| 10|  9d 8 |  32 |  10- 20 |   x xx     x |
+| Orc Zombie                   | z| 11| 11d 8 |  24 |  25- 20 |   xx x    x  |
+| Orc Warrior                  | o| 11| 11d 8 |  36 |  25- 20 |   x xx     x |
+| Vorpal Bunny                 | r| 11|  2d 3 |  10 |  30-  8 |  x  xxx    x |
+| Nasty Little Gnome           | p| 11|  4d 8 |  10 |  10- 18 |   x xx     x |
+| Hobgoblin                    | H| 11| 12d 8 |  38 |  30- 20 |   x xx     x |
+| Black Mamba                  | R| 12| 10d 8 |  32 |   1- 10 |  x  xx x     |
+| Grape Jelly                  | J| 12| 52d 8 |   1 |  99-  2 |      x xx x  |
+| Master Yeek                  | y| 12|  5d 8 |  24 |  10- 18 |     xx     x |
+| Priest                       | p| 12|  7d 8 |  22 |  40- 20 |     xx     x |
+| Giant Clear Ant              | a| 12|  3d 7 |  18 |  60- 12 |  x           |
+| Air Spirit                   | E| 12|  5d 8 |  20 |  20- 12 |           x  |
+| Skeleton Human               | s| 12| 12d 8 |  30 |  30- 20 |   xx      x  |
+| Human Zombie                 | z| 12| 11d 8 |  24 |  20- 20 |   xx x    x  |
+| Moaning Spirit               | G| 12|  4d 8 |  20 |  10- 14 |   xx    x x  |
+| Swordsman                    | p| 12| 11d 8 |  34 |  20- 20 |     xx     x |
+| Killer Brown Beetle          | K| 13| 13d 8 |  40 |  30- 10 |  x           |
+| Ogre                         | o| 13| 13d 8 |  32 |  30- 20 |   x xx     x |
+| Giant Red Speckled Frog      | f| 13|  6d 8 |  20 |  30- 12 |  x   x x     |
+| Magic User                   | p| 13|  7d 8 |  10 |  10- 20 |     xx     x |
+| Black Orc                    | o| 13| 12d 8 |  36 |  20- 20 |   x xx     x |
+| Giant Long-Eared Bat         | b| 13|  5d 8 |  20 |  20- 12 |  x   xx x  x |
+| Giant Gnat                   | F| 13|  1d 2 |   4 |  10-  8 |  x   xx      |
+| Killer Green Beetle          | K| 14| 16d 8 |  45 |  30- 12 |  x           |
+| Giant Flea                   | F| 14|  2d 2 |  25 |  10-  8 |  x   xx      |
+| Giant White Dragon Fly       | F| 14|  5d 8 |  20 |  50- 20 |  x   xx      |
+| Hill Giant                   | P| 14| 16d 8 |  36 |  50- 20 |   x xx     x |
+| Skeleton Hobgoblin           | s| 14| 13d 8 |  34 |  30- 20 |   xx      x  |
+| Flesh Golem                  | g| 14| 12d 8 |  10 |  10- 12 |     xx    x  |
+| White Dragon Bat             | b| 14|  2d 6 |  20 |  50- 12 |  x   xx x    |
+| Giant Black Louse            | l| 14|  1d 1 |   7 |  10-  6 |  x  xxxxx    |
+| Guardian Naga                | n| 15| 24d 8 |  50 | 120- 20 |   x  xxx   x |
+| Giant Grey Bat               | b| 15|  4d 8 |  22 |  15- 12 |  x   xx x  x |
+| Giant Clear Centipede        | c| 15|  5d 8 |  30 |  30- 12 |  x           |
+| Giant Yellow Tick            | t| 15| 20d 8 |  48 |  20- 12 |  x   x       |
+| Giant Ebony Ant              | a| 15|  3d 4 |  24 |  60- 12 |  x           |
+| Frost Giant                  | P| 15| 17d 8 |  38 |  50- 20 |   x  x       |
+| Clay Golem                   | g| 15| 14d 8 |  20 |  10- 12 |          xx  |
+| Huge White Bat               | b| 15|  3d 8 |  12 |  40-  7 |  x   xx x  x |
+| Giant Tan Bat                | b| 15|  3d 8 |  18 |  40- 12 |  x   xx x  x |
+| Violet Mold                  | m| 15| 17d 8 |  15 |  70-  2 |      x x  x  |
+| Umber Hulk                   | U| 16| 20d 8 |  20 |  10- 20 |   x  x  x  x |
+| Gelatinous Cube              | C| 16| 45d 8 |  18 |   1- 12 |      x    x  |
+| Giant Black Rat              | r| 16|  3d 4 |  16 |  20-  8 |  x  xxx    x |
+| Giant Green Dragon Fly       | F| 16|  5d 8 |  20 |  50- 20 |  x  xx       |
+| Fire Giant                   | P| 16| 20d 8 |  40 |  50- 20 |   x x      x |
+| Green Dragon Bat             | b| 16|  2d 7 |  22 |  50- 12 |  x  x   x  x |
+| Quasit                       | q| 16|  5d 8 |  30 |  20- 20 |   x       x  |
+| Troll                        | T| 17| 17d 8 |  40 |  40- 20 |   x  x     x |
+| Water Spirit                 | E| 17|  8d 8 |  28 |  40- 12 |      x    x  |
+| Giant Brown Scorpion         | S| 17| 11d 8 |  44 |  20- 12 |  x           |
+| Earth Spirit                 | E| 17| 13d 8 |  40 |  50- 10 |          xx  |
+| Fire Spirit                  | E| 18| 10d 8 |  30 |  20- 16 |     x     xx |
+| Uruk-Hai Orc                 | o| 18| 14d 8 |  42 |  20- 20 |   x xx     x |
+| Stone Giant                  | P| 18| 22d 8 |  40 |  50- 20 |   x      x x |
+| Stone Golem                  | g| 19| 28d 8 |  75 |  10- 12 |          xx  |
+| Grey Ooze                    | O| 19|  6d 8 |  10 |   1- 15 |      x x  x  |
+| Disenchanter Ooze            | O| 19|  6d 8 |  15 |   1- 15 |     xx x  x  |
+| Giant Spotted Rat            | r| 19|  4d 3 |  20 |  20-  8 |  x  xxx    x |
+| Mummified Kobold             | M| 19| 13d 8 |  24 |  75- 20 |   xx x    x  |
+| Killer Black Beetle          | K| 19| 18d 8 |  46 |  30- 12 |  x           |
+| Red Mold                     | m| 19| 17d 8 |  16 |  70-  2 |     x  x  xx |
+| Quylthulg                    | Q| 20|    32 |   1 |   0- 10 |           x  |
+| Giant Red Bat                | b| 20|  5d 8 |  24 |  20- 12 |  x   xx x  x |
+| Giant Black Dragon Fly       | F| 20|  4d 8 |  22 |  50- 20 |  x  xxx      |
+| Cloud Giant                  | P| 20| 24d 8 |  44 |  50- 20 |   x xx     x |
+| Black Dragon Bat             | b| 21|  2d 8 |  24 |  50- 12 |  x  x x x  x |
+| Blue Dragon Bat              | b| 21|  3d 6 |  26 |  50- 12 |  x  x x    x |
+| Mummified Orc                | M| 21| 14d 8 |  28 |  75- 20 |   xx x    x  |
+| Killer Boring Beetle         | K| 21| 18d 8 |  48 |  30- 12 |  x           |
+| Killer Stag Beetle           | K| 22| 20d 8 |  50 |  30- 12 |  x           |
+| Black Mold                   | m| 22| 15d 8 |  18 |  50-  2 |      x x  x  |
+| Iron Golem                   | g| 22| 80d 8 |  99 |  10- 12 |        x  x  |
+| Giant Yellow Scorpion        | S| 22| 12d 8 |  38 |  20- 12 |  x           |
+| Green Ooze                   | O| 22|  4d 8 |   5 |   1- 15 |     xx    x  |
+| Black Ooze                   | O| 23|  6d 8 |   6 |   1- 10 |     xx    x  |
+| Warrior                      | p| 23| 15d 8 |  40 |  40- 20 |     xx     x |
+| Red Dragon Bat               | b| 23|  3d 8 |  28 |  50- 12 |  x  x x x  x |
+| Killer Blue Beetle           | K| 23| 20d 8 |  50 |  30- 14 |  x           |
+| Giant Silver Ant             | a| 23|  6d 8 |  38 |  60- 10 |  x           |
+| Crimson Mold                 | m| 23| 16d 8 |  18 |  50-  2 |      x x  x  |
+| Forest Wight                 | W| 24| 12d 8 |  30 |  30- 20 |   xx x  x x  |
+| Berzerker                    | p| 24| 15d 8 |  20 |  10- 20 |     xx     x |
+| Mummified Human              | M| 24| 17d 8 |  34 |  60- 20 |   xx x    x  |
+| Banshee                      | G| 24|  6d 8 |  24 |  10- 20 |   xx    x x  |
+| Giant Troll                  | T| 25| 19d 8 |  40 |  50- 20 |   x  x     x |
+| Giant Brown Tick             | t| 25| 18d 8 |  50 |  20- 12 |  x   x       |
+| Killer Red Beetle            | K| 25| 20d 8 |  50 |  30- 14 |  x           |
+| Wooden Mold                  | m| 25| 25d 8 |  50 |  50-  2 |      x x  x  |
+| Giant Blue Dragon Fly        | F| 25|  6d 8 |  24 |  50- 20 |  x  xxx      |
+| Giant Grey Ant Lion          | A| 26| 19d 8 |  40 |  40- 10 |  x  xx       |
+| Disenchanter Bat             | b| 26|  4d 8 |  24 |   1- 14 |  x   xx x  x |
+| Giant Fire Tick              | t| 26| 16d 8 |  54 |  20- 14 |  x  x      x |
+| White Wraith                 | W| 26| 15d 8 |  40 |  10- 20 |   xx x  x x  |
+| Giant Black Scorpion         | S| 26| 13d 8 |  50 |  20- 12 |  x           |
+| Clear Ooze                   | O| 26|  4d 8 |  14 |   1- 10 |     xx x  x  |
+| Killer Fire Beetle           | K| 27| 13d 8 |  45 |  30- 14 |  x  x      x |
+| Vampire                      | V| 27| 20d 8 |  45 |  10- 20 |   xx x  x x  |
+| Giant Red Dragon Fly         | F| 27|  7d 8 |  24 |  50- 20 |  x  x x    x |
+| Shimmering Mold              | m| 27| 32d 8 |  24 |  50-  2 |      x x  x  |
+| Black Knight                 | p| 28| 25d 8 |  60 |  10- 20 |   x xx     x |
+| Mage                         | p| 28| 10d 8 |  30 |  10- 20 |     xx     x |
+| Ice Troll                    | T| 28| 22d 8 |  46 |  50- 20 |   x  x       |
+| Giant Purple Worm            | w| 29| 65d 8 |  65 |  30- 14 |  x  xx     x |
+| Young Blue Dragon            | d| 29| 33d 8 |  50 |  70- 20 | x x        x |
+| Young White Dragon           | d| 29| 32d 8 |  50 |  70- 20 | x x  x       |
+| Young Green Dragon           | d| 29| 32d 8 |  50 |  70- 20 | x x        x |
+| Giant Fire Bat               | b| 29|  5d 8 |  30 |  10- 14 |  x  x x x  x |
+| Giant Glowing Rat            | r| 29|  3d 3 |  24 |  20-  8 |  x  xxx    x |
+| Skeleton Troll               | s| 30|   112 |  55 |  20- 20 |   xx      x  |
+| Giant Lightning Bat          | b| 30|  8d 8 |  34 |  10- 15 |  x    x    x |
+| Giant Static Ant             | a| 30|  8d 8 |  40 |  60- 10 |  x           |
+| Grave Wight                  | W| 30|    96 |  35 |  30- 20 |   xx x  x x  |
+| Killer Slicer Beetle         | K| 30| 22d 8 |  55 |  30- 14 |  x           |
+| Giant White Ant Lion         | A| 30| 20d 8 |  45 |  40- 12 |  x   x       |
+| Ghost                        | G| 31|   104 |  30 |  10- 20 |   xx    x x  |
+| Giant Black Ant Lion         | A| 31| 23d 8 |  45 |  40- 14 |  x  xx       |
+| Death Watch Beetle           | K| 31| 25d 8 |  60 |  30- 16 |  x           |
+| Ogre Mage                    | o| 31|   112 |  42 |  30- 20 |   x xx     x |
+| Two-Headed Troll             | T| 32|   112 |  48 |  50- 20 |   x  x     x |
+| Invisible Stalker            | E| 32| 19d 8 |  46 |  20- 20 |           x  |
+| Giant Hunter Ant             | a| 32| 12d 8 |  40 |   1- 16 |  x           |
+| Ninja                        | p| 32|   120 |  65 |  10- 20 |   x xx     x |
+| Barrow Wight                 | W| 33|   104 |  40 |  10- 20 |   xx x  x x  |
+| Skeleton 2-Headed Troll      | s| 33|   160 |  48 |  20- 20 |   xx      x  |
+| Water Elemental              | E| 33| 25d 8 |  36 |  50- 12 |      x    x  |
+| Fire Elemental               | E| 33| 25d 8 |  40 |  70- 16 |     x     xx |
+| Lich                         | L| 34|   200 |  50 |  60- 20 |   xx    x x  |
+| Master Vampire               | V| 34|   184 |  55 |  10- 20 |   xx x  x x  |
+| Spirit Troll                 | G| 34|   120 |  40 |  10- 20 |   xx    x x  |
+| Giant Red Scorpion           | S| 34| 18d 8 |  50 |  40- 12 |  x           |
+| Earth Elemental              | E| 34| 30d 8 |  60 |  90- 10 |          xx  |
+| Young Black Dragon           | d| 35|   256 |  55 |  50- 20 | x x        x |
+| Young Red Dragon             | d| 35|   288 |  60 |  50- 20 | x x x      x |
+| Necromancer                  | p| 35|   136 |  40 |  10- 20 |     xx     x |
+| Mummified Troll              | M| 35|   144 |  38 |  50- 20 |   xx x    x  |
+| Giant Red Ant Lion           | A| 35| 23d 8 |  48 |  40- 14 |  x  x      x |
+| Mature White Dragon          | d| 35|   384 |  65 |  70- 20 | x x  x       |
+| Xorn                         | X| 36|   160 |  80 |  10- 20 |          x   |
+| Giant Mottled Ant Lion       | A| 36| 24d 8 |  50 |  40- 14 |  x  xx       |
+| Grey Wraith                  | W| 36|   184 |  50 |  10- 20 |   xx x  x x  |
+| Young Multi-Hued Dragon      | d| 36|   320 |  55 |  50- 20 | x x        x |
+| Mature Blue Dragon           | d| 36|   384 |  75 |  70- 20 | x x        x |
+| Mature Green Dragon          | d| 36|   384 |  70 |  70- 20 | x x        x |
+| Iridescent Beetle            | K| 37| 32d 8 |  60 |  30- 16 |  x           |
+| King Vampire                 | V| 37|   304 |  65 |  10- 20 |   xx x  x x  |
+| King Lich                    | L| 37|   416 |  65 |  50- 20 |   xx    x x  |
+| Mature Red Dragon            | d| 37|   480 |  80 |  30- 20 | x x x      x |
+| Mature Black Dragon          | d| 37|   464 |  55 |  30- 20 | x x        x |
+| Mature Multi-Hued Dragon     | d| 38|   640 |  65 |  50- 20 | x x        x |
+| Ancient White Dragon         | D| 38|   704 |  80 |  80- 20 | x x  x       |
+| Emperor Wight                | W| 38|   384 |  40 |  10- 20 |   xx x  x x  |
+| Black Wraith                 | W| 38|   400 |  55 |  10- 20 |   xx x  x x  |
+| Nether Wraith                | W| 39|   464 |  55 |  10- 20 |   xx x  x x  |
+| Sorcerer                     | p| 39|   240 |  50 |  10- 20 |     xx     x |
+| Ancient Blue Dragon          | D| 39|   696 |  90 |  80- 20 | x x        x |
+| Ancient Green Dragon         | D| 39|   720 |  85 |  80- 20 | x x        x |
+| Ancient Black Dragon         | D| 39|   720 |  90 |  70- 20 | x x        x |
+| Crystal Ooze                 | O| 40| 12d 8 |  30 |   1- 10 |      x x  x  |
+| Disenchanter Worm            | w| 40| 10d 8 |   5 |  10-  7 |  x  xx xx    |
+| Rotting Quylthulg            | Q| 40|    96 |   1 |   0- 20 |           x  |
+| Ancient Red Dragon           | D| 40|   840 | 100 |  70- 20 | x x x      x |
+| Death Quasit                 | q| 40| 55d 8 |  80 |   0- 20 |   x       x  |
+| Emperor Lich                 | L| 40|  1520 |  75 |  50- 20 |   xx    x x  |
+| Ancient Multi-Hued Dragon    | D| 40|  2080 | 100 |  70- 20 | x x        x |
+| Evil Iggy                    | p| 50|  2400 |  80 |   0- 30 |   x       x  |
+| Balrog                       | B|100|  3000 | 125 |   0- 40 |   x       x  |
++----------------------------------------------------------------------------+
+</pre>
+Notice is the number of turns he will sleep - distance from you when the sleep
+count starts.  For every three points of stealth you have, the sleep time is
+doubled.  Also, if you attack, that wakes the monster up.
+<p>
+The experience given above is for a character the same level as the monster.
+To convert this to a different level:
+<pre>
+        (base exp)*(monster level)
+        --------------------------  = real experience
+               (char level)
+</pre>
+Hence the Balrog for a 40th level character would be worth:
+<pre>
+        55000*100
+        --------- = 137500 experience points
+           40
+</pre>
+
+<hr>
+
+<a name="mattacks"><h3>Monster Attacks:</h3></a>
+<pre>
+   ATCK  No special attack, just damage
+   CONF  Confuses character
+   FEAR  Makes character afraid
+   FIRE  Fire based attack.
+   ACID  Acid based attack.
+   COLD  Cold/Frost based attack.
+   LIGT  Lightning based attack.
+   CORR  Corrosion attack
+   BLND  Blinds character
+   PARA  Paralyzes character
+   STL$  Steals money
+   STLO  Steal object
+   POIS  Posions
+   STR-  Reduces strength
+   DEX-  Reduces dexterity
+   CON-  Reduces constitution
+   INT-  Reduces intelligence
+   WIS-  Reduces wisdom
+   EXP-  Drains experience
+   AGGR  Aggravates monsters on that level
+   DENC  Disenchant an item
+   FOD-  Consumes food
+   LIT-  Drains light
+   CHG-  Drains charges
+</pre>
+
+<hr>
+
+<a name="hitprob"><h3>Hit Probability:</h3></a>
+<pre>
+       Hit bonus on weapon
+     + Hit bonus on items
+     + Hit bonus for DEX
+     + Hit bonus for STR
+     * 3
+     + Fighting ability (or Bow ability for missiles)
+   ----
+       Total to hit bonus.
+</pre>
+A random number between 1 and that hit number must be greater than the
+monster's AC.  In addition, a 1d20 is rolled.  A 1 on this die forces a miss
+and a 20 forces a hit.
+<p>
+Critical hits:
+<pre>
+       Hit bonus on weapon
+     + Hit bonus on items
+     + Hit bonus for DEX
+     + Hit bonus for STR
+     * 5
+     + Fighting ability
+     + Weight of weapon*10
+     - Fighting ability at 0th level.
+   ---
+       Total chance to critical
+</pre>
+If a number between 1 and 5000 is less than the critical chance, you have 
+scored a critical hit. 
+<p>
+
+<hr>
+
+<a name="damagecalc"><h3>Damage Calculation:</h3></a>
+
+Assuming you hit, the damage calculation is relatively straight-forward.
+<pre>
+        Damage of weapon
+      * EGO Bonus
+      * Critical hit bonus
+      + To Dam Bonus on weapon
+      + To Dam Bonus on items
+      + To Dam Bonus from STR
+     ---
+        Total damage
+</pre>
+If you scored a critical hit, the bonus is calculated below:
+<pre> 
+       Weight of weapon
+     * 10
+     + Random number between 1 and 650
+    ---
+       Severity level
+
++-------------------------------+
+| Severity | Multiplier         |
++-------------------------------+
+|    0-399 |  2x+5  (good)      |
+|  400-699 |  3x+10 (excellent) |
+|  700-899 |  4x+15 (superb)    |
+|  900+    |  5x+20 (*GREAT*)   |
++-------------------------------+
+</pre>
+
+<hr>
+
+<a name="bashing"><h3>Bashing:</h3></a>
+
+The chance of bashing a monster is significantly lower than hitting it
+with a weapon, even your fists.
+<pre>
+        Bonus to hit on STR
+      + Weight of shield*5
+      + Weight of player/10
+     ---
+        Chance to hit.
+</pre>
+You check to hit as above, but the chance for critical hits uses the weight of
+the shield/4 as the weapon wieght above.  Damage is the calculated the same
+with the damage caused being 1d1 or 1d2 depending on the shield.  Also, an
+additional bonus of character weight/60 +3 is added due to the force of your
+body ramming into whatever you hit.
+<p>
+The usefulness of basing is the chance to stun an oppenant.  This has the
+effect of a paralyze for 1d3 turns.  If 100+2d400 > HP+AverageHP then
+the monster is stunned.  Note:  The Balrog can never be stunned.
+<p>
+If 1d150 > your dexterity (exceptional added to rest, so 18/29=47) then you are
+stunned for 1+1d2 rounds.
+<p>
+
+<hr>
+
+<a name="accalc"><h3>AC Calculation:</h3></a>
+<pre>
+         Sum of Armor AC
+       + Bonus on AC
+       + Bonus on Items
+       + Bonus from DEX
+       + Bonus from spells (Bless, etc)
+      ---
+         Total AC.
+</pre>
+Simple enough, wasn't it...
+<p>
+
+<hr>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>Character</title>
+<body>
+<h2>Character</h2>
+
+<h3>Contents</h3>
+<ul>
+   <li><a href="#attributes">Attributes</a>
+   <li><a href="#races">Races</a>
+   <li><a href="#classes">Classes</a>
+   <li><a href="#experience">Experience</a>
+</ul>
+
+<hr>
+<p>
+<a name="attributes"><h3>Attributes:</h3></a>
+<p>
+Moria characters have several attributes that affect how they their character
+can survive in the dungeon and interact with monsters.  Many of these have
+cryptic relationships to their actual function.  Below is a list of all the
+attributes and their contribution to the character.
+<p>
+The following six attributes, which are the most important, are on a scale
+of 3-18, with an additional 'exceptional' value after 18, designated by
+a slash, like 18/29.  The maximum value of any attribute is 18/100.  A plain
+18 is the same as 18/00.  If a second number is displayed next to the
+attribute (like STR:    18  18/29) the second number is your original
+value before it was drained by a attribute draining creature.
+<p>
+STR:  Character strength.
+<pre>
++-------------------------------------------+   Carry capacity is:
+|  STR Range   | +HIT bonus | +Damage bonus |   
++-------------------------------------------+
+|  3           |     -3     |      -2       |   STR * 13.0 + Weight
+|  4           |     -2     |      -1       |
+|  5   - 7     |     -1     |       0       |   Maximum of 300.0 lbs.
+|  8   -15     |      0     |       0       |
+| 16           |     +0     |      +1       |   Weapon limit
+| 17           |     +0     |      +2       |
+| 18   -18/74  |     +1     |      +3       |   STR * 1.5 < Weapon Wt.
+| 18/75-18/90  |     +2     |      +4       |   then hit it str*1.5-wt
+| 18/91-18/99  |     +3     |      +5       |
+| 18/100       |     +4     |      +6       |
++-------------------------------------------+
+</pre>
+DEX:  Character Dexterity and Agility:
+<pre>
++-------------------------------------------------------+
+|  DEX Range   | +HIT bonus | +AC Bonus | +Disarm Bonus |
++-------------------------------------------------------+
+|  3           |     -3     |    -4     |      -8       |
+|  4           |     -2     |    -3     |      -6       |
+|  5           |     -2     |    -2     |      -4       |
+|  6           |     -1     |    -1     |      -2       |
+|  7           |     -1     |     0     |      -1       |
+|  8   -12     |      0     |     0     |       0       |
+| 13   -15     |      0     |     0     |      +1       |
+| 16           |     +1     |    +1     |      +2       |
+| 17           |     +2     |    +1     |      +2       |
+| 18   -18/49  |     +3     |    +2     |      +4       |
+| 18/50-18/90  |     +4     |    +3     |      +5       |
+| 18/91-18/99  |     +4     |    +4     |      +6       |
+| 18/100       |     +5     |    +5     |      +8       |
++-------------------------------------------------------+
+</pre>
+The number of attacks/round it determined by the weight of the weapon, the
+STR, and DEX attributes.  S/W = Str divided by the weight of the weapon in
+pounds.  Exceptional strength, is added to the 18.  (18/29 = 47)
+<pre>
++--------------------------------------------------------------------------+
+| S/W\DEX | 3-9 | 10-18 | 18/01-18/49 | 18/50-18/89 | 18/89-18/99 | 18/100 |
++--------------------------------------------------------------------------+
+|  0-1.99 |  1  |   1   |      1       |     1      |      1      |   1    |
+|  2-2.99 |  1  |   1   |      1       |     1      |      2      |   2    |
+|  3-3.99 |  1  |   1   |      1       |     2      |      2      |   3    |
+|  4-4.99 |  1  |   1   |      2       |     2      |      3      |   3    |
+|  5-6.99 |  1  |   2   |      2       |     3      |      3      |   4    |
+|  7-8.99 |  1  |   2   |      2       |     3      |      4      |   4    |
+|  9-     |  2  |   2   |      3       |     3      |      4      |   4    |
++--------------------------------------------------------------------------+
+</pre>
+INT and WIS:  These determine your spell casting ability.  For Mages, Rangers
+and Rogues, use the INT stat, and for priests and paladins, use the WIS stat.
+<p>
+Also, INT gives you a bonus for using devices, as shown in the table below.
+Note:  This is for the INT stat, no matter what the class is.  See the wand
+and staff section for a complete formula for the chance to use a device
+sucessfully.
+<pre>
++----------------------------------------------------------------+
+|   INT/WIS   |  Mana Mult | Fail adjust | Device use | Spell/lv |
++----------------------------------------------------------------+
+|  3   - 7    |      0     |  No spells  |     0      |   None   |
+|  8   -14    |      1     |    - 3%     |     1      |     1    |
+| 15   -17    |      1     |    - 6%     |     2      |     1    |
+| 18   -18/49 |     3/2    |    - 9%     |     3      |     1    |
+| 18/50-18/69 |      2     |    -12%     |     4      |    3/2   |
+| 18/70-18/89 |     5/2    |    -15%     |     5      |    3/2   |
+| 18/90-18/99 |      3     |    -18%     |     6      |     2    |
+| 18/100      |      4     |    -21%     |     7      |    5/2   |
++----------------------------------------------------------------+
+</pre>
+CON:  States how healthy the character is.
+<pre>
++--------------------------------------------------+
+|    CON      |  HP Bonus  | HP/turn poison damage |
++--------------------------------------------------+
+|  3          |     -4     |         4             |
+|  4          |     -3     |         3             |
+|  5          |     -2     |         3             |
+|  6          |     -1     |         2             |
+|  7   -16    |      0     |         1             |
+| 17          |     +1     |        1/2            |
+| 18   -18/74 |     +2     |        1/2            |
+| 18/75-18/99 |     +3     |        1/2            |
+| 18/100      |     +4     |        1/3            |
++--------------------------------------------------+
+</pre>
+CHA:  Charisma.  Describes you looks, personality, likeability.  The
+only thing this effects is the prices in the ship.  Unlike the other stats,
+nothing except a potion of Ugliness can lower your charisma.
+<pre>
++------------------------+
+|     CHA     |  % Base  |
++------------------------+
+|  3          |  130%    |
+|  4          |  125%    |
+|  5          |  122%    |
+|  6          |  120%    |
+|  7          |  118%    |
+|  8          |  116%    |
+|  9          |  114%    |
+| 10          |  112%    |
+| 11          |  110%    |
+| 12          |  108%    |
+| 13          |  106%    |
+| 14          |  104%    |
+| 15          |  103%    |
+| 16          |  102%    |
+| 17          |  101%    |
+| 18          |  100%    |
+| 18/01-18/49 |   98%    |
+| 18/50-18/69 |   96%    |
+| 18/70-18/89 |   94%    |
+| 18/90-18/99 |   92%    |
+| 18/100      |   90%    |
++------------------------+
+</pre>
+
+<hr>
+
+<a name="races"><h3>Races:</h3></a>
+<p>
+There are 8 races in standard moria.  All but humans get modifiers to their
+attributes and many are limited in what classes they can become.
+<p>
+Classes is a bitmap of WMPRRP  (Warrior, Mage, Priest, Rogue, Ranger, Paladin)
+<pre>
++----------------------------------------------------------------------+
+| Race     | STR | INT | WIS | DEX | CON | CHR | Classes | Exp Penalty |
++----------------------------------------------------------------------+
+| Human    |  0  |  0  |  0  |  0  |  0  |  0  | WMPRRP  |    0%       |
+| Half-Elf | -1  | +1  |  0  | +1  | -1  | +1  | WMPRRP  |   10%       |
+| Elf      | -1  | +2  | +1  | +1  | -2  | +1  | WMPRR   |   20%       |
+| Halfling | -2  | +2  | +1  | +3  | +1  | +1  | WM R    |   10%       |
+| Gnome    | -1  | +2  |  0  | +2  | +1  | -2  | WMPR    |   25%       |
+| Dwarf    | +2  | -3  | +1  | -2  | +2  | -3  | W P     |   20%       |
+| Half-Orc | +2  | -1  | +0  | +0  | +1  | -4  | W PR    |   10%       |
+| Half-Trl | +4  | -4  | -2  | -4  | +3  | -6  | W P     |   20%       |
++----------------------------------------------------------------------+
+
++------------------------------------------------------------------------+
+| Race     | Disarm | Search | Stealth | Precept | Fight | Bows | Device | 
++------------------------------------------------------------------------+
+| Human    |   0    |    0   |    0    |    0    |   0   |   0  |    0   |
+| Half-Elf |   2    |    6   |    1    |   -1    |  -1   |   5  |    3   |
+| Elf      |   5    |    8   |    1    |   -2    |  -5   |  15  |    6   |
+| Halfling |  15    |   12   |    4    |   -5    |  -10  |  20  |   18   |
+| Gnome    |  10    |    6   |    3    |   -3    |  -8   |  12  |   12   |
+| Dwarf    |   2    |    7   |   -1    |    0    |  15   |   0  |    9   |
+| Half-Orc |  -3    |    0   |   -1    |    3    |  12   |  -5  |   -3   |
+| Half-Trl |  -5    |   -1   |   -2    |    5    |  20   | -10  |   -8   |
++------------------------------------------------------------------------+
+</pre>
+Note:  Lower perception is better.  Saving throw ability is the same as
+Device use.
+<pre>
++------------------------------------------------------------------------+
+| Race     |   Age   | Height (M) | Weight (M) | Height (F) | Weight (F) |
++------------------------------------------------------------------------+
+| Human    | 14+1d6  |    72+1d6  |  180+1d25  |   66+1d4   |  150+1d20  |
+| Half-Elf | 24+1d16 |    66+1d6  |  130+1d15  |   62+1d6   |  100+1d10  |
+| Elf      | 75+1d75 |    60+1d4  |  100+1d6   |   54+1d4   |   80+1d6   |
+| Halfling | 21+1d12 |    36+1d3  |   60+1d3   |   33+1d3   |   50+1d3   |
+| Gnome    | 50+1d40 |    42+1d3  |   90+1d6   |   39+1d3   |   50+1d3   |
+| Dwarf    | 35+1d15 |    48+1d3  |  150+1d10  |   46+1d3   |  120+1d10  |
+| Half-Orc | 11+1d4  |    67      |  150+1d5   |   63       |  120+1d5   |
+| Half-Trl | 20+1d10 |    96+1d10 |  255+1d50  |   84+1d8   |  225+1d40  |
++------------------------------------------------------------------------+
+
++---------------------------------+
+| Race     | Infravision | Hitdie |
++---------------------------------+
+| Human    |      0'     |  10    |
+| Half-Elf |     20'     |   9    |
+| Elf      |     30'     |   8    |
+| Halfling |     40'     |   6    |
+| Gnome    |     40'     |   7    |
+| Dwarf    |     50'     |   9    |
+| Half-Orc |     30'     |  10    |
+| Half-Trl |     30'     |  12    |
++---------------------------------+
+</pre>
+
+<hr>
+
+<a name="classes"><h3>Classes:</h3></a>
+
+There are six classes in Moria.  The Warrior, Mage, Priest, Rogue, Ranger, and
+Paladin.  All of these classes get modifiers on their stats at the beginning
+and develop skills at a different rate per level.  All but the warrior also
+gets spells.  These spells are described in the Spells section at the end of
+this file.
+<pre>
++--------------------------------------------------------------------------+
+| Class   | STR | INT | WIS | DEX | CON | CHA | Spells | Exp Pen. | HitDie |
++--------------------------------------------------------------------------+
+| Warrior | +5  | -2  | -2  | +2  | +2  | -1  | NONE   |    0%    |  9     |
+| Mage    | -5  | +3  | +0  | +1  | -2  | +1  | MAGE   |   30%    |  0     |
+| Priest  | -3  | -3  | +3  | -1  | +0  | +2  | PRIEST |   20%    |  2     |
+| Rogue   | +2  | +1  | -2  | +3  | +1  | -1  | MAGE   |    0%    |  6     |
+| Ranger  | +2  | +2  | +0  | +1  | +1  | +1  | MAGE   |   40%    |  4     |
+| Paladin | +3  | -3  | +1  | +0  | +2  | +2  | PRIEST |   35%    |  6     |
++--------------------------------------------------------------------------+
+
++---------------------------------------------------------------------+
+| Class   | Disarm | Search | Stealth | Percept | Fight | Bows | Save |
++---------------------------------------------------------------------+
+| Warrior |   25   |   14   |   1     |   38    |  70   |  55  |  18  |
+| Mage    |   30   |   16   |   2     |   20    |  34   |  20  |  36  |
+| Priest  |   25   |   16   |   2     |   32    |  48   |  35  |  30  |
+| Rogue   |   45   |   32   |   5     |   16    |  60   |  66  |  30  |
+| Ranger  |   30   |   24   |   3     |   24    |  56   |  72  |  30  |
+| Paladin |   20   |   12   |   1     |   38    |  68   |  40  |  24  |
++---------------------------------------------------------------------+
+</pre>
+Each level, the fighting, bows, device use, disarm, and saves go up.  This
+chart describes the increase per level of the above numbers
+<pre>
++-------------------------------------------------+
+| Class   | Fight | Bows | Device | Disarm | Save | 
++-------------------------------------------------+
+| Warrior |  4    |   4  |   2    |   2    |  3   |
+| Mage    |  2    |   2  |   4    |   3    |  3   |
+| Priest  |  2    |   2  |   4    |   3    |  3   |
+| Rogue   |  3    |   4  |   3    |   4    |  3   |
+| Ranger  |  3    |   4  |   3    |   3    |  3   |
+| Paladin |  3    |   3  |   3    |   2    |  3   |
++-------------------------------------------------+
+</pre>
+
+<hr>
+
+<a name="experience"><h3>Experience:</h3></a>
+
+All characters receive experience during the game.  Experience
+determines your level, which determines hit points, mana points,
+spells, abilities, etc.  The amount of experience required to 
+advance a level is a base value (shown below) plus a penalty
+for race and class.
+<p>
+Base Experience
+<pre>
++----------------------------------------------------------+
+| Lv |  Exp to Adv  | Lv |  Exp to Adv  | Lv |  Exp to Adv |
++----------------------------------------------------------+
+|  1 |     10       | 14 |   1,400      | 27 |     35,000  |
+|  2 |     25       | 15 |   1,800      | 28 |     50,000  |
+|  3 |     45       | 16 |   2,300      | 29 |     75,000  |
+|  4 |     70       | 17 |   2,900      | 30 |    100,000  |
+|  5 |    100       | 18 |   3,600      | 31 |    150,000  |
+|  6 |    140       | 19 |   4,400      | 32 |    200,000  |
+|  7 |    200       | 20 |   5,400      | 33 |    300,000  |
+|  8 |    280       | 21 |   6,800      | 34 |    400,000  |
+|  9 |    380       | 22 |   8,400      | 35 |    500,000  |
+| 10 |    500       | 23 |  10,200      | 36 |    750,000  |
+| 11 |    650       | 24 |  12,500      | 37 |  1,500,000  |
+| 12 |    850       | 25 |  17,500      | 38 |  2,500,000  |
+| 13 |  1,100       | 26 |  25,000      | 39 |  5,000,000  |
++----------------------------------------------------------+
+</pre>
+Maximum level is 40 and maximum experience is 9,999,999
+<p>
+There are penalties to experience to help balance out the classes and
+races.  These are listed above and are used to figure out your actual
+experience required.
+<p>
+For example:  For a 10'th level Gnomish Mage to achieve 11'th level
+needs:<pre>
+           500 *  1.25 * 1.30 = 812.5
+         (base) (gnome) (mage)
+</pre>
+Note:  Even for the worst case (Gnomish Ranger) it is still possible
+to achieve the 40th level.  (5,000,000*1.25*1.40=8,750,000 experience)
+(Note:  A Gnomish Ranger can't exist, this was just a worst cast scenario)
+<p>
+The program internally keeps experience out to the second decimal place
+even though it only displays the integer portion on the screen.
+<p>
+There are many ways to gain experience.  This list shows a few.
+<ol>
+<li>Defeating monsters
+<li>Disarming traps
+<li>Picking locks
+<li>Using a scroll, potion, staff, wand, or rod for the first time
+  and discovering what it did.
+<li>Casting a spell successfully for the first time.
+<li>Drinking a potion of gain experience
+</ol>
+Identifying objects will give (item level + char level/2) /char level 
+experience points.
+<p>
+Each experience level has a title which is displayed under your name
+and class.  Below is a listing of all the titles for each level and
+class.
+<pre>
+   Warrior      Mage         Priest       Rogue        Ranger       Paladin
+ 1 Rookie       Novice       Believer     Vagabond     Runner(1st)  Gallant
+ 2 Private      Apprentice   Acolyte(1st) Footpad      Runner(2nd)  Keeper(1st)
+ 3 Soldier      Trickster-1  Acolyte(2nd) Cutpurse     Runner(3rd)  Keeper(2nd)
+ 4 Mercenary    Trickster-2  Acolyte(3rd) Robber       Strider(1st) Keeper(3rd)
+ 5 Veteran(1st) Trickster-3  Adept(1st)   Burglar      Strider(2nd) Keeper(4th)
+ 6 Veteran(2nd) Cabalist-1   Adept(2nd)   Filcher      Strider(3rd) Keeper(5th)
+ 7 Veteran(3rd) Cabalist-2   Adept(3rd)   Sharper      Scout(1st)   Keeper(6th)
+ 8 Warrior(1st) Cabalist-3   Priest(1st)  Magsman      Scout(2nd)   Keeper(7th)
+ 9 Warrior(2nd) Visionist    Priest(2nd)  Common Rogue Scout(3rd)   Keeper(8th)
+10 Warrior(3rd) Phantasmist  Priest(3rd)  Rogue(1st)   Scout(4th)   Keeper(9th)
+11 Warrior(4th) Shadowist    Priest(4th)  Rogue(2nd)   Scout(5th)   Protector-1
+12 Swordsman-1  Spellbinder  Priest(5th)  Rogue(3rd)   Courser(1st) Protector-2
+13 Swordsman-2  Illusionist  Priest(6th)  Rogue(4th)   Courser(2nd) Protector-3
+14 Swordsman-3  Evoker(1st)  Priest(7th)  Rogue(5th)   Courser(3rd) Protector-4
+15 Hero         Evoker(2nd)  Priest(8th)  Rogue(6th)   Courser(4th) Protector-5
+16 Swashbuckler Evoker(3rd)  Priest(9th)  Rogue(7th)   Courser(5th) Protector-6
+17 Myrmidon     Evoker(4th)  Curate(1st)  Rogue(8th)   Tracker(1st) Protector-7
+18 Champion-1   Conjurer     Curate(2nd)  Rogue(9th)   Tracker(2nd) Protector-8
+19 Champion-2   Theurgist    Curate(3rd)  Master Rogue Tracker(3rd) Defender-1
+20 Champion-3   Thaumaturge  Curate(4th)  Expert Rogue Tracker(4th) Defender-2
+21 Superhero    Magician     Curate(5th)  Senior Rogue Tracker(5th) Defender-3
+22 Knight       Enchanter    Curate(6th)  Chief Rogue  Tracker(6th) Defender-4
+23 Superior Knt Warlock      Curate(7th)  Prime Rogue  Tracker(7th) Defender-5
+24 Gallant Knt  Sorcerer     Curate(8th)  Low Thief    Tracker(8th) Defender-6
+25 Knt Errant   Necromancer  Curate(9th)  Thief(1st)   Tracker(9th) Defender-7
+26 Guardian Knt Mage(1st)    Canon(1st)   Thief(2nd)   Guide(1st)   Defender-8
+27 Baron        Mage(2nd)    Canon(2nd)   Thief(3rd)   Guide(2nd)   Warder(1st)
+28 Duke         Mage(3rd)    Canon(3rd)   Thief(4th)   Guide(3rd)   Warder(2nd)
+29 Lord(1st)    Mage(4th)    Canon(4th)   Thief(5th)   Guide(4th)   Warder(3rd)
+30 Lord(2nd)    Mage(5th)    Canon(5th)   Thief(6th)   Guide(5th)   Warder(4th)
+31 Lord(3rd)    Wizard(1st)  Low Lama     Thief(7th)   Guide(6th)   Warder(5th)
+32 Lord(4th)    Wizard(2nd)  Lama-1       Thief(8th)   Guide(7th)   Warder(6th)
+33 Lord(5th)    Wizard(3rd)  Lama-2       Thief(9th)   Guide(8th)   Warder(7th)
+34 Lord(6th)    Wizard(4th)  Lama-3       High Thief   Guide(9th)   Warder(8th)
+35 Lord(7th)    Wizard(5th)  High Lama    Master Thief Pathfinder-1 Warder(9th)
+36 Lord(8th)    Wizard(6th)  Great Lama   Executioner  Pathfinder-2 Guardian
+37 Lord(9th)    Wizard(7th)  Patriarch    Low Assassin Pathfinder-3 Chevalier
+38 Lord Gallant Wizard(8th)  High Priest  Assassin     Ranger       Justiciar
+39 Lord Keeper  Wizard(9th)  Great Priest High AssassinHigh Ranger  Paladin
+40 Lord Noble   Wizard Lord  Noble Priest Guildmaster  Ranger Lord  High Lord
+</pre>
+
+<hr>
+</body>
+</html>

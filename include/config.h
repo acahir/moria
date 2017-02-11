@@ -260,8 +260,7 @@ Constant.h should always be included after config.h,
 
 #else
 
-/* Generic UNIX */
-/* This must be unix; change file names as appropriate.  */
+/* default */
 #define MORIA_SAV "moria-save"
 #define MORIA_HOU "/home/dgrabiner/moria-5.6/files/hours"
 #define MORIA_MOR "/home/dgrabiner/moria-5.6/files/news"

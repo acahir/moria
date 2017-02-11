@@ -10,6 +10,7 @@ ifeq ($(shell uname -s), Darwin)
 else ifeq ($(shell uname -s), Linux)
 	include unix/Makefile.linux
 else
+# default install options
 	BINDIR = /usr/local/bin
 	LIBDIR = /usr/local/var/games/moria/
 	OWNER = root

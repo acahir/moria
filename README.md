@@ -1,7 +1,8 @@
-uMoria
+Moria
 =====
 
-[uMoria](https://en.wikipedia.org/wiki/Moria_(video_game)) is a rogue-like dungeon exploration game, ported to run on the various flavors of unix. 
+[uMoria](https://en.wikipedia.org/wiki/Moria_(video_game)) is a rogue-like dungeon exploration game, ported to run on the various flavors of unix. This
+is based on James Wilson's second major release of the game.
 
 ### Getting Started
 
@@ -9,10 +10,12 @@ uMoria
 
 After cloning the repository, the project should build cleanly on linux or Mac OS X by simply typing 'make' in the base directory.  'make install' will copy the files into final destinations. uMoria requires the ncurses library which can be installed via [Macports](https://www.macports.org) or [Homebrew](http://brew.sh). Xcode, a free download from the App Store, is also required to build uMoria. 
 
+[Detailed install instructions](INSTALL.md)
+
 #### Playing
 
 The game begins with creating a character, with a number of choices available for race, classes, etc. A good place to start is the 
-[Moria Manual](http://www.nongnu.org/gmoria/moria.html). It's not really a quick start guide, but it's useful to have handy as you get started.
+[Moria Manual](doc/manual.html). It's not really a quick start guide, but it's useful to have handy as you get started.
 
 ### Changes
 
@@ -62,10 +65,13 @@ This code is built on top of umoria 5.6, the most recent version available. The 
 ### Resources
 
 There are a number of resources available on the web, some of the most useful are listed below
-- [Moria Manual](http://www.nongnu.org/gmoria/moria.html)
+- [Moria Manual](doc/manual.html)
+- [Moria FAQ](doc/FAQ.md)
+- [Moria Spoilers](doc/spoilers.html)
 - [Beej's Moria Page](https://beej.us/moria/)
-- [The Moria Spoilers](http://beej.us/moria/mmspoilers/)
 
 ### License
 
-Umoria is free software released under the terms of version 3 the GNU General Public License as published by the Free Software Foundation.
+Umoria is free software released under the terms of version 3 the GNU General Public License as published by the Free Software Foundation. Full details can be found in the [license](files/COPYING) file.
+
+

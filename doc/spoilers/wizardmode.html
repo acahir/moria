@@ -1,0 +1,303 @@
+<html>
+<head>
+<title>Wizard Mode</title>
+<body>
+
+<h2>Wizard Mode</h2>
+
+<h3>Contents:</h3>
+<ul>
+   <li><a href="#enteringwizard">Entering Wizard Mode</a>
+   <li><a href="#wizardcommands">Wizard Commands</a>
+   <li><a href="#wizarditems">Wizard Items</a>
+</ul>
+
+<hr>
+
+<a name="enteringwizard"><h3>Entering Wizard Mode:</h3></a>
+
+Do you really want to play in wizard mode?  Wizard mode is primarily used by
+those who have just made a change in the source code of their copy of the game
+and are testing it out.  Using wizard mode for 'fun' can degrade your
+impression of the game, leading to 1) discontinued playing or 2) an inability
+to play a game without cheating.  In addition, you cannot enter the high score
+file after entering wizard mode.
+<p>
+What?  You're still here?
+<p>
+Ok.  To enter wizard mode, type ^W (That's control-W).  This will convert your
+current character to a Wizard.
+<p>
+You can also invoke wizard mode at the command line by doing 'moria -w'.
+<p>
+If you want to resurrect a dead character, type moria -w (save file).  The
+dungeon will be destroyed, and you'll return to the store level, but all of
+your items will be intact.
+<p>
+
+<hr>
+
+<a name="wizardcommands"><h3>Wizard commands:</h3></a>
+<pre>
++-----------------------------------------------------------------------------+
+| Normal | Rogue | Description                                                |
++-----------------------------------------------------------------------------+
+|   :    |   :   | Magic Mapping                                              |
+|   ^A   |   ^A  | Remove Curse, cure blind, conf, pois, fear, slowness, stat |
+|   ^B   |   ^O  | Generates objects for a level and prints them in a file    |
+|   ^D   |   ^D  | Teleports the character to the specified level (1 lv=50')  |
+|   ^E   |   ^E  | Edit char stats, HP, mana, skills, gold, exp, level, speed |
+|   ^F   |   ^F  | Eliminates all monsters on the screen.                     |
+|   ^G   |   ^G  | Randomly generate treasure around you.                     |
+|   ^H   |   \   | Wizard help.                                               |
+| ^I Tab | ^I Tab| Identify an item.                                          |
+|   ^J   |   +   | Double Experience                                          |
+|   ^L   |   *   | Turns on the global overhead light.  (No darkness anywhere)|
+|   ^T   |   ^T  | Teleport player                                            |
+|   ^U   |   &   | Summon random monster                                      |
+|   ^W   |   ^W  | Enter/exit wizard mode                                     |
+|   @    |   @   | Create wizard item (see below)                             |
++-----------------------------------------------------------------------------+
+</pre>
+
+<hr>
+
+<a name="wizarditems"><h3>Wizard Items:</h3></a>
+
+Creation of Wizard items is usually used by real people to test new items
+before inserting them into the wizard file.  For munchkins, this is used to
+create godlike weapons.  You'll probably want the source code handy also.
+<p>
+There are several questions you must answer to create a new item:
+<p>
+Tval:  This is a group number that tells moria what kind of object the item is.
+<pre>
++------------------------------------------------+
+| Tval | Group              | Subval | P1 Effect |
++------------------------------------------------+
+|   1  | Miscellaneous      | 14..63 |           |
+|   2  | Chest              | 19..63 |           |
+|  10  | Sling Ammo         |195..255| Ego bonus |
+|  11  | Bolt               |195..255| Ego bonus |
+|  12  | Arrow              |195..255| Ego bonus |
+|  13  | Spike              |  2..63 |           |
+|  15  | Light source       | 36..63 | Turns left|
+|  20  | Bow                | 21..63 | Ego bonus |
+|  21  | Hafted Weapons     | 10..63 | Ego bonus |
+|  22  | Polearm Weapons    | 14..63 | Ego bonus |
+|  23  | Swords             | 25..63 | Ego bonus |
+|  25  | Digging            |  7..63 | Dig bonus |
+|  30  | Boots              |  4..63 | Ego bonus |
+|  31  | Gloves             |  3..63 | Ego bonus |
+|  32  | Cloak              |  2..63 | Ego bonus |
+|  33  | Helm               |  9..63 | Ego bonus |
+|  34  | Shield             |  7..63 | Ego bonus |
+|  35  | Hard Armor         | 13..63 | Ego bonus |
+|  36  | Soft Armor         | 10..63 | Ego bonus |
+|  40  | Amulets            | 10..63 | bonus +/- |
+|  45  | Rings              | 31..63 | bonus +/- |
+|  55  | Staves             | 23..63 |  Charges  |
+|  65  | Wands              | 24..63 |  Charges  |
+|  70  | Scroll 1           |  None  |           |
+|  71  | Scroll 2           |104..191|           |
+|  75  | Potion 1           |  None  |           |
+|  76  | Potion 2           |109..191|           |
+|  77  | Flask              | 70..93 |           |
+|  80  | Food               | 85..89 | Food value|
+|  90  | Magik Book         | 68..93 |           |
+|  91  | Prayer Book        | 68..93 |           |
++------------------------------------------------+
+</pre>
+Tchar:  Character that the object will be represented by.
+<p>
+Subval:  Number used to distinguish items within a group.  See the Tval chart
+for the range of numbers in each group that are not already being used by
+an object.
+<p>
+Weight:  Number of tenths of pounds that the object weighs.
+<p>
+Number:  How many in the group.  (14 arrows, 5 food rations, etc)
+<p>
+Damage (dice):  number of dice rolled for base damage (5 if 5d4 damage)
+<br>
+Damage (side):  number of sides on each die rolled    (4 if 5d4 damage)
+<br>
+For non-weapons, damage is the damage done by throwing the item at 
+something.
+<p>
++To Hit: Bonus to-hit on the item.
+<br>
++To Dam: Bonus to-damage on the item.
+<p>
+AC: Base AC the item provides
+<p>
++To AC: Bonus on the AC.
+<p>
+P1: Miscelaneous number.  See the Tval chart for the uses of P1.
+<p>
+Flags (in hex):  Describes the powers an item has.  
+For different types of items, these have different meanings.   Use
+the table that describes the type of item that you are trying to
+create.  To have multiple effects, simply add the flags values together.  
+<pre>
++----------------------------------------+----------------+----------------+
+| Value (hex) | Wearable items           | Wand Effects   | Food Effects   |
++----------------------------------------+----------------+----------------+
+| 0x00000001  | +p1 to strength          | Starlight      | Poisoned       |
+| 0x00000002  | +p1 to Intelligence      | 4d8 lght bolt  | Blinded        |
+| 0x00000004  | +p1 to Wisdom            | 6d8 frst bolt  | Fear           |
+| 0x00000008  | +p1 to Dexterity         | 9d8 fire bolt  | Confused       |
+| 0x00000010  | +p1 to Constitution      | stone to mud   | Cure Poison    |
+| 0x00000020  | +p1 to Charisma          | polymorph      | Cure Blindness |
+| 0x00000040  | +p1 to searching         | Heals 4d6 HP   | Cure Fear      |
+| 0x00000080  | Slow digestion           | speed monster  | Cure Confusion |
+| 0x00000100  | +p1 to stealth           | slow monster   | Lose Strength  |
+| 0x00000200  | Aggravate monster        | confuse monst  | Lose Const.    |
+| 0x00000400  | Teleportation            | sleep monster  | Lose Intel.    |
+| 0x00000800  | Regeneration             | drain life     | Lose Wisdom    |
+| 0x00001000  | +p1 to speed             | destruction    | Lose Dexterity |
+| 0x00002000  | *4 damage to dragons     | 2d6 Mag. Misl  | Lose Charisma  |
+| 0x00004000  | *2 damage to animals     | wall building  | Restore Str.   |
+| 0x00008000  | *2 damage to evil        | clone monster  | Restore Con.   |
+| 0x00010000  | *3 damage to undead      | teleport mon.  | Restore Int.   |
+| 0x00020000  | *1.5 to frost vulnerable | disarm         | Restore Wis.   |
+| 0x00040000  | *1.5 to fire vulnerable  | 32 lght ball   | Restore Dex.   |
+| 0x00080000  | Resist Fire              | 48 frst ball   | Restore Chr.   |
+| 0x00100000  | Resist Acid              | 72 fire ball   | Heals 1d6 HP   |
+| 0x00200000  | Resist Cold              | 12 posn ball   | Heals 1d12 HP  |
+| 0x00400000  | Sustain stat in p1       | 60 acid ball   | Heals 1d18 HP  |
+| 0x00800000  | No sleep or paralysis    | random effect  | Heals 3d6 HP   |
+| 0x01000000  | See Invisible            +----------------+ Heals 3d12 HP  |
+| 0x02000000  | Resist Lightning         |                | Lose 1d18 HP   |
+| 0x04000000  | Feather fall             |                | Lose 1d8 HP    |
+| 0x08000000  | Blindness                |                | Lose 2d8 HP    |
+| 0x10000000  | Causes Fear              |                | Lose 3d8 HP    |
+| 0x20000000  | Digging implement        |                +----------------+
+| 0x40000000  | +p1*10' to infravision   |
+| 0x80000000  | Cursed {damned}          |
++----------------------------------------+
+
++-----------------------------------+--------------------+-----------------+
+| Value (hex) | Scroll 1 Effects    | Scroll 2 Effects   | Staff Effects   |
++-----------------------------------+--------------------+-----------------+
+| 0x00000001  | Enchant Weapon-Hit  | *Enchant Weapon*   | Light Area      |
+| 0x00000002  | Enchant Weapon-Dam  | Curse Weapon       | Detect Doors    |
+| 0x00000004  | Enchant Armor       | *Enchant Armor*    | Detect Traps    |
+| 0x00000008  | Identify            | Curse Armor        | Detect Treasure |
+| 0x00000010  | Remove Curse        | Summon Undead      | Detect Objects  |
+| 0x00000020  | Light               | Bless 1d12+6 turns | Teleportation   |
+| 0x00000040  | Summon Monster      | Bless 1d24+12 turns| Earthquake      |
+| 0x00000080  | Phase Door          | Bless 1d48+24 turns| Summon Monsters |
+| 0x00000100  | Teleport            | Word of Recall     +-----------------+
+| 0x00000200  | Level Teleport      | Destruction        | Destruction     |
+| 0x00000400  | Confuse Monster     +--------------------+ Starlight       |
+| 0x00000800  | Magik Mapping       |                    | Speed Monsters  |
+| 0x00001000  | Sleep Monsters      |                    | Slow Monsters   |
+| 0x00002000  | Rune of Protection  |                    | Sleep Monsters  |
+| 0x00004000  | Detect Treasure     |                    | Heal 1d8 HP     |
+| 0x00008000  | Detect Object       |                    | Detect Invisible|
+| 0x00010000  | Detect Traps        |                    | Speed           |
+| 0x00020000  | Detect Doors        |                    | Slow            |
+| 0x00040000  | Mass Genocide       |                    | Mass Polymorph  |
+| 0x00080000  | Detect invisible    |                    | Remove Curse    |
+| 0x00100000  | Aggravate Monst.    |                    | Detect Evil     |
+| 0x00200000  | Trap Creation       |                    | Cure Bl/Ps/Cnf  |
+| 0x00400000  | Trap/Door Destruct. |                    | Dispel Evil     |
+| 0x00800000  | Door Creation       |                    +-----------------+
+| 0x01000000  | Recharge Item       |                    | Darkness        |
+| 0x02000000  | Genocide            |                    +-----------------+
+| 0x04000000  | Darkness            |
+| 0x08000000  | Protect Evil        |
+| 0x10000000  | Create Food         |
+| 0x20000000  | Dispel Undead 60hp  |
+| 0x40000000  +---------------------+ 
+| 0x80000000  |
++-------------+
+
++-----------------------------------+--------------------+-----------------+
+| Value (hex) | Potion 1 Effects    | Potion 2 Effects   | Chest Flaggs    |
++-----------------------------------+--------------------+-----------------+
+| 0x00000001  | Gain Strength       +--------------------+ Locked          |
+| 0x00000002  | Lose Strength       | Lose Experience    +-----------------+ 
+| 0x00000004  | Restore Strength    | Salt Water         |
+| 0x00000008  | Gain Intelligence   | Invulnerability    +-----------------+
+| 0x00000010  | Lose Intelligence   | Heroism            | Lose Strength   |
+| 0x00000020  | Restore Intell.     | Super Heroism      | Poison Needle   |
+| 0x00000040  | Gain Wisdom         | Remove Fear        | Paralysis       |
+| 0x00000080  | Lose Wisdom         | Restore Life Levels| Explode         |
+| 0x00000100  | Restore Wisdom      | Resist Heat        | Summon Monsters |
+| 0x00000200  | Gain Charisma       | Resist Cold        +-----------------+
+| 0x00000400  | Lose Charisma       | Detect Invisible   |
+| 0x00000800  | Restore Charisma    | Slow Poison        |
+| 0x00001000  | Heal 2d7 Hp         | Cure Poison        |
+| 0x00002000  | Heal 4d7 Hp         | Restore Mana       |
+| 0x00004000  | Heal 6d7 Hp         | Infravision        |
+| 0x00008000  | Heal 1000 Hp        +--------------------+
+| 0x00010000  | Gain Constitution   |
+| 0x00020000  | Gain Experience     |
+| 0x00040000  | Sleep               |
+| 0x00080000  | Blindness           |
+| 0x00100000  | Confusion           |
+| 0x00200000  | Poison              |
+| 0x00400000  | Speed               |
+| 0x00800000  | Slow                |
+| 0x01000000  | Gain Dexterity      |
+| 0x02000000  | Restore Dexterity   |
+| 0x04000000  | Restore Constitution|
+| 0x08000000  | Cure Blindness      |
+| 0x10000000  | Cure Confusion      |
+| 0x20000000  | Cure Poison         |
+| 0x40000000  +---------------------+
+| 0x80000000  |
++-------------+
+
++-------------+----------------------------+-------------------------------+
+| Value (hex) | Spells in Mage Book        | Spells in Priest Books        |
++-------------+----------------------------+-------------------------------+
+| 0x00000001  | Magic Missiles             | Detect Evil                   |
+| 0x00000002  | Detect Monsters            | Cure Light Wounds             |
+| 0x00000004  | Phase Door                 | Bless                         |
+| 0x00000008  | Light Area                 | Remove Fear                   |
+| 0x00000010  | Cure Light Wounds          | Call Light                    |
+| 0x00000020  | Find Hidden Traps/Doors    | Find Traps                    |
+| 0x00000040  | Stinking Cloud             | Detect Doors/Stairs           |
+| 0x00000080  | Confusion                  | Slow Poison                   |
+| 0x00000100  | Lightning Bolt             | Blind Creature                |
+| 0x00000200  | Trap/Door Destruction      | Portal                        |
+| 0x00000400  | Sleep I                    | Cure Medium Wounds            |
+| 0x00000800  | Cure Posion                | Chant                         |
+| 0x00001000  | Teleport Self              | Sanctuary                     |
+| 0x00002000  | Remove Curse               | Create Food                   |
+| 0x00004000  | Frost Bolt                 | Remove Curse                  |
+| 0x00008000  | Turn Stone To Mud          | Resist Heat and Cold          | 
+| 0x00010000  | Create food                | Neutralize Poison             |
+| 0x00020000  | Recharge Item I            | Orb of Draining               |
+| 0x00040000  | Sleep II                   | Cure Serious Wounds           |
+| 0x00080000  | Polymorph Other            | Sense Invisible               |
+| 0x00100000  | Identify                   | Protection From Evil          |
+| 0x00200000  | Sleep III                  | Earthquake                    |
+| 0x00400000  | Fire Bolt                  | Sense Surroundings            |
+| 0x00800000  | Slow Monster               | Cure Critical Wounds          |
+| 0x01000000  | Frost Ball                 | Turn Undead                   |
+| 0x02000000  | Recharge Item II           | Prayer                        |
+| 0x04000000  | Teleport Other             | Dispel Undead                 |
+| 0x08000000  | Haste Self                 | Heal                          |
+| 0x10000000  | Fire Ball                  | Dispel Evil                   |
+| 0x20000000  | Word of Destruction        | Glyph of Warding              |
+| 0x40000000  | Genocide                   | Holy Word                     |
+| 0x80000000  +----------------------------+-------------------------------+
++-------------+
+</pre>
+Just add up the flags you want and enter it as a hex number.
+<p>
+Cost:  The base cost in the stores (should you decide to sell it :-)
+<p>
+Level:  Level of the dungeon on which it would be randomly generated.  Wizard
+items will not be randomly generated in the game.  Also affects the difficulty
+of wand and staff use and recharging.
+<p>
+
+<hr>
+
+</body>
+</html>

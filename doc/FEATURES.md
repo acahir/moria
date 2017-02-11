@@ -1,3 +1,85 @@
+## Umoria 5.6.1
+
+#### New Features
+
+Two new in-game options added
+- Disable haggling - no haggling in any store for buying or selling
+- Quick Mode - changes some odds in player's favor. Allows faster games
+	- doubles chance of getting a special item
+	- increased odds of casting Identity spell
+	- increased odds of detecting magic items in inventory
+	- ensures a list of base supplies are always available in stores
+		(indenty, word-of-recall, food ration, oil, etc)
+	- increases the price limits in some stores
+
+Added color support
+- Minimally tested fuction in no color support env
+- Added colors for most items and monsters
+- Additional improvements possible by adding color to...
+  - inventory, char description screen, stats, messages, etc
+
+#### Changes/Fixes
+
+Improved build process
+- Makefile will identify system type and automatically set params
+- Added Makefile for Mac OS x
+- Cleaned up some compiler warnings for C99
+
+Disenchant creatures can no longer affect item bonuses that can't 
+be re-enchanted. For example, Gauntlets of Slaying toHit or toDam, 
+or toAC on weapons. Seemed unfair to be able to loose without ability
+to regain.
+
+Possible future improvements:
+- remove MAC code? no longer relevant and messy
+- ability to choose character color
+
+Documentation
+- Added Moria manual
+- Added Spoilers document
+- Cleaned up old files
+
+Github repository created
+	https://github.com/acahir/umoria
+
+
+
+## Umoria 5.6
+
+??
+
+
+## Umoria 5.5.1:
+
+If you inscribe an item with a single digit (using "{" to inscribe), you
+can refer to that item by the digit when it is in your inventory.  You
+can thus label your pick as item 1, and wield item 1 whenever you need
+the pick without checking which letter the pick is.
+
+The prayers Turn Undead and Holy Word have been strengthened.
+
+Creatures with fire attacks now resist your fire attacks, and you will
+learn this in the recall information.
+
+
+## Umoria 5.5:
+
+The maximum damage enchantment for a weapon is now equal to its maximum
+damage, instead of being fixed at 10 (there is a slight chance of
+enchantment beyond this level); thus daggers are no longer the best
+weapons for mid-level characters.
+
+
+## Umoria 5.4:
+
+Prints multiple sentences on the message line if they are short enough.
+
+
+
+
+## Previous
+
+(the following are probably oldest to newest)
 
 You get a warning for spells or prayers beyond your strength.
 
@@ -202,13 +284,13 @@ proficiency at fighting twice as fast as mages/priests now.  As a result,
 high level warriors are better fighters than before, and high level
 mages/priests do not fight as well as they used to.  The complete table is:
 			      Magic	     Saving
-	     Fighting  Bows  Devices  Disarm  Throw
-Warrior		4	4	2	2	3
-Mage		2	2	4	3	3
-Priest		2	2	4	3	3
-Rogue		3	4	3	4	3
-Ranger		3	4	3	3	3
-Paladin		3	3	3	2	3
+	      Fighting  Bows    Devices  Disarm  Throw
+Warrior       4     4        2       2      3
+Mage          2     2        4       3      3
+Priest        2     2        4       3      3
+Rogue         3     4        3       4      3
+Ranger        3     4        3       3      3
+Paladin       3     3        3       2      3
 In all cases, three is equivalent to the old rate.
 
 umoria now understands tilde (~) characters at the start of a file name.
@@ -256,68 +338,6 @@ e.g. potions, wands, staffs, scrolls.
 Typing RETURN while haggling will default to the last increment/decrement
 amount used.
 
-Umoria 5.4:
-
-Prints multiple sentences on the message line if they are short enough.
-
-Umoria 5.5:
-
-The maximum damage enchantment for a weapon is now equal to its maximum
-damage, instead of being fixed at 10 (there is a slight chance of
-enchantment beyond this level); thus daggers are no longer the best
-weapons for mid-level characters.
-
-Umoria 5.5.1:
-
-If you inscribe an item with a single digit (using "{" to inscribe), you
-can refer to that item by the digit when it is in your inventory.  You
-can thus label your pick as item 1, and wield item 1 whenever you need
-the pick without checking which letter the pick is.
-
-The prayers Turn Undead and Holy Word have been strengthened.
-
-Creatures with fire attacks now resist your fire attacks, and you will
-learn this in the recall information.
-
-Umoria 5.6
-
-??
-
-Umoria 5.6.1
-
-Two new in-game options added
-- Disable haggling - no haggling in any store for buying or selling
-- Easy/Quick Mode - changes some odds in player's favor. Allows faster games
-	- doubles chance of getting a special item 
-	- increased odds of casting Identity spell
-	- increased odds of detecting magic items in inventory
-	- ensures a list of base supplies are always available in stores
-		(indenty, word-of-recall, food ration, oil, etc)
-	- increases the price limits in some stores
-
-Added initial color support
-	- Minimally tested fuction in no color support env
-	- Added colors for most items and monsters
-	- Additional improvements possible by adding color to...
-		- inventory, Char description screen, stats, messages, etc
-
-Added Makefile for Mac OS x
-
-Disenchant creatures can no longer affect item bonuses that can't 
-be re-enchanted. For example, Gauntlets of Slaying toHit or toDam, 
-or toAC on weapons. Seemed unfair to be able to loose without ability
-to regain.
-
-Cleaned up some compiler warnings for C99.
-
-Possible future improvements:
-	- remove MAC code? no longer relevant and messy
-	- ability to choose character color
-	
-	
-Github repository created
-	https://github.com/acahir/umoria
 
 
 
-last modified 2/7/17

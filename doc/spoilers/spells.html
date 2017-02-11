@@ -1,0 +1,307 @@
+<html>
+<head>
+<title>Spells</title>
+<body>
+
+<h2>Spells</h2>
+
+<h3>Contents:</h3>
+<ul>
+   <li><a href="#spellsystem">Spell system</a>
+   <li><a href="#mana">Mana</a>
+   <li><a href="#failure">Failure</a>
+   <li><a href="#magespells">Mage Spells</a>
+   <li><a href="#clericspells">Cleric Spells</a>
+</ul>
+
+<hr>
+
+<a name="spellsystem"><h3>Spell System:</h3></a>
+
+All player characters in Moria except warriors are able to cast some sort of
+spells.  The types of spells are determined by your class.  Mage spells are
+granted to Mages, Rangers, and Thieves, although only mages get all of the
+spells.  Priest spells are granted to Priests and Paladins.
+<p>
+Each spell has four attributes to it:  Level, Mana, Failure, and Experience.
+The Level of the spell is the level the caster needs to be to learn that spell.
+Mana is the number of mana points it takes to attempt to cast the spell.
+Failure is the base failure rate of the spell, and Experience is the number of
+experience points the character receives for casting that spell successfully for
+the first time.
+<p>
+The spells are divided up into eight books, four mage and four priest books.  
+Here is the general table item table for spellbooks.
+<pre>
++---------------------------------------------------+
+| Book                        | Type | Cost | Level |
++---------------------------------------------------+
+| [Beginners-Magick]          | MAGE |   25 |   40  |
+| [Beginners Handbook]        | CLER |   25 |   40  |
+| [Magick I]                  | MAGE |  100 |   40  |
+| [Words of Wisdom]           | CLER |  100 |   40  |
+| [Magick II]                 | MAGE |  400 |   40  |
+| [Chants and Blessings]      | CLER |  400 |   40  |
+| [The Mages' Guide to Power] | MAGE |  800 |   40  |
+| [Exorcism and Dispelling]   | CLER |  800 |   40  |
++---------------------------------------------------+
+</pre>
+
+<hr>
+
+<a name="mana"><h3>Mana:</h3></a>
+
+Mana is granted depending on your intelligence, wisdom, and level.  Mage spells
+require intelligence to cast successfully, and priest spells require wisdom.  The
+formula for the number of Mana points a character has is:
+<pre>
+        Level
+      * Mana factor from INT/WIS
+      + 1
+     ---
+        Mana
+</pre>
+Level is the number of levels that character has been casting spells.  For
+Priests, Paladins, and Mages, this is the same as their character level because
+they get spells at first level.  Rangers would be level-2 because their first
+spell is at third level, and Rogues would be level-4 for similar reasons.
+<p>
+Note:  A character with a factor of 0 (INT/WIS <8) will have 0 mana points and
+not be able to cast any spells.
+<p>
+
+<hr>
+
+<a name="failure"><h3>Failure:</h3></a>
+
+All spells have at least a small chance of failing.  The formula below will
+give the chance that a spell has of failing.
+<pre>
+      + Base failure rate of spell
+      + 3 * spell level
+      - 3 * player level
+      - INT/WIS fail adjust
+      + 5 per mana point, if you don't have enough mana.
+     ---
+      Chance to fail.
+</pre>
+Note:  The max failure rate is 95%, the lowest is 5%
+<p>
+
+<hr>
+
+<a name="magespells"><h3>Mage spells:</h3></a>
+<pre>
++-----------------------------------------------------------------------------+
+|              |        MAGE        |       RANGER       |       ROGUE        |
+| Spell        | Lv |Mana|Fail| Exp | Lv |Mana|Fail| Exp | Lv |Mana|Fail| Exp |
++-----------------------------------------------------------------------------+
+|Magic Missile |  1 |  1 | 22 |   1 |  3 |  1 | 30 |   1 | -- | -- | -- | --- |
+|Detect Monster|  1 |  1 | 23 |   1 |  3 |  2 | 35 |   2 |  5 |  1 | 50 |   1 |
+|Phase Door    |  1 |  2 | 24 |   1 |  3 |  2 | 35 |   2 |  7 |  2 | 55 |   1 |
+|Light Area    |  1 |  2 | 26 |   1 |  5 |  3 | 35 |   2 |  9 |  3 | 60 |   2 |
+|Cure Lt. Wnds |  3 |  3 | 25 |   2 |  5 |  3 | 40 |   2 | 11 |  4 | 65 |   2 |
+|Find Tr/Doors |  3 |  3 | 25 |   1 |  5 |  4 | 45 |   3 | 13 |  5 | 70 |   3 |
+|Stinking Cloud|  3 |  3 | 27 |   2 |  7 |  5 | 40 |   6 | -- | -- | -- | --- |
++-----------------------------------------------------------------------------+
+|Confusion     |  3 |  4 | 30 |   1 |  7 |  6 | 40 |   5 | 15 |  6 | 75 |   3 |
+|Lightning Bolt|  5 |  4 | 30 |   6 |  9 |  7 | 40 |   7 | -- | -- | -- | --- |
+|Trap/Door Dest|  5 |  5 | 30 |   8 |  9 |  8 | 45 |  10 | 17 |  7 | 80 |   4 |
+|Sleep I       |  5 |  5 | 30 |   5 | 11 |  8 | 40 |  10 | 19 |  8 | 85 |   5 |
+|Cure Poison   |  5 |  5 | 35 |   6 | 11 |  9 | 45 |  10 | 21 |  9 | 90 |   6 |
+|Teleport Self |  7 |  6 | 35 |   9 | 13 | 10 | 45 |  12 | -- | -- | -- | --- |
+|Remove Curse  |  7 |  6 | 50 |  10 | 13 | 11 | 55 |  13 | 23 | 10 | 95 |   7 |
+|Frost Bolt    |  7 |  6 | 40 |  12 | 15 | 12 | 50 |  15 | -- | -- | -- | --- |
+|Turn Stone/Mud|  9 |  7 | 44 |  19 | 15 | 13 | 50 |  15 | -- | -- | -- | --- |
++-----------------------------------------------------------------------------+
+|Create Food   |  9 |  7 | 45 |  19 | 17 | 17 | 55 |  15 | 25 | 12 | 95 |   9 |
+|Recharge I    |  9 |  7 | 75 |  22 | 17 | 17 | 90 |  17 | 27 | 15 | 99 |  11 |
+|Sleep II      |  9 |  7 | 45 |  19 | 21 | 17 | 55 |  17 | -- | -- | -- | --- |
+|Polymorph Othr| 11 |  7 | 45 |  25 | 21 | 19 | 60 |  18 | -- | -- | -- | --- |
+|Identify      | 11 |  7 | 99 |  19 | 23 | 25 | 95 |  20 | 29 | 18 | 99 |  19 |
+|Sleep III     | 13 |  7 | 50 |  22 | 23 | 20 | 60 |  20 | -- | -- | -- | --- |
+|Fire Bolt     | 15 |  9 | 50 |  25 | 25 | 20 | 60 |  20 | -- | -- | -- | --- |
+|Slow Monster  | 17 |  9 | 50 |  31 | 25 | 21 | 65 |  20 | -- | -- | -- | --- |
++-----------------------------------------------------------------------------+
+|Frost Ball    | 19 | 12 | 55 |  38 | 27 | 21 | 65 |  22 | -- | -- | -- | --- |
+|Recharge II   | 21 | 12 | 90 |  44 | 29 | 23 | 95 |  23 | -- | -- | -- | --- |
+|Teleport Other| 23 | 12 | 60 |  50 | 31 | 25 | 70 |  25 | -- | -- | -- | --- |
+|Haste Self    | 25 | 12 | 65 |  63 | 33 | 25 | 75 |  38 | -- | -- | -- | --- |
+|Fire Ball     | 29 | 18 | 65 |  88 | 35 | 25 | 80 |  50 | -- | -- | -- | --- |
+|Word Destruct.| 33 | 21 | 80 | 125 | 37 | 30 | 95 | 100 | -- | -- | -- | --- |
+|Genocide      | 37 | 25 | 95 | 200 | -- | -- | -- | --- | -- | -- | -- | --- |
++-----------------------------------------------------------------------------+
+</pre>
+<h4>Spell effects</h4>
+<b>[Beginners-Magik]</b>
+<dl>
+<dt>Magic Missile:       <dd>2d6 damage to target
+<dt>Detect Monsters:     <dd>Light all non-invisible monster on the screen
+<dt>Phase Door:          <dd>Teleport 10 squares away
+<dt>Light Area:          <dd>Permenantly illuminates the room
+<dt>Cure Light Wounds:   <dd>Heals 4d4 damage.
+<dt>Find Traps/Doors:    <dd>Lights all traps, doors, and stairs on the screen
+<dt>Stinking Cloud:      <dd>Poison gas ball doing 9 points of damage.
+</dl>
+<p>
+<b>[Magik I]</b>
+<dl>
+<dt>Confusion:           <dd>Confuses monster.  Will move/attack randomly
+<dt>Lightning Bolt:      <dd>4d8 lightning damage to target
+<dt>Trap/Door Destuct:   <dd>Removes traps and doors adjacent to caster.  Incl. chests
+<dt>Sleep I:             <dd>Sleeps one monster
+<dt>Cure Poison:         <dd>Heals poison.
+<dt>Teleport self:       <dd>Teleports caster randomly on the level.
+<dt>Remove Curse:        <dd>Allows caster to remove {damned} items
+<dt>Frost Bolt:          <dd>6d8 cold damage to a target
+<dt>Turn Stone to Mud:   <dd>Liquidates one wall square.  See wand above.
+</dl>
+<p>
+<b>[Magik II]</b>
+<dl>
+<dt>Create Food:         <dd>Creates a pint of fine grade mush at your feet.
+<dt>Recharge Item I:     <dd>Recharge an item.  See below.
+<dt>Sleep II:            <dd>Sleeps monsters adjacent to caster.
+<dt>Polymorph Other:     <dd>Randomly polymorphs one monster.
+<dt>Identify:            <dd>Fully ID's all bonuses, and artifact things on an item
+<dt>Sleep III:           <dd>Causes all monsters in sight to fall asleep
+<dt>Fire Bolt:           <dd>9d8 fire damage to a target
+<dt>Slow Monster:        <dd>Slows one monster down one speed unit
+</dl>
+<p>
+<b>[Mages Guide to Power]</b>
+<dl>
+<dt>Frost Ball:          <dd>Cold ball doing 48 points of damage at center
+<dt>Recharge Item II:    <dd>Recharge an item.  See below.
+<dt>Teleport Other:      <dd>Teleports monster randomly on the level.
+<dt>Haste Self:          <dd>Speeds you up one speed unit for 1d20+level turns
+<dt>Fire Ball:           <dd>Fire ball doing 72 points of damage at center
+<dt>Word of Destruction: <dd>Tactical nuke at ground zero.  Kill all monsters.
+<dt>Genocide:            <dd>Kills all monsters of a specific letter group.
+</dl>
+
+<h4>Recharging items:</h4>
+
+The chance that an item will survive recharging, and the number of charges it
+reveives is based on the power of the recharge spell/scroll.
+<p>
+Chance to recharge:
+<pre>          
+           + origin bonus (Recharge I=20, recharge II or scroll=60)
+           + 50
+           - level of wand/staff
+           - charges in wand/staff
+           / 10
+         --- Chance
+</pre>
+An item will be destroyed 1 time in 'Chance' times.
+<p>
+The number of charges added to the wand/staff is:
+<pre>
+           + origin bonus (see above)
+           / 2+level of staff/wand
+           + 1
+         --- Max charges
+</pre>
+The number of charges added is 2+(1..max)
+<p>
+
+<hr>
+
+<a name="clericspells"><h3>Priest spells:</h3></a>
+<pre>
++---------------------------------------------------------------------+
+|                           |       CLERIC       |       PALADIN      |
+|  Prayer                   | Lv |Mana|Fail| Exp | Lv |Mana|Fail| Exp |
++---------------------------------------------------------------------+
+| Detect Evil               |  1 |  1 | 10 |   1 |  1 |  1 | 30 |   1 |
+| Cure Light Wounds         |  1 |  2 | 15 |   1 |  2 |  2 | 35 |   2 |
+| Bless                     |  1 |  2 | 20 |   1 |  3 |  3 | 35 |   3 |
+| Remove Fear               |  1 |  2 | 25 |   1 |  5 |  3 | 35 |   5 |
+| Call Light                |  3 |  2 | 25 |   1 |  5 |  4 | 35 |   5 |
+| Find Traps                |  3 |  3 | 27 |   2 |  7 |  5 | 40 |   6 |
+| Detect Doors/Stairs       |  3 |  3 | 27 |   2 |  7 |  5 | 40 |   6 |
+| Slow Poison               |  3 |  3 | 28 |   3 |  9 |  7 | 40 |   7 |
++---------------------------------------------------------------------+
+| Blind Creature            |  5 |  4 | 29 |   4 |  9 |  7 | 40 |   8 |
+| Portal                    |  5 |  4 | 30 |   5 |  9 |  8 | 40 |   8 |
+| Cure Medium Wounds        |  5 |  4 | 32 |   5 | 11 |  9 | 40 |  10 |
+| Chant                     |  5 |  5 | 34 |   5 | 11 | 10 | 45 |  10 |
+| Sanctuary                 |  7 |  5 | 36 |   6 | 11 | 10 | 45 |  10 |
+| Create Food               |  7 |  5 | 38 |   7 | 13 | 10 | 45 |  12 |
+| Remove Curse              |  7 |  6 | 38 |   9 | 13 | 11 | 45 |  13 |
+| Resist Heat and Cold      |  7 |  7 | 38 |   9 | 15 | 13 | 45 |  15 |
++---------------------------------------------------------------------+
+| Neutralize Poison         |  9 |  6 | 38 |   9 | 15 | 15 | 50 |  15 |
+| Orb of Draining           |  9 |  7 | 38 |  10 | 17 | 15 | 50 |  17 |
+| Cure Serious Wounds       |  9 |  7 | 40 |  10 | 17 | 15 | 50 |  18 |
+| Sense Invisible           | 11 |  8 | 42 |  10 | 19 | 15 | 50 |  19 |
+| Protection from Evil      | 11 |  8 | 42 |  12 | 19 | 15 | 50 |  19 |
+| Earthquake                | 11 |  9 | 55 |  15 | 21 | 17 | 50 |  20 |
+| Sense Surroundings        | 13 | 10 | 45 |  15 | 23 | 17 | 50 |  20 |
+| Cure Critical Wounds      | 13 | 11 | 45 |  16 | 25 | 20 | 50 |  20 |
+| Turn Undead               | 15 | 12 | 50 |  20 | 27 | 21 | 50 |  22 |
++---------------------------------------------------------------------+
+| Prayer                    | 15 | 14 | 50 |  22 | 29 | 22 | 50 |  24 |
+| Dispel Undead             | 17 | 14 | 55 |  32 | 31 | 24 | 60 |  25 |
+| Heal                      | 21 | 16 | 60 |  38 | 33 | 28 | 60 |  31 |
+| Dispel Evil               | 25 | 20 | 70 |  75 | 35 | 32 | 70 |  38 |
+| Glyph of Warding          | 33 | 24 | 90 | 125 | 37 | 36 | 90 |  50 |
+| Holy Word                 | 39 | 32 | 80 | 200 | 39 | 38 | 90 | 100 |
++---------------------------------------------------------------------+
+</pre>
+<h4>Prayer effects:</h4>
+
+<b>[Beginner's Handbook]</b>
+<dl>
+<dt>Detect Evil:           <dd>Lights all evil (including invisible) monsters on screen
+<dt>Cure Light Wounds:     <dd>Heals 3d3 HP
+<dt>Bless:                 <dd>AC +2, +5 to fight and bow skill for 12+1d12 turns
+<dt>Remove Fear:           <dd>Cures Fear
+<dt>Call Light:            <dd>Lights room or corridor
+<dt>Find Traps:            <dd>Lights all the traps on the screen
+<dt>Detect Doors/Stairs:   <dd>Lights all the doors and stairs on the screen
+<dt>Slow Poison:           <dd>Halves the amount of time before poison wears off.
+</dl>
+<p>
+<b>[Words of Wisdom]</b>
+<dl>
+<dt>Blind Creature:        <dd>Blinds creature.  He will act as if you're not there.
+<dt>Portal:                <dd>Teleport up to 3*level squares away
+<dt>Cure Medium Wounds:    <dd>Heals 4d4 HP
+<dt>Chant:                 <dd>AC+2, +5 to fight and bow skill for 24+1d24 turns
+<dt>Sanctuary:             <dd>Sleeps all adjacent monsters
+<dt>Create Food:           <dd>Pint of fine grade mush appears at your feet.
+<dt>Remove Curse:          <dd>Allows {damned} items to be removed
+<dt>Resist Heat and Cold:  <dd>1d10+10 turns.  Combines with (RF) and (RC) items
+</dl>
+<p>
+<b>[Chants and Blessings]</b>
+<dl>
+<dt>Neutralize Poison:     <dd>Cures poison
+<dt>Orb of Draining:       <dd>Black sphere doing 3d6+level damage.  Double to evil
+<dt>Cure Serious Wounds:   <dd>Heals 8d4 HP
+<dt>Protection from Evil:  <dd>Evil creatures cannot attack you.  See scrolls
+<dt>Earthquake:            <dd>Changes some walls to caverns and vice versa.
+<dt>Sense Surroundings:    <dd>Magic Mapping
+<dt>Cure Critical Wounds:  <dd>Heal 16d4 HP
+<dt>Turn Undead:           <dd>All undead in sight will flee if the
+                       undead is lower level than the caster.  If the undead
+                       is higher level, the undead flees only 1/5 times.
+</dl>
+<p>
+<b>[Exorcisms and Dispelings]</b>
+<dl>
+<dt>Prayer:                <dd>AC+2, +5 to fight and bow skill for 48+1d48 turns
+<dt>Dispel Undead:         <dd>1d(3*level) to all undead in sight
+<dt>Heal:                  <dd>Heals 200 HP
+<dt>Dispel Evil:           <dd>1d(3*level) damage to all evil
+<dt>Glyph of Warding:      <dd>Creates glyph that monsters won't cross. 
+<dt>Holy Word:             <dd>Dispel Evil up to 4*level, Cure Fear, Cure Poison,
+                       Heals 1000 HP, restores all stats, invuln 3 turns
+</dl>
+
+<hr>
+
+</body>
+</html>

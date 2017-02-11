@@ -1,0 +1,218 @@
+<html>
+<head>
+<title>The Dungeon</title>
+<body>
+
+<h2>The Dungeon</h2>
+
+<h3>Contents</h3>
+<ul>
+   <li><a href="#city">The City</a>
+   <li><a href="#stores">Stores</a>
+   <li><a href="#haggling">Haggling</a>
+   <li><a href="#underground">The Underground</a>
+   <li><a href="#traps">Traps</a>
+</ul>
+
+<hr>
+<a name="city"><h3>The City:</h3></a>
+
+The city is a special part of the game of moria.  You start the game here.  
+Unlike other levels of the dungeon, the town is only one screen big and it has
+stores that will buy and sell items you find in the store.  There are monsters
+on this level, but since it is assumed that you grew up in an environment like
+this, you will get zero experience points for killing town creatures.
+<p>
+
+<hr>
+
+<a name="stores"><h3>Stores:</h3></a>
+
+There are six kinds of stores on the town level:
+<dl>
+<dt>General stores:
+<dd>sell food, water, cloaks, picks, light sources, and spikes
+<dt>Weapon shop:
+<dd>sells weapons
+<dt>Armor shop:
+<dd>sells armor
+<dt>Temple:
+<dd>Sells potion, scrolls, prayer books, and some bashing weapons
+<dt>Alchemists shop:
+<dd>Sells potions, scrolls
+<dt>Magic shop:
+<dd>Sells magic books, wands, staffs, rings, amulets
+</dl>
+Each store can have a different shopkeeper that will determine base prices, 
+haggling difficulty, and overall pleasantness.
+<pre>
++----------------------------------------------------------------------------+
+| Shop Keeper             | Max$ | First | Final | Haggle % | Race | Insults |
++-----------General Store----------------------------------------------------+
+| Erick the Honest        |  250 |  175  |  108  |    4     |  Hu  |    12   |
+| Andy the Friendly       |  200 |  170  |  108  |    5     |  Hl  |    15   |
+| Lyar-el the Comley      |  300 |  165  |  107  |    6     |  El  |    18   |
++------------------Armory----------------------------------------------------+
+| Mauglin the Grumpy      |32000 |  200  |  112  |    4     |  Dw  |     5   |
+| Darg-Low the Grim       |10000 |  190  |  111  |    4     |  Hu  |     9   |
+| Mauglim the Horrible    | 3000 |  200  |  113  |    5     |  HO  |     9   |
++-------------Weaponsmith----------------------------------------------------+
+| Arndal Best-Slayer      |10000 |  185  |  110  |    5     |  HE  |     8   |
+| Oglign Dragon-Slayer    |32000 |  195  |  112  |    4     |  Dw  |     8   |
+| Ithyl-Mak the Beastly   | 3000 |  210  |  115  |    6     |  HT  |     8   |
++------------------Temple----------------------------------------------------+
+| Hardblow the Humble     | 3500 |  175  |  109  |    6     |  Hu  |    15   |
+| Gunnar the Paladin      | 5000 |  185  |  110  |    5     |  Hu  |    23   |
+| Delilah the Pure        |25000 |  180  |  107  |    6     |  HE  |    20   |
++---------------Alchemist----------------------------------------------------+
+| Ga-nat the Greedy       |12000 |  220  |  115  |    4     |  Gn  |     9   |
+| Muaser the Chemist      |10000 |  190  |  111  |    5     |  HE  |     8   |
+| Wizzle the Chaotic      |10000 |  190  |  110  |    6     |  Hl  |     8   |
++--------------Magic Shop----------------------------------------------------+
+| Valeria Starshine       |32000 |  175  |  110  |    5     |  El  |    11   |
+| Gopher the Great!       |20000 |  215  |  113  |    6     |  Gn  |    10   |
+| Inglorian the Mage      |32000 |  200  |  110  |    7     |  Hu  |    10   |
++----------------------------------------------------------------------------+
+</pre>
+<dl>
+<dt>Max$:
+<dd>Amount of gold they can buy items for.  Hence, you can't sell a 3000
+    gp cloak to most general stores, because they can't afford it.
+<dt>First:
+<dd>Percent Markup of the base price used in the first offer.
+<dt>Final:
+<dd>Percent Markup of the base price used in their Final Offer.
+<dt>Haggle%:
+<dd>What percent you must increase your offer by and not insult keeper.
+<dt>Race:
+<dd>What race the shopkeeper is:<pre>
+          Hu  Human    Hl  Halfling
+          El  Elf      HE  Half-Elf
+          Gn  Gnome    HO  Half-Orc
+          Dw  Dwarf    HT  Half-Troll</pre>
+<dt>Insult:
+<dd>The number of times you can insult the shopkeeper before he kicks you
+    out of his store.
+</dl>
+
+<hr>
+
+<a name="haggling"><h3>Haggling:</h3></a>
+
+Haggling is one of the most irritating skills in the game, according to most
+people.  There are been methods of eliminating haggling, or making it an option
+in the game.  Here is a detailed method of how to haggle and get the best price
+on an item.
+<p>
+Final offer price
+<pre>
+             Base cost of item
+           * Final offer markup
+           * Race adjustment
+           * CHA adjustment
+          --- Final offer price
+</pre>
+The initial offer price is the same, except substitute the First instead of 
+Final in the second line.
+<p>
+If the item is unidentified, the price is determined by the table below.  Using
+the real price would allow players to identify the relative value of items by
+offering to sell them.
+<pre>
++---------------------------+
+| Unidentified Item | Price |
++---------------------------+
+| Weapon or Armor   |  Base |
+| Diggers           |  Base |
+| Food              |     1 |
+| Potion            |    20 |
+| Scrolls           |    20 |
+| Amulet            |    45 |
+| Ring              |    45 |
+| Wand              |    50 |
+| Staff             |    70 |
++---------------------------+
+</pre>
+If a wand or staff whose type is known, but not the number of charges, the base
+price for the wand/staff is used.
+<p>
+If a non-cursed type of ring or amulet is known, but not the bonus, then the
+price is still the base price of the ring/amulet
+<p>
+Ration type foods are always identified.  Only molds and mushrooms are above.
+<p>
+Race adjustment is how well members of two races get along.  The table below
+is the percent markup based on the race of the player and the shopkeeper.
+<pre>
++----------------Shopkeeper Race-------------------------------------------+
+| Player  | Human | H-Elf | Elf | H-ling | Gnome | Dwarf | H-Orc | H-Troll |
++--------------------------------------------------------------------------+
+| Human   |  100  |  105  | 105 |   110  |  113  |  115  |  120  |   125   |
+| Half-Elf|  110  |  100  | 100 |   105  |  110  |  120  |  125  |   130   |
+| Elf     |  110  |  105  | 100 |   105  |  110  |  120  |  125  |   130   |
+| Halfling|  115  |  110  | 105 |    95  |  105  |  110  |  115  |   130   |
+| Gnome   |  115  |  115  | 110 |   105  |   95  |  110  |  115  |   130   |
+| Dwarf   |  115  |  120  | 120 |   110  |  110  |   95  |  125  |   135   |
+| Half-Orc|  115  |  120  | 125 |   115  |  115  |  130  |  110  |   115   |
+| Half-Trl|  110  |  115  | 115 |   110  |  110  |  130  |  110  |   110   |
++--------------------------------------------------------------------------+
+</pre>
+When offering a price, if you didn't increase (decrease for selling) you offer 
+by the Haggle% of the shopkeeper, he is insulted.  If you have insulted him
+the number of times in the Insult column, he closes his store for 1000 turns.
+If you increase it by more than 3*Haggle%, then instead of the shopkeeper 
+matching your change, he'll just use 3*Haggle%.  Thus you have just given the
+shopkeeper some free money.
+<p>
+If the number of good haggles - 3* bad haggles - 5 is greater than zero and
+it's square is greater than the price/50, haggling is not necessary for that
+item.
+<p>
+
+<hr>
+
+<a name="underground"><h3>The Underground:</h3></a>
+
+Each level of the underground is filled with rooms,  monsters, and treasure.
+These levels are much bigger than the town level, typically 66 high and 198
+characters wide.  When you pass through a stair, the old level is destroyed
+and a new one created.  There will not be a staircase for you to return to the
+old level, after going through a staircase.  You will have to find one on the
+level.
+<p>
+<hr>
+
+<a name="traps"><h3>Traps:</h3></a>
+
+There are many traps to be found in the dungeons.  Some of these traps are
+just natural occurances, but others are set by monsters to try and kill the
+adventurer.
+<pre>
++-----------------------------------------------------------------------------+
+| Trap Desc      | Exp | Description                                          |
++-----------------------------------------------------------------------------+
+| open pit       |   1 | Fall for 2d6 damage.  Visible trap                   |
+| arrow trap     |   3 | Arrow doing 1d8 damage                               |
+| covered pit    |   2 | Fall for 2d6 damage.                                 |
+| trap door      |   5 | Fall for 2d8 damage.  Go down one level              |
+| gas trap       |   3 | Fall asleep for 1d10+4 turns.                        |
+| loose rock     |   0 | Hidden object under a rock.  Not really a trap       |
+| dart trap      |   5 | Lowers Strength by 1                                 |
+| strange rune   |   5 | Teleport trap                                        |
+| loose rock     |   5 | Falling rock hits for 2d6 damage.  Leaves rubble     |
+| gas trap       |  10 | Corrodes a piece of armor                            |
+| strange rune   |   5 | Summon 1d3+2 monsters                                |
+| blackened spot |  10 | Fire trap doing 4d6 damage                           |
+| corroded rock  |  10 | Acid trap doing 4d6 damage                           |
+| gas trap       |   5 | Posion gas going 2d6 damage + poisoned               |
+| gas trap       |   5 | Blinded for 1d50+50 turns                            |
+| gas trap       |   5 | Confused for 1d15+15 turns                           |
+| dart trap      |   5 | Slowed for 1d20+10 turns                             |
+| dart trap      |   5 | Lowers Constitution by 1                             |
+| a strange rune |   0 | Glyph of warding, rune of protection.  Harmless      |
++-----------------------------------------------------------------------------+
+</pre>
+
+<hr>
+</body>
+</html>
