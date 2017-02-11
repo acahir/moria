@@ -77,7 +77,7 @@ extern int find_ignore_doors; /* Run through open doors */
 extern int sound_beep_flag;   /* Beep for invalid character */
 extern int display_counts;    /* Display rest/repeat counts */
 extern int disable_haggle;    /* Disable haggling SAC */
-extern int easy_mode;         /* Improves odds for player SAC */
+extern int quick_mode;        /* Improves odds for player SAC */
 
 /* global flags */
 extern int new_level_flag; /* Next level when true  */
