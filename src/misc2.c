@@ -39,7 +39,7 @@ void magic_treasure(x, level) int x, level;
   chance = OBJ_BASE_MAGIC + level;
   if (chance > OBJ_BASE_MAX)
     chance = OBJ_BASE_MAX;
-  if (easy_mode) {
+  if (quick_mode) {
     special = chance / (OBJ_DIV_SPECIAL / 2);
   } else {
     special = chance / OBJ_DIV_SPECIAL;
@@ -1074,12 +1074,12 @@ static struct opt_desc {
                {"Beep for invalid character", &sound_beep_flag},
                {"Display rest/repeat counts", &display_counts},
                {"Disable haggling in stores", &disable_haggle},    // SAC
-               {"Easy mode: Improve odds for player", &easy_mode}, // SAC
+               {"Quick mode for faster games", &quick_mode}, // SAC
                {0, 0}};
 
-/* updates some struct values for easy_mode SAC */
+/* updates some struct values for quick_mode SAC */
 void update_options() {
-  if (easy_mode) {
+  if (quick_mode) {
     // store owners
     owners[13].max_cost = 6000;
     owners[14].max_cost = 6000;
@@ -1122,7 +1122,7 @@ void set_options() {
     move_cursor(i + 1, 40);
     switch (inkey()) {
     case ESCAPE:
-      // update easy mode values SAC
+      // update quick mode values SAC
       update_options();
       return;
     case '-':

@@ -773,7 +773,7 @@ void dungeon() {
     /* Allow for a slim chance of detect enchantment -CJS- */
     /* for 1st level char, check once every 2160 turns
        for 40th level char, check once every 416 turns */
-    if (easy_mode)
+    if (quick_mode)
       detect_odds = 375;
     else
       detect_odds = 750;

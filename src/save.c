@@ -178,7 +178,7 @@ static int sv_write() {
     l |= 0x400;
   if (disable_haggle) // SAC
     l |= 0x800;       // SAC
-  if (easy_mode)      // SAC
+  if (quick_mode)      // SAC
     l |= 0x1000;      // SAC
   if (death)
     l |= 0x80000000L; /* Sign bit */
@@ -839,9 +839,9 @@ int get_char(generate) int *generate;
     else                      // SAC
       disable_haggle = FALSE; // SAC
     if (l & 0x1000)           // SAC
-      easy_mode = TRUE;       // SAC
+      quick_mode = TRUE;       // SAC
     else                      // SAC
-      easy_mode = FALSE;      // SAC
+      quick_mode = FALSE;      // SAC
 
     update_options(); // update values after reading in pref SAC
   

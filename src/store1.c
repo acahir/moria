@@ -399,7 +399,7 @@ void store_maint() {
       if (s_ptr->store_ctr < STORE_MIN_INVEN) {
         j += STORE_MIN_INVEN - s_ptr->store_ctr;
       }
-      if (easy_mode)          // SAC
+      if (quick_mode)          // SAC
         store_base_create(i); // SAC
       while (--j >= 0)
         store_create(i);

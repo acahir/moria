@@ -637,9 +637,9 @@ int mon_take_hit(monptr, dam) int monptr, dam;
     } else
       p_ptr->exp_frac = new_exp_frac;
 
-    /* If in easy_mode and exp below max_exp
+    /* If in quick_mode and exp below max_exp
        add half new exp to max_exp */
-    if ((easy_mode) && (p_ptr->exp < p_ptr->max_exp)) {
+    if ((quick_mode) && (p_ptr->exp < p_ptr->max_exp)) {
       p_ptr->max_exp += new_exp/2;
     }
 
