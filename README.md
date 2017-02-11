@@ -19,7 +19,7 @@ The game begins with creating a character, with a number of choices available fo
 
 ### Changes
 
-#### v5.6.1b1 
+#### v5.6.1
 The latest code revision include several new features and some maintenance and cleanup of the code base.
 
 Added two new in-game options
